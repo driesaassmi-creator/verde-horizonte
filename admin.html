@@ -1,81 +1,590 @@
 <!DOCTYPE html>
 <html lang="nl">
 <head>
-<meta charset="utf-8">
-<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover, user-scalable=no">
-<title>VH Admin</title>
-<meta name="theme-color" content="#05070d">
-<meta name="apple-mobile-web-app-capable" content="yes">
-<meta name="mobile-web-app-capable" content="yes">
-<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
-<meta name="apple-mobile-web-app-title" content="VH Admin">
-<link rel="manifest" href="manifest.json">
-<link rel="icon" href="icon.svg" type="image/svg+xml">
-<link rel="apple-touch-icon" href="apple-touch-icon.png">
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+<title>Verde Horizonte – Websites en software op maat</title>
+
+<link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><rect width='100' height='100' rx='20' fill='%2305070d'/><text x='50%' y='55%' font-size='45' font-family='sans-serif' font-weight='bold' fill='%23d4af37' text-anchor='middle' dominant-baseline='middle'>VH</text></svg>">
+
+<meta property="og:title" content="Verde Horizonte – Websites & Maatwerksoftware">
+<meta property="og:description" content="Webdevelopment en maatwerksoftware. Lokaal geworteld, remote inzetbaar.">
+<meta property="og:image" content="https://image.thum.io/get/width/1200/crop/630/garage.fitzonemechelen.be">
+<meta property="og:url" content="https://www.verdehorizonte.be">
+<meta property="og:type" content="website">
+<meta name="description" content="Verde Horizonte bouwt websites en software. Van flitsende one-pagers tot complexe webapplicaties.">
+
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "ProfessionalService",
+  "name": "Verde Horizonte",
+  "url": "https://www.verdehorizonte.be",
+  "description": "Webdevelopment en maatwerksoftware.",
+  "founder": { "@type": "Person", "name": "Dries" }
+}
+</script>
+
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
+
 <style>
-:root{ --bg:#05070d; --blue:#5b8cff; --cyan:#4fd1ff; --gold:#d4af37; --text:#f2f5fb; --muted:#8b93a7; --card:rgba(255,255,255,.045); --line:rgba(255,255,255,.09); }
-*{ box-sizing:border-box; margin:0; -webkit-tap-highlight-color:transparent; user-select: none; -webkit-user-select: none; }
-html,body{height:100%; overscroll-behavior-y: none; background: var(--bg);}
-body{ background:radial-gradient(900px 500px at 15% -10%,rgba(91,140,255,.18),transparent 60%), radial-gradient(700px 420px at 100% 0%,rgba(79,209,255,.10),transparent 60%),var(--bg); color:var(--text);font-family:'Inter',-apple-system,BlinkMacSystemFont,'SF Pro Display','Segoe UI',sans-serif; -webkit-font-smoothing:antialiased; padding:calc(env(safe-area-inset-top,0px) + 20px) 20px calc(env(safe-area-inset-bottom,0px) + 20px); display:flex;justify-content:center; position: fixed; width: 100%; }
-.app{width:100%;max-width:480px;display:flex;flex-direction:column;min-height:100%;gap:22px; overflow-y: auto; padding-bottom: 20px;}
-header{display:flex;align-items:center;gap:14px; margin-bottom: 10px;}
-.logo{width:48px;height:48px;border-radius:14px;background:#0a0e18;border:1px solid rgba(212,175,55,.35); display:grid;place-items:center;color:var(--gold);font-weight:700;font-size:18px;letter-spacing:.5px;flex:none}
-h1{font-size:24px;line-height:1.15;font-weight:700;letter-spacing:-.02em}
-h1 small{display:block;font-size:13px;font-weight:500;color:var(--muted);letter-spacing:0;margin-top:4px}
-.section-title {font-size: 0.8rem; text-transform: uppercase; letter-spacing: 1px; color: var(--muted); font-weight: 600; margin-top: 10px; margin-bottom: -10px;}
-.grid{display:grid;grid-template-columns:1fr 1fr;gap:14px;}
-.tile{ position:relative;aspect-ratio:1/1;border-radius:24px;padding:18px;text-decoration:none;color:var(--text); background:var(--card);border:1px solid var(--line);backdrop-filter:blur(18px);-webkit-backdrop-filter:blur(18px); display:flex;flex-direction:column;justify-content:space-between; transition:transform .25s cubic-bezier(.2,.8,.2,1),border-color .25s,background .25s; }
-.tile:active{transform:scale(.95); background: rgba(255,255,255,.1);}
-.tile svg{width:28px;height:28px;stroke:var(--cyan);fill:none;stroke-width:1.8;stroke-linecap:round;stroke-linejoin:round}
-.tile:nth-child(2) svg{stroke:var(--blue)}
-.tile b{font-size:16px;font-weight:600;letter-spacing:-.01em;display:block}
-.tile span{font-size:12px;color:var(--muted);display:block;margin-top:2px}
-footer{margin-top:auto;text-align: center; color: var(--muted); font-size: 13px; padding-top: 20px;}
-footer a {color: var(--blue); text-decoration: none;}
-#install{display:none;border:1px solid rgba(255,255,255,.12);background:transparent;color:var(--muted);font:inherit;font-size:13px; padding:12px;border-radius:14px;cursor:pointer; margin-top: 10px;}
-a:focus-visible,button:focus-visible{outline:2px solid var(--cyan);outline-offset:3px}
-@media (prefers-reduced-motion:reduce){*{transition:none!important}}
+:root{
+  --bg:#05070d; --navy:#0a1226; --surface:#0c1429; --line:rgba(122,162,255,.16);
+  --text:#e9edf7; --muted:#8c97b0; --accent:#5b8cff; --accent2:#4fd1ff;
+  --gold:#d4af37;
+  --glow:0 0 40px rgba(91,140,255,.35);
+}
+*{box-sizing:border-box;margin:0;padding:0}
+html{scroll-behavior:smooth}
+body{font-family:Inter,Roboto,system-ui,-apple-system,"Segoe UI",sans-serif;background:var(--bg);color:var(--text);line-height:1.6;overflow-x:hidden;-webkit-font-smoothing:antialiased}
+body::before{content:"";position:fixed;inset:0;z-index:-1;background:
+  radial-gradient(900px 500px at 15% -10%,rgba(91,140,255,.18),transparent 60%),
+  radial-gradient(700px 500px at 100% 30%,rgba(79,209,255,.08),transparent 60%),
+  linear-gradient(180deg,var(--bg),var(--navy) 60%,var(--bg))}
+a{color:inherit;text-decoration:none}
+:focus-visible{outline:2px solid var(--accent2);outline-offset:3px;border-radius:6px}
+.wrap{width:min(1120px,92%);margin-inline:auto}
+
+/* Logo Animatie */
+@keyframes logoReveal {
+  0% { opacity: 0; transform: translateY(10px); letter-spacing: 5px; }
+  100% { opacity: 1; transform: translateY(0); letter-spacing: 1px; }
+}
+@keyframes goldGlow {
+  0% { text-shadow: 0 0 0px rgba(212,175,55,0); }
+  50% { text-shadow: 0 0 15px rgba(212,175,55,0.6); }
+  100% { text-shadow: 0 0 0px rgba(212,175,55,0); }
+}
+.logo {
+  animation: logoReveal 1.2s cubic-bezier(0.2, 0.8, 0.2, 1) forwards;
+}
+.logo span {
+  display: inline-block;
+  animation: goldGlow 3s infinite ease-in-out;
+  animation-delay: 1.2s; /* Wacht tot de tekst er staat voordat hij gaat gloeien */
+}
+
+/* Nav */
+header{position:sticky;top:0;z-index:50;backdrop-filter:blur(14px);background:rgba(5,7,13,.65);border-bottom:1px solid var(--line)}
+.nav{display:flex;align-items:center;justify-content:space-between;height:72px}
+.logo{font-weight:800; letter-spacing:1px; font-size:1.2rem; color:var(--text); text-transform:uppercase;}
+.logo span{color: var(--gold);}
+.nav a.link{color:var(--muted);font-size:.9rem;transition:color .2s}
+.nav a.link:hover{color:var(--text)}
+
+/* Buttons */
+.btn{display:inline-flex;align-items:center;gap:.5rem;padding:.9rem 1.6rem;border-radius:999px;font-weight:600;font-size:.95rem;border:1px solid var(--line);transition:transform .25s,box-shadow .25s,background .25s,border-color .25s;cursor:pointer}
+.btn.primary{background:linear-gradient(135deg,var(--accent),#3f6ef0);border-color:transparent;box-shadow:0 8px 30px rgba(91,140,255,.35)}
+.btn.primary:hover{transform:translateY(-2px);box-shadow:0 12px 44px rgba(91,140,255,.6)}
+.btn.ghost{background:rgba(255,255,255,.03)}
+.btn.ghost:hover{border-color:var(--accent);background:rgba(91,140,255,.1)}
+.btn.case-btn{border-color:var(--gold);color:var(--gold);background:rgba(212,175,55,.05);padding:1rem 2rem;font-size:1rem;}
+.btn.case-btn:hover{background:rgba(212,175,55,.15);box-shadow:0 0 20px rgba(212,175,55,.2);transform:translateY(-2px);}
+
+/* Hero */
+.hero{padding:clamp(56px,10vw,120px) 0 24px;text-align:center}
+.hero h1{font-size:clamp(2.2rem,6.4vw,4.8rem);line-height:1.04;letter-spacing:-.035em;font-weight:800;max-width:20ch;margin:0 auto 1.4rem;text-wrap:balance}
+.hero p{color:var(--muted);font-size:clamp(1rem,2vw,1.2rem);max-width:56ch;margin:0 auto 2.2rem}
+.hero .actions{display:flex;gap:.8rem;justify-content:center;flex-wrap:wrap}
+
+/* Carousel */
+.showcase{padding:40px 0 100px}
+.stage{position:relative;height:460px;perspective:1500px;touch-action:pan-y;cursor:grab;user-select:none;-webkit-user-select:none;margin-top:30px}
+.stage.dragging{cursor:grabbing}
+.ring{position:absolute;left:50%;top:50%;width:240px;height:320px;margin:-160px 0 0 -120px;transform-style:preserve-3d}
+.card3d{position:absolute;inset:0;display:block;border-radius:16px;overflow:hidden;background:var(--surface);border:1px solid var(--line);box-shadow:0 20px 60px rgba(0,0,0,.6),0 0 30px rgba(91,140,255,.12);transition:box-shadow .3s,border-color .3s}
+.card3d:hover{border-color:rgba(91,140,255,.7);box-shadow:0 20px 60px rgba(0,0,0,.6),var(--glow)}
+.card3d img{width:100%;height:100%;object-fit:cover;object-position:top;display:block;-webkit-user-drag:none;pointer-events:none}
+.card3d .cap{position:absolute;left:0;right:0;bottom:0;padding:2.4rem 1rem .9rem;background:linear-gradient(transparent,rgba(5,7,13,.92));font-weight:600;font-size:.92rem}
+.card3d .cap small{display:block;color:var(--muted);font-weight:400;font-size:.76rem}
+.card3d.noimg img{display:none}
+.card3d.noimg{background:linear-gradient(160deg,#13204a,#0a1226)}
+.arrows{display:flex;justify-content:center;gap:.8rem;margin-top:8px}
+.arrow{width:48px;height:48px;border-radius:50%;border:1px solid var(--line);background:rgba(255,255,255,.03);color:var(--text);cursor:pointer;display:grid;place-items:center;transition:all .25s}
+.arrow:hover{border-color:var(--accent);box-shadow:var(--glow);background:rgba(91,140,255,.12)}
+.arrow svg{width:20px;height:20px}
+.hint{text-align:center;color:var(--muted);font-size:.85rem;margin-top:14px}
+
+/* About */
+.about{padding:80px 0;border-top:1px solid var(--line)}
+.about-grid{display:grid;grid-template-columns:1fr 1fr;gap:4rem;align-items:center}
+.about-img img{width:100%;max-width:400px;border-radius:24px;border:1px solid var(--line);box-shadow:0 20px 60px rgba(0,0,0,.5);display:block;margin:0 auto;filter: grayscale(20%);transition: filter .3s}
+.about-img img:hover{filter: grayscale(0%)}
+.about-text h2{font-size:clamp(1.8rem,4vw,3rem);letter-spacing:-.03em;line-height:1.1;font-weight:800;margin-bottom:1rem}
+.about-text p{color:var(--muted);font-size:1.05rem;margin-bottom:1.2rem;max-width:50ch}
+.about-list{list-style:none;margin-top:1.5rem;display:flex;flex-direction:column;gap:1rem}
+.about-list li{display:flex;align-items:center;gap:.8rem;font-weight:500}
+.about-list svg{color:var(--accent2);width:20px;height:20px;flex-shrink:0}
+
+/* Tech Stack */
+.tech-stack {padding: 40px 0; border-top: 1px solid var(--line); border-bottom: 1px solid var(--line); background: rgba(255,255,255,.01);}
+.tech-stack-wrap {display: flex; flex-wrap: wrap; justify-content: center; gap: 1rem; max-width: 900px; margin: 0 auto;}
+.tech-badge {display: flex; align-items: center; gap: 0.5rem; padding: 0.6rem 1.2rem; background: rgba(12,20,41,.8); border: 1px solid var(--line); border-radius: 999px; font-size: 0.9rem; font-weight: 500; color: var(--muted); transition: all 0.3s;}
+.tech-badge:hover {border-color: var(--accent); color: var(--text); box-shadow: 0 0 15px rgba(91,140,255,.2);}
+.tech-badge svg {width: 18px; height: 18px; color: var(--accent2);}
+
+/* Process */
+.process{padding:80px 0 20px;border-top:1px solid var(--line)}
+.process h2, .pricing h2, .faq h2, .eco h2, .cta h2{font-size:clamp(1.8rem,4vw,3rem);letter-spacing:-.03em;line-height:1.1;font-weight:800}
+.process .intro, .pricing .intro, .faq .intro, .eco .intro{color:var(--muted);max-width:58ch;margin:1rem 0 3rem;font-size:1.05rem}
+.grid-steps{display:grid;grid-template-columns:repeat(3,1fr);gap:1.4rem}
+.step-card{position:relative;padding:2rem;border-radius:20px;background:rgba(255,255,255,.02);border:1px solid var(--line);transition:transform .3s,border-color .3s}
+.step-card:hover{transform:translateY(-4px);border-color:rgba(91,140,255,.4)}
+.step-num{font-size:2.5rem;font-weight:800;color:var(--accent);opacity:.5;margin-bottom:1rem;line-height:1}
+.step-card h3{font-size:1.2rem;margin-bottom:.5rem}
+.step-card p{color:var(--muted);font-size:.95rem}
+
+/* Pricing */
+.pricing{padding:80px 0 40px;border-top:1px solid var(--line)}
+.pricing-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:1.4rem;margin-top:2rem}
+.price-card{position:relative;display:flex;flex-direction:column;padding:2.5rem 2rem;border-radius:20px;background:rgba(255,255,255,.02);border:1px solid var(--line);transition:transform .3s,border-color .3s,box-shadow .3s}
+.price-card:hover{transform:translateY(-6px);border-color:rgba(91,140,255,.6);box-shadow:0 18px 50px rgba(0,0,0,.5),0 0 40px rgba(91,140,255,.2)}
+.price-card.featured{border-color:var(--accent);background:rgba(91,140,255,.05)}
+.price-badge{position:absolute;top:-12px;left:50%;transform:translateX(-50%);background:var(--accent);color:#fff;padding:.3rem 1rem;border-radius:999px;font-size:.75rem;font-weight:700;letter-spacing:1px;text-transform:uppercase;}
+.price-card h3{font-size:1.3rem;margin-bottom:.5rem;color:var(--text)}
+.price-card .price{font-size:2.5rem;font-weight:800;margin-bottom:1rem;color:var(--text)}
+.price-card .price span{font-size:1rem;color:var(--muted);font-weight:400}
+.price-card p{color:var(--muted);font-size:.95rem;margin-bottom:2rem;flex-grow:1}
+.price-card ul{list-style:none;margin-bottom:2rem;display:flex;flex-direction:column;gap:.8rem}
+.price-card ul li{display:flex;align-items:center;gap:.6rem;font-size:.95rem}
+.price-card ul li svg{color:var(--accent2);width:18px;height:18px;flex-shrink:0}
+.price-card .btn{width:100%;justify-content:center}
+
+/* Maintenance Grid */
+.maintenance-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 1.4rem; margin-top: 2rem; }
+.maintenance-card { display: flex; flex-direction: column; justify-content: center; background: rgba(14,22,44,.9); border: 1px solid var(--line); border-radius: 16px; padding: 2rem; transition: transform .3s, border-color .3s; }
+.maintenance-card:hover { transform: translateY(-4px); border-color: rgba(91,140,255,.4); }
+.maintenance-card.gold-card { border-color: rgba(212,175,55,.4); background: linear-gradient(180deg, rgba(212,175,55,.05) 0%, rgba(9,14,30,.9) 100%); }
+.maintenance-card.gold-card:hover { border-color: var(--gold); }
+.maintenance-header { display: flex; align-items: center; gap: 1rem; margin-bottom: 1rem; }
+.maintenance-icon { width: 40px; height: 40px; border-radius: 10px; background: rgba(91,140,255,.1); display: grid; place-items: center; color: var(--accent2); flex-shrink: 0; }
+.gold-card .maintenance-icon { background: rgba(212,175,55,.1); color: var(--gold); }
+.maintenance-icon svg { width: 20px; height: 20px; }
+.maintenance-header h4 { font-size: 1.1rem; margin: 0; color: var(--text); }
+.maintenance-price-row { display: flex; justify-content: space-between; align-items: flex-end; margin-top: auto; padding-top: 1rem; border-top: 1px solid rgba(255,255,255,.05); }
+.maintenance-desc { font-size: 0.9rem; color: var(--muted); margin-bottom: 0; line-height: 1.5; }
+.maintenance-price .amount { font-size: 1.5rem; font-weight: 800; color: var(--text); line-height: 1.2; display: block; }
+.gold-card .maintenance-price .amount { color: var(--gold); }
+.maintenance-price .unit { font-size: 0.85rem; color: var(--muted); }
+
+/* FAQ */
+.faq{padding:80px 0 40px;border-top:1px solid var(--line)}
+.faq-grid{display:flex;flex-direction:column;gap:1rem;max-width:800px;margin:0 auto}
+.faq-item{background:rgba(255,255,255,.02);border:1px solid var(--line);border-radius:16px;overflow:hidden;transition:border-color .3s}
+.faq-item:hover{border-color:rgba(91,140,255,.4)}
+.faq-item summary{padding:1.5rem;font-weight:600;font-size:1.1rem;cursor:pointer;list-style:none;display:flex;justify-content:space-between;align-items:center;user-select:none}
+.faq-item summary::-webkit-details-marker{display:none}
+.faq-item summary::after{content:'+';font-size:1.5rem;color:var(--accent);transition:transform .3s}
+.faq-item[open] summary::after{transform:rotate(45deg)}
+.faq-content{padding:0 1.5rem 1.5rem;color:var(--muted);font-size:.95rem;line-height:1.7}
+.faq-content strong{color:var(--text);}
+
+/* Software / Maatwerk */
+.eco{padding:80px 0 100px;border-top:1px solid var(--line)}
+.grid{display:grid;grid-template-columns:repeat(3,1fr);gap:1.4rem}
+.card{position:relative;display:flex;flex-direction:column;padding:2rem;border-radius:20px;background:linear-gradient(180deg,rgba(14,22,44,.9),rgba(9,14,30,.9));border:1px solid var(--line);transition:transform .3s,border-color .3s,box-shadow .3s}
+.card:hover{transform:translateY(-6px);border-color:rgba(91,140,255,.6);box-shadow:0 18px 50px rgba(0,0,0,.5),0 0 40px rgba(91,140,255,.2)}
+.icon{width:52px;height:52px;border-radius:14px;display:grid;place-items:center;margin-bottom:1.4rem;background:rgba(91,140,255,.1);border:1px solid var(--line);color:var(--accent2);transition:box-shadow .3s}
+.card:hover .icon{box-shadow:0 0 24px rgba(79,209,255,.35)}
+.icon svg{width:26px;height:26px}
+.card h3{font-size:1.3rem;letter-spacing:-.02em;margin-bottom:.5rem}
+.card p{color:var(--muted);font-size:.97rem}
+
+/* CTA */
+.cta{padding:90px 0 110px;text-align:center;border-top:1px solid var(--line)}
+.cta .panel{padding:clamp(2.4rem,6vw,4.5rem) 1.5rem;border-radius:28px;border:1px solid var(--line);background:radial-gradient(600px 260px at 50% 0%,rgba(91,140,255,.22),transparent 70%),var(--surface);box-shadow:0 0 80px rgba(91,140,255,.12)}
+.cta p{color:var(--muted);max-width:50ch;margin:1rem auto 2rem}
+footer{padding:28px 0;text-align:center;color:var(--muted);font-size:.82rem;border-top:1px solid var(--line)}
+
+/* Contact Form */
+.contact-form{max-width:600px;margin:0 auto;display:flex;flex-direction:column;gap:1rem;text-align:left}
+.form-row{display:grid;grid-template-columns:1fr 1fr;gap:1rem}
+.contact-form input,.contact-form textarea{width:100%;padding:1rem;border-radius:12px;background:rgba(255,255,255,.03);border:1px solid var(--line);color:var(--text);font-family:inherit;font-size:.95rem;outline:none;transition:border-color .2s}
+.contact-form input:focus,.contact-form textarea:focus{border-color:var(--accent)}
+.contact-form textarea{min-height:150px;resize:vertical}
+.contact-form button{justify-content:center;margin-top:.5rem;width:100%}
+
+/* WhatsApp */
+.whatsapp-float {position: fixed; width: 60px; height: 60px; bottom: 30px; right: 30px; background-color: #25d366; color: #FFF; border-radius: 50px; text-align: center; box-shadow: 0 4px 15px rgba(0,0,0,0.3); z-index: 100; display: flex; align-items: center; justify-content: center; transition: transform 0.3s, box-shadow 0.3s;}
+.whatsapp-float:hover {transform: scale(1.1) translateY(-5px); box-shadow: 0 10px 25px rgba(37, 211, 102, 0.4);}
+.whatsapp-float svg {width: 35px; height: 35px;}
+
+/* Responsive */
+@media(max-width:900px){
+  .about-grid{grid-template-columns:1fr;text-align:center;gap:2rem}
+  .about-text p{margin-inline:auto}
+  .about-list li{justify-content:center}
+  .about-img img{max-width:300px}
+  .grid-steps, .grid, .pricing-grid, .maintenance-grid{grid-template-columns:1fr}
+}
+@media(max-width:600px){
+  .form-row{grid-template-columns:1fr}
+  .whatsapp-float{width: 50px; height: 50px; bottom: 20px; right: 20px;}
+  .whatsapp-float svg{width: 28px; height: 28px;}
+}
+@media(max-width:300px){
+  .stage{height:auto;perspective:none;cursor:auto;overflow-x:auto;scroll-snap-type:x mandatory;-webkit-overflow-scrolling:touch;padding:10px 4vw 24px;touch-action:auto;scrollbar-width:thin}
+  .ring{position:static;width:max-content;height:auto;margin:0;display:flex;gap:1rem;transform:none!important}
+  .card3d{position:relative;inset:auto;flex:0 0 72vw;max-width:280px;aspect-ratio:3/4;transform:none!important;opacity:1!important;filter:none!important;scroll-snap-align:center}
+  .arrows{display:none}
+  .nav a.link{display:none}
+}
+@media(prefers-reduced-motion:reduce){*{transition:none!important}html{scroll-behavior:auto}}
 </style>
 </head>
 <body>
-<main class="app">
-  <header><div class="logo" aria-hidden="true">VH</div><h1>Admin App<small>Jouw persoonlijke commandocentrum</small></h1></header>
+<header>
+  <div class="wrap nav">
+    <a class="logo" href="#top">Verde <span>Horizonte</span></a>
+    <a class="link" href="#maatwerk">Maatwerk</a>
+    <a class="btn ghost" href="#contact" style="padding:.55rem 1.1rem;font-size:.85rem">Contact</a>
+  </div>
+</header>
 
-  <div class="section-title">Zakelijk Beheer</div>
-  <nav class="grid" aria-label="Zakelijke tools">
-    <a class="tile" href="offerte.html"><svg viewBox="0 0 24 24"><path d="M5 3h14v18l-2.5-1.8L14 21l-2-1.8L10 21l-2.5-1.8L5 21z"/><path d="M9 8h6M9 12h6"/></svg><div><b>Offerte</b><span>Voorstel maken</span></div></a>
-    <a class="tile" href="factuur.html"><svg viewBox="0 0 24 24"><rect x="1" y="4" width="22" height="16" rx="2" ry="2"></rect><line x1="1" y1="10" x2="23" y2="10"></line></svg><div><b>Factuur</b><span>Versturen</span></div></a>
-    <a class="tile" href="klantenbeheer.html"><svg viewBox="0 0 24 24"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"></path><circle cx="9" cy="7" r="4"></circle><path d="M23 21v-2a4 4 0 0 0-3-3.87"></path><path d="M16 3.13a4 4 0 0 1 0 7.75"></path></svg><div><b>Klanten</b><span>CRM Database</span></div></a>
-    <a class="tile" href="projecten.html"><svg viewBox="0 0 24 24"><rect x="3" y="3" width="7" height="7"></rect><rect x="14" y="3" width="7" height="7"></rect><rect x="14" y="14" width="7" height="7"></rect><rect x="3" y="14" width="7" height="7"></rect></svg><div><b>Projecten</b><span>Kanban Bord</span></div></a>
-    <a class="tile" href="uren-tracker.html"><svg viewBox="0 0 24 24"><circle cx="12" cy="13" r="8"/><path d="M12 9v4l2.5 2M9 2h6"/></svg><div><b>Timer</b><span>Uren bijhouden</span></div></a>
-    <a class="tile" href="dashboard.html"><svg viewBox="0 0 24 24"><path d="M12 2v20M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"/></svg><div><b>Dashboard</b><span>Volledig overzicht</span></div></a>
-    <a class="tile" href="calculator.html"><svg viewBox="0 0 24 24"><rect x="4" y="2" width="16" height="20" rx="2"/><line x1="8" y1="6" x2="16" y2="6"/><line x1="16" y1="14" x2="16" y2="14.01"/><line x1="12" y1="14" x2="12" y2="14.01"/><line x1="8" y1="14" x2="8" y2="14.01"/><line x1="16" y1="18" x2="16" y2="18.01"/><line x1="12" y1="18" x2="12" y2="18.01"/><line x1="8" y1="18" x2="8" y2="18.01"/></svg><div><b>Calculator</b><span>Prijsschatting</span></div></a>
-    <a class="tile" href="kaartje.html"><svg viewBox="0 0 24 24"><rect x="3" y="4" width="18" height="16" rx="2"/><circle cx="8.5" cy="10.5" r="1.5"/><path d="M21 15l-5-5L5 21"/></svg><div><b>Mijn Kaartje</b><span>Digitale vCard</span></div></a>
-  </nav>
+<main id="top">
+  <section class="hero">
+    <div class="wrap">
+      <h1>Websites en software die jouw bedrijf laten opvallen.</h1>
+      <p>Geen standaard templates. Ik bouw snelle, high-end websites en slimme software voor ondernemers die online willen groeien en indruk willen maken.</p>
+      <div class="actions">
+        <a class="btn primary" href="#contact">Start jouw project</a>
+        <a class="btn ghost" href="#werk">Bekijk demo’s</a>
+      </div>
+    </div>
+  </section>
 
-  <div class="section-title">Techniek & Hosting</div>
-  <nav class="grid" aria-label="Technische tools">
-    <a class="tile" href="https://github.com/driesaassmi-creator/verde-horizonte" target="_blank"><svg viewBox="0 0 24 24"><path d="M9 19c-5 1.5-5-2.5-7-3m14 6v-3.87a3.37 3.37 0 0 0-.94-2.61c3.14-.35 6.44-1.54 6.44-7A5.44 5.44 0 0 0 20 4.77 5.07 5.07 0 0 0 19.91 1S18.73.65 16 2.48a13.38 13.38 0 0 0-7 0C6.27.65 5.09 1 5.09 1A5.07 5.07 0 0 0 5 4.77a5.44 5.44 0 0 0-1.5 3.78c0 5.42 3.3 6.61 6.44 7A3.37 3.37 0 0 0 9 18.13V22"></path></svg><div><b>GitHub</b><span>Broncode</span></div></a>
-    <a class="tile" href="https://vercel.com/dashboard" target="_blank"><svg viewBox="0 0 24 24"><polygon points="12 2 22 22 2 22"></polygon></svg><div><b>Vercel</b><span>Hosting</span></div></a>
-    <a class="tile" href="index.html" target="_blank"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"></circle><line x1="2" y1="12" x2="22" y2="12"></line><path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"></path></svg><div><b>Website</b><span>Publieke site</span></div></a>
-  </nav>
+  <section class="showcase" id="werk" aria-label="Demo-websites">
+    <div class="wrap">
+      <div class="stage" id="stage" tabindex="0" aria-roledescription="carousel" aria-label="3D-carousel met demo-websites.">
+        <div class="ring" id="ring"></div>
+      </div>
+      <div class="arrows">
+        <button class="arrow" id="prev" aria-label="Vorige demo"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M15 18l-6-6 6-6"/></svg></button>
+        <button class="arrow" id="next" aria-label="Volgende demo"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 18l6-6-6-6"/></svg></button>
+      </div>
+      <p class="hint">Sleep om te draaien. Klik op een kaart om de live demo te openen.</p>
+      
+      <div style="text-align: center; margin-top: 2rem;">
+        <a href="portfolio.html" class="btn ghost">Bekijk alle 10 demo's als overzicht</a>
+      </div>
+      
+    </div>
+  </section>
+  
+  <section class="about" id="over-mij" data-aos="fade-up">
+    <div class="wrap about-grid">
+      <div class="about-img"><img src="foto.png" alt="Dries - Verde Horizonte"></div>
+      <div class="about-text">
+        <h2>Hallo, ik ben Dries.</h2>
+        <p>Als beginnende maar enorm gedreven webdeveloper heb ik één missie: ondernemers online laten stralen met techniek die werkt.</p>
+        <p>Of je nu een lokale zaak in Mechelen hebt of een bedrijf dat een betrouwbare developer zoekt: ik lever code die razendsnel is, veilig is en er verbluffend uitziet.</p>
+        <ul class="about-list">
+          <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/><path d="M22 4L12 14.01l-3-3"/></svg> Persoonlijke aanpak</li>
+          <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/><path d="M22 4L12 14.01l-3-3"/></svg> Razendsnelle websites</li>
+          <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/><path d="M22 4L12 14.01l-3-3"/></svg> Lokaal & betrokken</li>
+        </ul>
+      </div>
+    </div>
+  </section>
 
-  <button id="install" type="button">App installeren op beginscherm</button>
-  <footer>Verde Horizonte &copy; 2026</footer>
+  <section class="tech-stack" data-aos="fade-up">
+    <div class="wrap tech-stack-wrap">
+      <div class="tech-badge"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M16 18l6-6-6-6M8 6l-6 6 6 6"/></svg> HTML5</div>
+      <div class="tech-badge"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5"/></svg> CSS3 / Tailwind</div>
+      <div class="tech-badge"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/></svg> JavaScript</div>
+      <div class="tech-badge"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M18 10h-1.26A8 8 0 1 0 9 20h9a5 5 0 0 0 0-10z"/></svg> API Integraties</div>
+      <div class="tech-badge"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><ellipse cx="12" cy="5" rx="9" ry="3"/><path d="M21 12c0 1.66-4 3-9 3s-9-1.34-9-3"/><path d="M3 5v14c0 1.66 4 3 9 3s9-1.34 9-3V5"/></svg> Databases</div>
+      <div class="tech-badge"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg> UI/UX Design</div>
+    </div>
+  </section>
+
+  <section class="process" id="werkwijze" data-aos="fade-up">
+    <div class="wrap">
+      <h2>Hoe we samenwerken</h2>
+      <p class="intro">Van eerste idee tot een website die klanten oplevert.</p>
+      <div class="grid-steps">
+        <div class="step-card">
+          <div class="step-num">01</div>
+          <h3>Kennismaking</h3>
+          <p>We bespreken je doelen, wensen en wat jouw bedrijf uniek maakt.</p>
+        </div>
+        <div class="step-card">
+          <div class="step-num">02</div>
+          <h3>Ontwerp & Bouw</h3>
+          <p>Ik bouw een razendsnel, maatwerk ontwerp dat perfect past bij jouw merk.</p>
+        </div>
+        <div class="step-card">
+          <div class="step-num">03</div>
+          <h3>Livegang & Groei</h3>
+          <p>Je site gaat live. Klaar om nieuwe klanten aan te trekken en te groeien.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="pricing" id="investering" data-aos="fade-up">
+    <div class="wrap">
+      <h2>Een slimme investering</h2>
+      <p class="intro">Kies een pakket dat past bij jouw fase, of vraag een voorstel op maat aan.</p>
+      <div class="pricing-grid">
+        <div class="price-card">
+          <h3>De Starter</h3>
+          <div class="price">€799<span> / eenmalig</span></div>
+          <p>Perfect voor een flitsende one-pager of landingspagina om jouw zaak op de kaart te zetten.</p>
+          <ul>
+            <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/><path d="M22 4L12 14.01l-3-3"/></svg> One-page design</li>
+            <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/><path d="M22 4L12 14.01l-3-3"/></svg> Contactformulier</li>
+            <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/><path d="M22 4L12 14.01l-3-3"/></svg> Mobielvriendelijk</li>
+            <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/><path d="M22 4L12 14.01l-3-3"/></svg> Live binnen 1 week</li>
+          </ul>
+          <a href="#contact" class="btn ghost">Kies Starter</a>
+        </div>
+        
+        <div class="price-card featured">
+          <div class="price-badge">Populair</div>
+          <h3>De Professional</h3>
+          <div class="price">€1.499<span> / eenmalig</span></div>
+          <p>De complete website voor ondernemers die serieus willen groeien en indruk willen maken.</p>
+          <ul>
+            <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/><path d="M22 4L12 14.01l-3-3"/></svg> Tot 5 pagina's</li>
+            <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/><path d="M22 4L12 14.01l-3-3"/></svg> High-end animaties</li>
+            <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/><path d="M22 4L12 14.01l-3-3"/></svg> SEO-geoptimaliseerd</li>
+            <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/><path d="M22 4L12 14.01l-3-3"/></svg> Eigen fotografie integratie</li>
+          </ul>
+          <a href="#contact" class="btn primary">Kies Professional</a>
+        </div>
+
+        <div class="price-card">
+          <h3>Maatwerk / Software</h3>
+          <div class="price" style="font-size:2rem;">Op aanvraag</div>
+          <p>Heb je een specifiek idee, een platform of een boekingssysteem nodig? Ik bouw het van de grond af op.</p>
+          <ul>
+            <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/><path d="M22 4L12 14.01l-3-3"/></svg> Webapplicaties</li>
+            <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/><path d="M22 4L12 14.01l-3-3"/></svg> Klantportalen</li>
+            <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/><path d="M22 4L12 14.01l-3-3"/></svg> Koppelingen met API's</li>
+          </ul>
+          <a href="#contact" class="btn ghost">Bespreek het</a>
+        </div>
+      </div>
+
+      <div class="maintenance-grid">
+        <div class="maintenance-card">
+          <div class="maintenance-header">
+            <div class="maintenance-icon">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
+            </div>
+            <h4>Flexibel Uurtarief</h4>
+          </div>
+          <p class="maintenance-desc">Voor eenmalige aanpassingen of extra functionaliteit na de lancering. Je betaalt alleen voor de uren die ik effectief werk.</p>
+          <div class="maintenance-price-row">
+            <div class="maintenance-price">
+              <span class="amount">€75</span>
+              <span class="unit">/ uur (excl. btw)</span>
+            </div>
+          </div>
+        </div>
+
+        <div class="maintenance-card gold-card">
+          <div class="maintenance-header">
+            <div class="maintenance-icon">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
+            </div>
+            <h4>Zorgeloos Pakket</h4>
+          </div>
+          <p class="maintenance-desc">Jouw website altijd up-to-date. Inclusief <strong>1 uur aanpassingen per maand</strong> (teksten, foto's, prijzen) en periodieke technische checks.</p>
+          <div class="maintenance-price-row">
+            <div class="maintenance-price">
+              <span class="amount">€49</span>
+              <span class="unit">/ maand (excl. btw)</span>
+            </div>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </section>
+
+  <section class="faq" id="faq" data-aos="fade-up">
+    <div class="wrap">
+      <h2>Veelgestelde Vragen</h2>
+      <p class="intro">Twijfel je nog over iets? Misschien staat het antwoord hier wel tussen.</p>
+      <div class="faq-grid">
+        <details class="faq-item">
+          <summary>Werk je ook voor bedrijven buiten Mechelen?</summary>
+          <div class="faq-content">Ja, absoluut. Ik werk efficiënt en remote. Of je nu in Antwerpen, Brussel of ergens anders in België zit: we kunnen alles online regelen en ik kom langs als dat nodig is.</div>
+        </details>
+        <details class="faq-item">
+          <summary>Zijn er nog verborgen kosten?</summary>
+          <div class="faq-content">Nee. De pakketprijs dekt het ontwerp en de bouw van de website. Eventuele jaarlijkse kosten voor een domeinnaam en hosting zijn meestal rond de €100 per jaar en worden vooraf duidelijk gecommuniceerd.</div>
+        </details>
+        <details class="faq-item">
+          <summary>Hoe lang duurt het voor mijn website live staat?</summary>
+          <div class="faq-content">Omdat ik met moderne technieken werk en niet afhankelijk ben van trage systemen, schakel ik razendsnel. Zodra we de knoop doorhakken en alle content compleet is, staat een strakke website vaak al <strong>binnen 1 tot 2 weken</strong> live.</div>
+        </details>
+      </div>
+    </div>
+  </section>
+
+  <section class="eco" id="maatwerk" data-aos="fade-up">
+    <div class="wrap">
+      <h2>Meer dan alleen een website</h2>
+      <p class="intro">Sommige bedrijven ontgroeien de standaard. Voor jouw bouw ik complexe webapplicaties, slimme dashboards en koppelingen die jouw processen automatiseren.</p>
+      <div class="grid">
+        <article class="card">
+          <div class="icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="7" height="9" rx="1.5"/><rect x="14" y="3" width="7" height="5" rx="1.5"/><rect x="14" y="12" width="7" height="9" rx="1.5"/><rect x="3" y="16" width="7" height="5" rx="1.5"/></svg></div>
+          <h3>Dashboards & Hubs</h3>
+          <p>Beheer alles op één centrale plek. Van klantgegevens tot financiën, met een gebruiksvriendelijke interface.</p>
+        </article>
+        <article class="card">
+          <div class="icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M6.5 6.5v11M17.5 6.5v11M3 9.5v5M21 9.5v5M6.5 12h11"/></svg></div>
+          <h3>Platformen & Boekingen</h3>
+          <p>Complexe systemen met meerdere gebruikersrollen (admin, klant, medewerker) en real-time updates.</p>
+        </article>
+        <article class="card">
+          <div class="icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M4 5.5A2.5 2.5 0 0 1 6.5 3H20v16H6.5A2.5 2.5 0 0 0 4 21.5z"/><path d="M4 5.5v16M9 8h7"/></svg></div>
+          <h3>Maatwerk & API's</h3>
+          <p>Koppelingen met externe software, databases en specifieke tools die perfect aansluiten bij jouw bedrijfsvoering.</p>
+        </article>
+      </div>
+      
+      <div style="text-align: center; margin-top: 3rem;">
+        <a href="case-study.html" class="btn case-btn">Lees de volledige FitZone Case Study →</a>
+      </div>
+      
+    </div>
+  </section>
+
+  <section class="cta" id="contact" data-aos="fade-up">
+    <div class="wrap">
+      <div class="panel">
+        <h2>Klaar om te bouwen?</h2>
+        <p>Vertel ons kort wat je nodig hebt. Je krijgt snel een eerlijk voorstel op maat.</p>
+        
+        <form action="https://api.web3forms.com/submit" method="POST" class="contact-form">
+          <input type="hidden" name="access_key" value="a05ef49b-f4f1-473b-91a9-bd20994d2cd5">
+          <input type="hidden" name="subject" value="Nieuwe aanvraag via Verde Horizonte">
+          <div class="form-row">
+            <input type="text" name="name" placeholder="Jouw naam" required>
+            <input type="email" name="email" placeholder="Jouw e-mailadres" required>
+          </div>
+          <textarea name="message" placeholder="Vertel kort over je project..." required></textarea>
+          <button type="submit" class="btn primary">Verstuur aanvraag</button>
+        </form>
+        <div id="form-success" style="display:none; padding: 2rem; background: rgba(91,140,255,.1); border: 1px solid var(--accent); border-radius: 12px; margin-top: 1rem;">
+          <h3 style="color: var(--accent2); margin-bottom: .5rem;">Bedankt voor je bericht!</h3>
+          <p style="margin: 0; color: var(--text);">Ik heb je aanvraag ontvangen en neem zo snel mogelijk contact met je op.</p>
+        </div>
+      </div>
+    </div>
+  </section>
 </main>
 
+<footer><div class="wrap">© <span id="yr"></span> Verde Horizonte. Alle rechten voorbehouden.</div></footer>
+
+<a href="https://wa.me/32469181196" target="_blank" rel="noopener" class="whatsapp-float" aria-label="Chat via WhatsApp">
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512" fill="currentColor"><path d="M380.9 97.1C339 55.1 283.2 32 223.9 32c-122.4 0-222 99.6-222 222 0 39.1 10.2 77.3 29.6 111L0 480l117.7-30.9c32.4 17.7 68.9 27 106.1 27h.1c122.3 0 224.1-99.6 224.1-222 0-59.3-25.2-115-67.1-157zm-157 341.6c-33.2 0-65.7-8.9-94-25.7l-6.7-4-69.8 18.3L72 359.2l-4.4-7c-18.5-29.4-28.2-63.3-28.2-98.2 0-101.7 82.8-184.5 184.6-184.5 49.3 0 95.6 19.2 130.4 54.1 34.8 34.9 56.2 81.2 56.1 130.5 0 101.8-84.9 184.6-186.6 184.6zm101.2-138.2c-5.5-2.8-32.8-16.2-37.9-18-5.1-1.9-8.8-2.8-12.5 2.8-3.7 5.6-14.3 18-17.6 21.8-3.2 3.7-6.5 4.2-12 1.4-32.6-16.3-54-29.1-75.5-66-5.7-9.8 5.7-9.1 16.3-30.3 1.8-3.7.9-6.9-.5-9.7-1.4-2.8-12.5-30.1-17.1-41.2-4.5-10.8-9.1-9.3-12.5-9.5-3.2-.2-6.9-.2-10.6-.2-3.7 0-9.7 1.4-14.8 6.9-5.1 5.6-19.4 19-19.4 46.3 0 27.3 19.9 53.7 22.6 57.4 2.8 3.7 39.1 59.7 94.8 83.8 35.2 15.2 49 16.5 66.7 13.8 10.7-1.6 32.8-13.4 37.4-26.4 4.6-13 4.6-24.1 3.2-26.4-1.3-2.5-5-3.9-10.5-6.6z"/></svg>
+</a>
+
+<script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
 <script>
-let deferred;
-window.addEventListener('beforeinstallprompt', e => { e.preventDefault(); deferred = e; document.getElementById('install').style.display = 'block'; });
-document.getElementById('install').addEventListener('click', async () => {
-  if (!deferred) return; deferred.prompt(); await deferred.userChoice; deferred = null; document.getElementById('install').style.display = 'none';
-});
-window.addEventListener('appinstalled', () => { document.getElementById('install').style.display = 'none'; });
-function haptic() { if (navigator.vibrate) navigator.vibrate(10); }
-document.querySelectorAll('a, button').forEach(el => { el.addEventListener('touchstart', haptic, {passive: true}); });
+// 1. De 3D Carousel logica
+(function(){
+  var demos=[
+    ["Maison Belle","Beauty","beauty.fitzonemechelen.be"],
+    ["Cafe Central","Café","cafe.fitzonemechelen.be"],
+    ["Voltx","Elektricien","elektricien.fitzonemechelen.be"],
+    ["Garage","Autogarage","garage.fitzonemechelen.be"],
+    ["Kapper","Kapsalon","kapper.fitzonemechelen.be"],
+    ["KineMotion","Kinesitherapie","kine.fitzonemechelen.be"],
+    ["AquaFix","Loodgieter","loodgieter.fitzonemechelen.be"],
+    ["Miro Atelier","Atelier","miro.fitzonemechelen.be"],
+    ["Atelier","Restaurant","restaurant.fitzonemechelen.be"],
+    ["Helder & Co","Schoonmaak","schoonmaak.fitzonemechelen.be"]
+  ];
+  var ring=document.getElementById("ring"),stage=document.getElementById("stage");
+  var n=demos.length,step=360/n,radius=0;
+  var reduce=window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+  var mobile=window.matchMedia("(max-width:300px)");
+  document.getElementById("yr").textContent=new Date().getFullYear();
+
+  var cards=demos.map(function(d){
+    var a=document.createElement("a"); a.className="card3d"; a.href="https://"+d[2]+"/"; a.target="_blank"; a.rel="noopener";
+    a.setAttribute("aria-label",d[0]+" – "+d[1]+" (opent live demo)");
+    var img=new Image(); img.alt="Screenshot van "+d[0]; img.decoding="async"; img.draggable=false;
+    img.src="https://s0.wp.com/mshots/v1/https%3A%2F%2F"+d[2]+"?w=600&h=800";
+    img.onerror=function(){a.classList.add("noimg")};
+    var cap=document.createElement("div"); cap.className="cap";
+    cap.appendChild(document.createTextNode(d[0]));
+    var s=document.createElement("small"); s.textContent=d[1]; cap.appendChild(s);
+    a.appendChild(img); a.appendChild(cap); ring.appendChild(a);
+    return a;
+  });
+
+  var rot=0,vel=0,target=null,dragging=false,lastX=0,moved=0,hover=false;
+
+  function layout(){
+    if(mobile.matches){ cards.forEach(function(c){c.style.transform="";c.style.opacity="";c.style.filter=""}); ring.style.transform=""; return; }
+    var w=cards[0].offsetWidth||240; radius=Math.round(w/2/Math.tan(Math.PI/n))+26;
+    cards.forEach(function(c,i){c.style.transform="rotateY("+(i*step)+"deg) translateZ("+radius+"px)"}); render();
+  }
+  function render(){
+    if(mobile.matches)return;
+    ring.style.transform="translateZ("+(-radius)+"px) rotateY("+rot+"deg)";
+    for(var i=0;i<n;i++){
+      var a=Math.abs(((i*step+rot)%360+540)%360-180); var f=1-a/180;
+      cards[i].style.opacity=(0.35+0.65*f).toFixed(2);
+      cards[i].style.filter="brightness("+(0.55+0.45*f).toFixed(2)+")";
+    }
+  }
+  function tick(){
+    if(!mobile.matches){
+      if(target!==null){ rot+=(target-rot)*0.12; if(Math.abs(target-rot)<0.05){rot=target;target=null} }
+      else if(!dragging){ rot+=vel; vel*=0.94; if(Math.abs(vel)<0.01)vel=0; if(!reduce&&!hover&&vel===0)rot-=0.14; }
+      render();
+    }
+    requestAnimationFrame(tick);
+  }
+  function go(dir){ vel=0; var base=target!==null?target:Math.round(rot/step)*step; target=base+dir*step; }
+
+  document.getElementById("prev").addEventListener("click",function(){go(1)});
+  document.getElementById("next").addEventListener("click",function(){go(-1)});
+  stage.addEventListener("keydown",function(e){ if(e.key==="ArrowLeft"){go(1);e.preventDefault()} if(e.key==="ArrowRight"){go(-1);e.preventDefault()} });
+  stage.addEventListener("mouseenter",function(){hover=true}); stage.addEventListener("mouseleave",function(){hover=false});
+  stage.addEventListener("focusin",function(){hover=true}); stage.addEventListener("focusout",function(){hover=false});
+  stage.addEventListener("pointerdown",function(e){ if(mobile.matches)return; dragging=true; moved=0; lastX=e.clientX; target=null; vel=0; stage.classList.add("dragging"); });
+  window.addEventListener("pointermove",function(e){ if(!dragging)return; var dx=e.clientX-lastX; lastX=e.clientX; moved+=Math.abs(dx); rot+=dx*0.3; vel=dx*0.3; });
+  function end(){ if(!dragging)return; dragging=false; stage.classList.remove("dragging"); }
+  window.addEventListener("pointerup",end); window.addEventListener("pointercancel",end);
+  ring.addEventListener("click",function(e){ if(moved>6){e.preventDefault();e.stopPropagation();moved=0} },true);
+
+  var t; window.addEventListener("resize",function(){clearTimeout(t);t=setTimeout(layout,100)});
+  if(mobile.addEventListener)mobile.addEventListener("change",layout);
+  layout(); requestAnimationFrame(tick);
+})();
+
+// 2. Formulier verzenden
+const form = document.querySelector('.contact-form');
+if (form) {
+  form.addEventListener('submit', function(e) {
+    e.preventDefault();
+    const formData = new FormData(form); const object = Object.fromEntries(formData); const json = JSON.stringify(object);
+    fetch('https://api.web3forms.com/submit', {
+      method: 'POST', headers: { 'Content-Type': 'application/json', 'Accept': 'application/json' }, body: json
+    }).then(async (response) => {
+      let json = await response.json();
+      if (response.status == 200) {
+        form.style.display = 'none'; document.getElementById('form-success').style.display = 'block';
+      } else { alert("Er ging iets mis: " + json.message); }
+    }).catch(error => { alert("Er ging iets mis bij het verzenden."); });
+  });
+}
+
+// 3. AOS Animaties
+AOS.init({ duration: 800, once: true, offset: 50 });
 </script>
+<script defer src="/_vercel/insights/script.js"></script>
 </body>
 </html>
