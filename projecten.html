@@ -2,85 +2,111 @@
 <html lang="nl">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
 <title>Projecten – Verde Horizonte Admin</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
 <style>
   :root {
-    --bg: #05070d;
-    --surface: #0b1020;
-    --surface-2: #0f1630;
-    --border: rgba(233, 237, 247, 0.09);
-    --text: #e9edf7;
-    --muted: rgba(233, 237, 247, 0.58);
-    --accent: #5b8cff;
-    --accent2: #4fd1ff;
-    --gold: #d4af37;
+    --bg: #05070d; --surface: #0b1020; --surface-2: #0f1630;
+    --border: rgba(233, 237, 247, 0.09); --text: #e9edf7;
+    --muted: rgba(233, 237, 247, 0.58); --accent: #5b8cff; --gold: #d4af37;
   }
-  * { box-sizing: border-box; margin: 0; padding: 0; }
+  * { box-sizing: border-box; margin: 0; padding: 0; -webkit-tap-highlight-color: transparent; user-select: none; }
+  
+  /* Zet de buitenkant van de pagina vast */
+  html, body { 
+    height: 100%; 
+    overflow: hidden; /* Voorkomt dat de hele pagina scrolt */
+    overscroll-behavior: none; 
+    touch-action: pan-x pan-y; 
+    background: var(--bg); 
+  }
+  
   body {
-    font-family: 'Inter', sans-serif;
-    background: var(--bg);
-    color: var(--text);
-    min-height: 100vh;
-    padding: 40px 20px;
+    font-family: 'Inter', sans-serif; color: var(--text);
+    display: flex; flex-direction: column;
     background: radial-gradient(900px 420px at 50% -120px, rgba(91,140,255,.14), transparent 70%), var(--bg);
   }
-  .container { max-width: 1100px; margin: 0 auto; }
   
-  .header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 30px; }
-  .header h1 { font-size: 1.8rem; font-weight: 700; }
+  .header { 
+    display: flex; justify-content: space-between; align-items: center; 
+    padding: calc(env(safe-area-inset-top, 0px) + 20px) 20px 15px;
+    background: rgba(5,7,13,0.8); backdrop-filter: blur(10px); z-index: 10;
+    border-bottom: 1px solid var(--border);
+  }
+  .header h1 { font-size: 1.4rem; font-weight: 700; }
   .header span { color: var(--gold); }
+  .header a { color: var(--muted); text-decoration: none; font-size: 0.9rem; padding: 8px 12px; background: var(--surface); border: 1px solid var(--border); border-radius: 8px; }
+  .header a:active { background: rgba(255,255,255,.1); }
 
-  /* Formulier */
-  .add-form { display: flex; gap: 10px; margin-bottom: 40px; background: var(--surface); padding: 20px; border-radius: 16px; border: 1px solid var(--border); }
-  .add-form input { flex: 1; padding: 12px; background: var(--bg); border: 1px solid var(--border); color: var(--text); border-radius: 8px; font: inherit; }
+  .app-content { flex: 1; display: flex; flex-direction: column; overflow: hidden; }
+
+  .add-form { padding: 15px 20px; display: flex; gap: 10px; background: var(--bg); z-index: 5; border-bottom: 1px solid var(--border); }
+  .add-form input { flex: 1; padding: 12px; background: var(--surface); border: 1px solid var(--border); color: var(--text); border-radius: 8px; font: inherit; font-size: 16px; -webkit-appearance: none; }
   .add-form input:focus { outline: none; border-color: var(--accent); }
-  .btn-add { padding: 12px 24px; background: var(--accent); color: #000; font-weight: 600; border: none; border-radius: 8px; cursor: pointer; }
-  .btn-add:hover { filter: brightness(1.1); }
+  .btn-add { padding: 12px 20px; background: var(--accent); color: #000; font-weight: 600; border: none; border-radius: 8px; cursor: pointer; }
+  .btn-add:active { transform: scale(0.95); }
 
-  /* Kanban Board */
-  .board { display: grid; grid-template-columns: repeat(3, 1fr); gap: 20px; }
-  @media(max-width: 768px) { .board { grid-template-columns: 1fr; } }
-
-  .column { background: var(--surface-2); border-radius: 16px; padding: 20px; border: 1px solid var(--border); min-height: 400px; }
-  .column-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 20px; padding-bottom: 10px; border-bottom: 1px solid var(--border); }
-  .column-header h2 { font-size: 1rem; font-weight: 600; text-transform: uppercase; letter-spacing: 1px; color: var(--muted); }
-  .count { background: rgba(91,140,255,.1); color: var(--accent); padding: 2px 8px; border-radius: 10px; font-size: 0.8rem; font-weight: 700; }
-
-  /* Kaartjes */
-  .task-list { display: flex; flex-direction: column; gap: 12px; }
-  .task { background: var(--surface); border: 1px solid var(--border); padding: 15px; border-radius: 10px; cursor: grab; transition: all 0.2s; }
-  .task:hover { border-color: rgba(91,140,255,.4); transform: translateY(-2px); }
-  .task h3 { font-size: 0.95rem; margin-bottom: 5px; }
-  .task p { font-size: 0.8rem; color: var(--muted); margin-bottom: 12px; }
+  /* Het Bord */
+  .board { 
+    flex: 1; display: flex; overflow-x: auto; overflow-y: hidden; 
+    scroll-snap-type: x mandatory; 
+    padding: 20px;
+    gap: 15px;
+    scrollbar-width: none;
+  }
+  .board::-webkit-scrollbar { display: none; }
   
-  .task-actions { display: flex; gap: 8px; }
-  .btn-move { padding: 4px 8px; background: transparent; border: 1px solid var(--border); color: var(--muted); border-radius: 6px; cursor: pointer; font-size: 0.75rem; }
-  .btn-move:hover { background: rgba(91,140,255,.1); color: var(--text); border-color: var(--accent); }
-  .btn-delete { color: #ff6b7a; border-color: rgba(255,107,122,.3); }
-  .btn-delete:hover { background: rgba(255,107,122,.1); border-color: #ff6b7a; }
+  .column { 
+    flex: 0 0 85vw; /* 85% van het scherm */
+    max-width: 350px;
+    scroll-snap-align: center; 
+    background: var(--surface-2); 
+    border-radius: 16px; 
+    border: 1px solid var(--border); 
+    display: flex; flex-direction: column; 
+    overflow: hidden;
+  }
 
-  .empty-msg { text-align: center; color: var(--muted); font-size: 0.85rem; padding: 20px 0; font-style: italic; }
+  .column-header { padding: 15px; border-bottom: 1px solid var(--border); display: flex; justify-content: space-between; align-items: center; background: rgba(0,0,0,0.2); }
+  .column-header h2 { font-size: 0.9rem; font-weight: 600; text-transform: uppercase; letter-spacing: 1px; color: var(--muted); }
+  .count { background: rgba(91,140,255,.1); color: var(--accent); padding: 2px 10px; border-radius: 10px; font-size: 0.8rem; font-weight: 700; }
+
+  .task-list { flex: 1; overflow-y: auto; padding: 15px; display: flex; flex-direction: column; gap: 12px; }
+  .task { background: var(--surface); border: 1px solid var(--border); padding: 16px; border-radius: 12px; }
+  .task h3 { font-size: 1rem; margin-bottom: 4px; }
+  .task p { font-size: 0.85rem; color: var(--muted); margin-bottom: 15px; }
+  
+  .task-actions { display: flex; gap: 8px; flex-wrap: wrap; }
+  .btn-move { padding: 8px 14px; background: transparent; border: 1px solid var(--border); color: var(--text); border-radius: 8px; cursor: pointer; font-size: 0.85rem; font-weight: 500;}
+  .btn-move:active { background: rgba(91,140,255,.2); border-color: var(--accent); }
+  .btn-delete { color: #ff6b7a; border-color: rgba(255,107,122,.3); margin-left: auto;}
+  .btn-delete:active { background: rgba(255,107,122,.2); }
+
+  /* Desktop weergave (als je hem op laptop opent) */
+  @media(min-width: 769px) {
+    .header { padding: 20px 40px; }
+    .add-form { padding: 20px 40px; }
+    .board { padding: 20px 40px; display: grid; grid-template-columns: repeat(3, 1fr); overflow: visible; }
+    .column { flex: none; max-width: none; height: 70vh; }
+  }
 </style>
 </head>
 <body>
-  <div class="container">
-    <div class="header">
-      <h1>Projecten <span>Tracker</span></h1>
-      <a href="index.html" style="color: var(--muted); text-decoration: none; font-size: 0.9rem;">← Terug naar site</a>
-    </div>
+  <div class="header">
+    <h1>Projecten <span>Tracker</span></h1>
+    <a href="admin.html">← Terug</a>
+  </div>
 
-    <!-- Formulier om een project toe te voegen -->
+  <div class="app-content">
     <form class="add-form" id="task-form">
-      <input type="text" id="task-name" placeholder="Projectnaam (bijv. Website Garage 2800)" required>
-      <input type="text" id="task-client" placeholder="Klantnaam" required>
-      <button type="submit" class="btn-add">+ Toevoegen</button>
+      <input type="text" id="task-name" placeholder="Projectnaam" required>
+      <input type="text" id="task-client" placeholder="Klant" required>
+      <button type="submit" class="btn-add">+</button>
     </form>
 
-    <!-- Het bord -->
     <div class="board">
       <div class="column">
         <div class="column-header"><h2>Te Doen</h2><span class="count" id="count-todo">0</span></div>
@@ -98,59 +124,30 @@
   </div>
 
   <script>
-    // 1. Data ophalen
     let tasks = JSON.parse(localStorage.getItem('vh_tasks')) || [];
-
     const form = document.getElementById('task-form');
-    const lists = {
-      todo: document.getElementById('list-todo'),
-      doing: document.getElementById('list-doing'),
-      done: document.getElementById('list-done')
-    };
-    const counts = {
-      todo: document.getElementById('count-todo'),
-      doing: document.getElementById('count-doing'),
-      done: document.getElementById('count-done')
-    };
+    const lists = { todo: document.getElementById('list-todo'), doing: document.getElementById('list-doing'), done: document.getElementById('list-done') };
+    const counts = { todo: document.getElementById('count-todo'), doing: document.getElementById('count-doing'), done: document.getElementById('count-done') };
 
-    // 2. Opslaan
-    function saveTasks() {
-      localStorage.setItem('vh_tasks', JSON.stringify(tasks));
-    }
+    function saveTasks() { localStorage.setItem('vh_tasks', JSON.stringify(tasks)); }
 
-    // 3. Render functie
     function render() {
-      // Maak alle lijsten leeg
-      lists.todo.innerHTML = '';
-      lists.doing.innerHTML = '';
-      lists.done.innerHTML = '';
-
+      lists.todo.innerHTML = ''; lists.doing.innerHTML = ''; lists.done.innerHTML = '';
       let countTodo = 0, countDoing = 0, countDone = 0;
 
-      // Loop door alle taken
       tasks.forEach(task => {
-        // Bepaal in welke kolom hij moet
         let targetList;
         if (task.status === 'todo') { targetList = lists.todo; countTodo++; }
         else if (task.status === 'doing') { targetList = lists.doing; countDoing++; }
         else { targetList = lists.done; countDone++; }
 
-        // Maak het kaartje
         const card = document.createElement('div');
         card.className = 'task';
         
-        // Knoppen voor verplaatsen
         let moveButtons = '';
-        if (task.status === 'todo') {
-          moveButtons = `<button class="btn-move" onclick="moveTask(${task.id}, 'doing')">Start →</button>`;
-        } else if (task.status === 'doing') {
-          moveButtons = `
-            <button class="btn-move" onclick="moveTask(${task.id}, 'todo')">← Terug</button>
-            <button class="btn-move" onclick="moveTask(${task.id}, 'done')">Voltooi ✓</button>
-          `;
-        } else if (task.status === 'done') {
-          moveButtons = `<button class="btn-move" onclick="moveTask(${task.id}, 'doing')">← Heropen</button>`;
-        }
+        if (task.status === 'todo') { moveButtons = `<button class="btn-move" onclick="moveTask(${task.id}, 'doing')">Start →</button>`; }
+        else if (task.status === 'doing') { moveButtons = `<button class="btn-move" onclick="moveTask(${task.id}, 'todo')">← Terug</button><button class="btn-move" onclick="moveTask(${task.id}, 'done')">Voltooi ✓</button>`; }
+        else if (task.status === 'done') { moveButtons = `<button class="btn-move" onclick="moveTask(${task.id}, 'doing')">← Heropen</button>`; }
 
         card.innerHTML = `
           <h3>${task.name}</h3>
@@ -160,51 +157,30 @@
             <button class="btn-move btn-delete" onclick="deleteTask(${task.id})">Verwijder</button>
           </div>
         `;
-        
         targetList.appendChild(card);
       });
-
-      // Update de tellers
       counts.todo.textContent = countTodo;
       counts.doing.textContent = countDoing;
       counts.done.textContent = countDone;
     }
 
-    // 4. Nieuwe taak toevoegen
     form.addEventListener('submit', (e) => {
       e.preventDefault();
-      const name = document.getElementById('task-name').value.trim();
-      const client = document.getElementById('task-client').value.trim();
-      
-      tasks.push({
-        id: Date.now(),
-        name: name,
-        client: client,
-        status: 'todo' // Start altijd in 'Te Doen'
-      });
-
-      saveTasks();
-      form.reset();
-      render();
+      tasks.push({ id: Date.now(), name: document.getElementById('task-name').value.trim(), client: document.getElementById('task-client').value.trim(), status: 'todo' });
+      saveTasks(); form.reset(); render();
     });
 
-    // 5. Taak verplaatsen
     function moveTask(id, newStatus) {
       tasks = tasks.map(t => t.id === id ? { ...t, status: newStatus } : t);
-      saveTasks();
-      render();
+      saveTasks(); render();
     }
 
-    // 6. Taak verwijderen
     function deleteTask(id) {
       if(confirm('Weet je zeker dat je dit project wilt verwijderen?')) {
         tasks = tasks.filter(t => t.id !== id);
-        saveTasks();
-        render();
+        saveTasks(); render();
       }
     }
-
-    // 7. Start
     render();
   </script>
 </body>
