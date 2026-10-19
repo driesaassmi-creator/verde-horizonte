@@ -76,23 +76,6 @@ document.getElementById('install').addEventListener('click', async () => {
 window.addEventListener('appinstalled', () => { document.getElementById('install').style.display = 'none'; });
 function haptic() { if (navigator.vibrate) navigator.vibrate(10); }
 document.querySelectorAll('a, button').forEach(el => { el.addEventListener('touchstart', haptic, {passive: true}); });
-
-// Functie om de Gmail app te openen
-function openInbox(e) {
-  e.preventDefault();
-  const userAgent = navigator.userAgent || navigator.vendor || window.opera;
-  
-  if (/android/i.test(userAgent)) {
-    // Android: Gmail intent
-    window.location.href = "intent://#Intent;package=com.google.android.gm;scheme=android-app;end";
-  } else if (/iPad|iPhone|iPod/.test(userAgent) && !window.MSStream) {
-    // iOS: Gmail app link
-    window.location.href = "googlegmail://";
-  } else {
-    // Desktop of onbekend: open Gmail in browser
-    window.open("https://mail.google.com/mail/u/0/#inbox", "_blank");
-  }
-}
 </script>
 </body>
 </html>
