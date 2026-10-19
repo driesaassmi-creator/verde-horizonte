@@ -233,15 +233,21 @@
     return `Hallo ${client},\n\nHierbij de gegevens van factuur ${num}.\n\nHet totaalbedrag is: ${total}\n\nGelieve dit bedrag te voldoen voor de vervaldatum.\n\nMet vriendelijke groet,\nDries - Verde Horizonte`;
   }
 
-  function sendWhatsApp() {
+   function sendWhatsApp() {
     const text = encodeURIComponent(getMessage());
     window.open(`https://wa.me/?text=${text}`, '_blank');
+    closeMenu();
   }
 
   function sendEmail() {
     const num = document.getElementById('doc-num').value;
     const text = encodeURIComponent(getMessage());
     window.location.href = `mailto:?subject=Factuur ${num} - Verde Horizonte&body=${text}`;
+    closeMenu();
+  }
+
+  function closeMenu() {
+    document.getElementById('shareMenu').classList.remove('active');
   }
 </script>
 </body>

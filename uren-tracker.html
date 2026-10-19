@@ -5,66 +5,34 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
 <title>Uren Tracker – Verde Horizonte Admin</title>
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="style.css">
 <style>
-  :root {
-    --bg: #05070d; --surface: #0b1020; --surface-2: #0f1630;
-    --border: rgba(233, 237, 247, 0.09); --text: #e9edf7;
-    --muted: rgba(233, 237, 247, 0.58); --accent: #5b8cff;
-    --accent2: #4fd1ff; --danger: #ff6b7a; --success: #4ade80;
-  }
-  * { box-sizing: border-box; margin: 0; padding: 0; }
-  
-  html, body { overflow-x: hidden; overscroll-behavior-x: none; touch-action: pan-y; }
-  
-  body {
-    font-family: 'Inter', sans-serif; background: var(--bg); color: var(--text);
-    min-height: 100vh; padding: 20px;
-    background: radial-gradient(900px 420px at 50% -120px, rgba(91,140,255,.14), transparent 70%), var(--bg);
-  }
-  .container { max-width: 900px; margin: 0 auto; }
-  
-  .header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 25px; }
-  .header h1 { font-size: 1.6rem; font-weight: 700; }
-  .header a { color: var(--text); text-decoration: none; font-size: 0.85rem; background: var(--surface); padding: 8px 14px; border-radius: 8px; border: 1px solid var(--border); }
+  .card{background:var(--surface);border:1px solid var(--border);border-radius:16px;padding:20px;margin-bottom:20px}
+  .card h2{font-size:1.1rem;margin-bottom:15px;font-weight:600}
+  .form-row{display:flex;gap:15px;flex-wrap:wrap;margin-bottom:15px}
+  .form-group{flex:1;min-width:150px}
+  .btn-stop{background:var(--danger);color:#fff}
+  .btn-stop:hover{filter:brightness(1.1)}
 
-  .card { background: var(--surface); border: 1px solid var(--border); border-radius: 16px; padding: 20px; margin-bottom: 20px; }
-  .card h2 { font-size: 1.1rem; margin-bottom: 15px; font-weight: 600; }
+  .timer-display{font-size:3.5rem;font-weight:700;text-align:center;margin:20px 0;color:var(--accent2);font-variant-numeric:tabular-nums;letter-spacing:2px}
+  .timer-active{background:rgba(91,140,255,.1);border:1px solid var(--accent);border-radius:16px;padding:20px;text-align:center}
+  .timer-active p{color:var(--muted);margin-bottom:10px}
 
-  .form-row { display: flex; gap: 15px; flex-wrap: wrap; margin-bottom: 15px; }
-  .form-group { flex: 1; min-width: 150px; }
-  .form-group label { display: block; font-size: 0.85rem; color: var(--muted); margin-bottom: 5px; }
-  .form-group input, .form-group select { width: 100%; padding: 12px; background: var(--bg); border: 1px solid var(--border); color: var(--text); border-radius: 10px; font: inherit; font-size: 1rem; }
-  .form-group input:focus, .form-group select:focus { outline: none; border-color: var(--accent); }
+  .session-list{display:flex;flex-direction:column;gap:10px}
+  .session-item{display:flex;justify-content:space-between;align-items:center;padding:15px;background:var(--surface-2);border:1px solid var(--border);border-radius:10px;flex-wrap:wrap;gap:10px}
+  .session-info{display:flex;flex-direction:column;gap:4px}
+  .session-project{font-weight:600;font-size:1rem}
+  .session-meta{font-size:.85rem;color:var(--muted)}
+  .session-right{display:flex;align-items:center;gap:15px;flex-wrap:wrap}
+  .session-duration{font-weight:700;color:var(--accent2);font-size:1.1rem}
+  .session-amount{color:var(--success);font-weight:600}
+  .empty-msg{text-align:center;color:var(--muted);padding:20px;font-style:italic}
 
-  .btn { padding: 14px 20px; border-radius: 10px; font-weight: 600; border: none; cursor: pointer; font: inherit; font-size: 1rem; width: 100%; }
-  .btn-primary { background: var(--accent); color: #05070d; }
-  .btn-primary:hover { filter: brightness(1.1); }
-  .btn-danger { background: transparent; color: var(--danger); border: 1px solid rgba(255,107,122,.3); padding: 8px 12px; font-size: 0.85rem; width: auto; }
-  .btn-stop { background: var(--danger); color: #fff; }
-  .btn-stop:hover { filter: brightness(1.1); }
-
-  .timer-display { font-size: 3.5rem; font-weight: 700; text-align: center; margin: 20px 0; color: var(--accent2); font-variant-numeric: tabular-nums; letter-spacing: 2px; }
-  .timer-active { background: rgba(91,140,255,.1); border: 1px solid var(--accent); border-radius: 16px; padding: 20px; text-align: center; }
-  .timer-active p { color: var(--muted); margin-bottom: 10px; }
-
-  .session-list { display: flex; flex-direction: column; gap: 10px; }
-  .session-item { display: flex; justify-content: space-between; align-items: center; padding: 15px; background: var(--surface-2); border: 1px solid var(--border); border-radius: 10px; flex-wrap: wrap; gap: 10px;}
-  .session-info { display: flex; flex-direction: column; gap: 4px; }
-  .session-project { font-weight: 600; font-size: 1rem; }
-  .session-meta { font-size: 0.85rem; color: var(--muted); }
-  
-  .session-right { display: flex; align-items: center; gap: 15px; flex-wrap: wrap;}
-  .session-duration { font-weight: 700; color: var(--accent2); font-size: 1.1rem;}
-  .session-amount { color: var(--success); font-weight: 600; }
-
-  .empty-msg { text-align: center; color: var(--muted); padding: 20px; font-style: italic; }
-
-  @media(max-width: 600px) {
-    .form-row { flex-direction: column; }
-    .timer-display { font-size: 2.8rem; }
-    .session-item { flex-direction: column; align-items: flex-start; }
-    .session-right { width: 100%; justify-content: space-between; margin-top: 10px; }
-    .btn-danger { width: 100%; text-align: center; }
+  @media(max-width:600px){
+    .form-row{flex-direction:column}
+    .timer-display{font-size:2.8rem}
+    .session-item{flex-direction:column;align-items:flex-start}
+    .session-right{width:100%;justify-content:space-between;margin-top:10px}
   }
 </style>
 </head>
@@ -72,7 +40,7 @@
   <div class="container">
     <div class="header">
       <h1>Uren Tracker</h1>
-      <a href="admin.html">← Terug</a>
+      <a href="admin.html">← Terug naar Admin</a>
     </div>
 
     <div class="card" id="start-card">
@@ -98,6 +66,8 @@
     </div>
   </div>
 
+  <div class="toast" id="toast"></div>
+
   <script>
     let sessions = JSON.parse(localStorage.getItem('vh_sessions')) || [];
     let activeSession = JSON.parse(localStorage.getItem('vh_active_session')) || null;
@@ -108,31 +78,37 @@
     const timerDisplay = document.getElementById('timer-display');
     const sessionList = document.getElementById('session-list');
     const emptyMsg = document.getElementById('empty-msg');
+    const toast = document.getElementById('toast');
 
-    function saveSessions() { localStorage.setItem('vh_sessions', JSON.stringify(sessions)); }
-    function saveActive() { localStorage.setItem('vh_active_session', JSON.stringify(activeSession)); }
+    function saveSessions(){ localStorage.setItem('vh_sessions', JSON.stringify(sessions)); }
+    function saveActive(){ localStorage.setItem('vh_active_session', JSON.stringify(activeSession)); }
+    function showToast(msg, type='success'){
+      toast.textContent = msg;
+      toast.className = 'toast show ' + type;
+      setTimeout(()=> toast.classList.remove('show'), 2500);
+    }
 
-    function formatTime(seconds) {
-      const h = Math.floor(seconds / 3600).toString().padStart(2, '0');
-      const m = Math.floor((seconds % 3600) / 60).toString().padStart(2, '0');
-      const s = (seconds % 60).toString().padStart(2, '0');
+    function formatTime(seconds){
+      const h = Math.floor(seconds/3600).toString().padStart(2,'0');
+      const m = Math.floor((seconds%3600)/60).toString().padStart(2,'0');
+      const s = (seconds%60).toString().padStart(2,'0');
       return `${h}:${m}:${s}`;
     }
 
-    function updateTimer() {
-      if (!activeSession) return;
-      const elapsed = Math.floor((Date.now() - activeSession.startTime) / 1000);
+    function updateTimer(){
+      if(!activeSession) return;
+      const elapsed = Math.floor((Date.now() - activeSession.startTime)/1000);
       timerDisplay.textContent = formatTime(elapsed);
     }
 
-    document.getElementById('start-btn').addEventListener('click', () => {
+    document.getElementById('start-btn').addEventListener('click', ()=>{
       const project = document.getElementById('project-name').value.trim();
-      if (!project) return alert('Vul een projectnaam in.');
-      activeSession = { 
-        project: project, 
-        client: document.getElementById('client-name').value.trim() || 'Onbekend', 
-        rate: parseFloat(document.getElementById('hourly-rate').value) || 75, 
-        startTime: Date.now() 
+      if(!project) return showToast('Vul een projectnaam in', 'error');
+      activeSession = {
+        project,
+        client: document.getElementById('client-name').value.trim() || 'Onbekend',
+        rate: parseFloat(document.getElementById('hourly-rate').value) || 75,
+        startTime: Date.now()
       };
       saveActive();
       startCard.style.display = 'none';
@@ -141,37 +117,36 @@
       document.getElementById('active-client').textContent = activeSession.client;
       updateTimer();
       timerInterval = setInterval(updateTimer, 1000);
+      showToast('Timer gestart!', 'success');
     });
 
-    document.getElementById('stop-btn').addEventListener('click', () => {
-      if (!activeSession) return;
-      const duration = Math.floor((Date.now() - activeSession.startTime) / 1000);
-      const amount = (duration / 3600) * activeSession.rate;
-      
-      sessions.unshift({ 
-        id: Date.now(), project: activeSession.project, client: activeSession.client, 
-        rate: activeSession.rate, startTime: activeSession.startTime, duration: duration, amount: amount 
+    document.getElementById('stop-btn').addEventListener('click', ()=>{
+      if(!activeSession) return;
+      const duration = Math.floor((Date.now() - activeSession.startTime)/1000);
+      const amount = (duration/3600) * activeSession.rate;
+      sessions.unshift({
+        id: Date.now(), project: activeSession.project, client: activeSession.client,
+        rate: activeSession.rate, startTime: activeSession.startTime, duration, amount
       });
       saveSessions();
-      activeSession = null;
-      saveActive();
+      activeSession = null; saveActive();
       clearInterval(timerInterval);
       startCard.style.display = 'block';
       activeCard.style.display = 'none';
       document.getElementById('project-name').value = '';
       document.getElementById('client-name').value = '';
       renderSessions();
+      showToast('Sessie opgeslagen!', 'success');
     });
 
-    function renderSessions() {
+    function renderSessions(){
       sessionList.innerHTML = '';
-      if (sessions.length === 0) { emptyMsg.style.display = 'block'; return; }
-      emptyMsg.style.display = 'none';
-
-      sessions.forEach(s => {
+      if(sessions.length === 0){ emptyMsg.style.display='block'; return; }
+      emptyMsg.style.display='none';
+      sessions.forEach(s=>{
         const item = document.createElement('div');
         item.className = 'session-item';
-        const date = new Date(s.startTime).toLocaleString('nl-BE', { day: '2-digit', month: '2-digit', hour: '2-digit', minute: '2-digit' });
+        const date = new Date(s.startTime).toLocaleString('nl-BE',{day:'2-digit',month:'2-digit',hour:'2-digit',minute:'2-digit'});
         item.innerHTML = `
           <div class="session-info">
             <span class="session-project">${s.project} <span style="color:var(--muted);font-weight:400;">(${s.client})</span></span>
@@ -180,22 +155,20 @@
           <div class="session-right">
             <span class="session-duration">${formatTime(s.duration)}</span>
             <span class="session-amount">€ ${s.amount.toFixed(2)}</span>
-            <button class="btn btn-danger" onclick="deleteSession(${s.id})">Verwijder</button>
+            <button class="btn-danger" data-id="${s.id}">Verwijder</button>
           </div>
         `;
+        item.querySelector('[data-id]').addEventListener('click', ()=>{
+          sessions = sessions.filter(x => x.id !== s.id);
+          saveSessions(); renderSessions();
+          showToast('Sessie verwijderd', 'success');
+        });
         sessionList.appendChild(item);
       });
     }
 
-    function deleteSession(id) {
-      if (confirm('Sessie verwijderen?')) {
-        sessions = sessions.filter(s => s.id !== id);
-        saveSessions(); renderSessions();
-      }
-    }
-
-    function restoreActive() {
-      if (activeSession) {
+    function restoreActive(){
+      if(activeSession){
         startCard.style.display = 'none';
         activeCard.style.display = 'block';
         document.getElementById('active-project').textContent = activeSession.project;

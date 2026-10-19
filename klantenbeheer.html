@@ -5,75 +5,44 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
 <title>Klantenbeheer – Verde Horizonte Admin</title>
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="style.css">
 <style>
-  :root {
-    --bg: #05070d; --surface: #0b1020; --surface-2: #0f1630;
-    --border: rgba(233, 237, 247, 0.09); --text: #e9edf7;
-    --muted: rgba(233, 237, 247, 0.58); --accent: #5b8cff;
-    --danger: #ff6b7a; --success: #4ade80;
-  }
-  * { box-sizing: border-box; margin: 0; padding: 0; }
-  
-  html, body { overflow-x: hidden; overscroll-behavior-x: none; touch-action: pan-y; }
-  
-  body {
-    font-family: 'Inter', sans-serif; background: var(--bg); color: var(--text);
-    min-height: 100vh; padding: 20px;
-    background: radial-gradient(900px 420px at 50% -120px, rgba(91,140,255,.14), transparent 70%), var(--bg);
-  }
-  .container { max-width: 1000px; margin: 0 auto; }
-  
-  .header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 25px; }
-  .header h1 { font-size: 1.6rem; font-weight: 700; }
-  .header a { color: var(--text); text-decoration: none; font-size: 0.85rem; background: var(--surface); padding: 8px 14px; border-radius: 8px; border: 1px solid var(--border); }
+  .layout{display:grid;grid-template-columns:350px 1fr;gap:30px;align-items:start}
+  .card{background:var(--surface);border:1px solid var(--border);border-radius:16px;padding:20px}
+  .card h2{font-size:1.1rem;margin-bottom:20px;font-weight:600}
+  .form-group{margin-bottom:15px}
 
-  .layout { display: grid; grid-template-columns: 350px 1fr; gap: 30px; align-items: start; }
-  
-  .card { background: var(--surface); border: 1px solid var(--border); border-radius: 16px; padding: 20px; }
-  .card h2 { font-size: 1.1rem; margin-bottom: 20px; font-weight: 600; }
-  
-  .form-group { margin-bottom: 15px; }
-  label { display: block; font-size: 0.85rem; color: var(--muted); margin-bottom: 5px; }
-  input, select, textarea {
-    width: 100%; padding: 12px; background: var(--bg); color: var(--text);
-    border: 1px solid var(--border); border-radius: 10px; font: inherit; font-size: 1rem;
-  }
-  input:focus, select:focus, textarea:focus { outline: none; border-color: var(--accent); }
-  textarea { resize: vertical; min-height: 80px; }
+  .list-header{display:flex;justify-content:space-between;align-items:center;margin-bottom:20px;flex-wrap:wrap;gap:15px}
+  .search-box{padding:12px;width:100%;max-width:300px;background:var(--surface);border:1px solid var(--border);border-radius:10px;color:var(--text)}
 
-  .btn { display: inline-flex; align-items: center; justify-content: center; padding: 14px 20px; border-radius: 10px; font-weight: 600; font-size: 1rem; cursor: pointer; border: none; width: 100%; }
-  .btn-primary { background: var(--accent); color: #05070d; }
-  .btn-primary:hover { filter: brightness(1.1); }
+  .customer-grid{display:grid;gap:12px}
+  .customer-card{display:flex;justify-content:space-between;align-items:center;padding:15px;background:var(--surface);border:1px solid var(--border);border-radius:12px;flex-wrap:wrap;gap:10px}
+  .customer-info{display:flex;align-items:center;gap:15px;flex:1;min-width:200px}
+  .avatar{width:45px;height:45px;border-radius:50%;background:rgba(91,140,255,.15);color:var(--accent);display:grid;place-items:center;font-weight:700;font-size:1.1rem;flex-shrink:0}
+  .customer-details{display:flex;flex-direction:column}
+  .customer-name{font-weight:600;font-size:1rem}
+  .customer-company{color:var(--muted);font-size:.85rem}
+  .customer-meta{display:flex;gap:10px;margin-top:5px;font-size:.8rem;color:var(--muted);flex-wrap:wrap}
 
-  .list-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 20px; flex-wrap: wrap; gap: 15px; }
-  .search-box { padding: 12px; width: 100%; max-width: 300px; background: var(--surface); border: 1px solid var(--border); border-radius: 10px; color: var(--text); }
+  .status-badge{padding:3px 8px;border-radius:20px;font-size:.7rem;font-weight:600;text-transform:uppercase}
+  .status-prospect{background:rgba(255,170,0,.15);color:#ffaa00}
+  .status-actief{background:rgba(74,222,128,.15);color:var(--success)}
+  .status-inactief{background:rgba(255,107,122,.15);color:var(--danger)}
 
-  .customer-grid { display: grid; gap: 12px; }
-  .customer-card { display: flex; justify-content: space-between; align-items: center; padding: 15px; background: var(--surface); border: 1px solid var(--border); border-radius: 12px; flex-wrap: wrap; gap: 10px;}
-  
-  .customer-info { display: flex; align-items: center; gap: 15px; flex: 1; min-width: 200px; }
-  .avatar { width: 45px; height: 45px; border-radius: 50%; background: rgba(91,140,255,.15); color: var(--accent); display: grid; place-items: center; font-weight: 700; font-size: 1.1rem; flex-shrink: 0; }
-  .customer-details { display: flex; flex-direction: column; }
-  .customer-name { font-weight: 600; font-size: 1rem; }
-  .customer-company { color: var(--muted); font-size: 0.85rem; }
-  .customer-meta { display: flex; gap: 10px; margin-top: 5px; font-size: 0.8rem; color: var(--muted); flex-wrap: wrap; }
+  .btn-danger{background:transparent;color:var(--danger);border:1px solid rgba(255,107,122,.3);padding:8px 12px;font-size:.8rem;width:auto;border-radius:8px;cursor:pointer;font-family:inherit}
+  .btn-danger:hover{background:rgba(255,107,122,.1)}
 
-  .status-badge { padding: 3px 8px; border-radius: 20px; font-size: 0.7rem; font-weight: 600; text-transform: uppercase; }
-  .status-prospect { background: rgba(255, 170, 0, 0.15); color: #ffaa00; }
-  .status-actief { background: rgba(74, 222, 128, 0.15); color: var(--success); }
-  .status-inactief { background: rgba(255, 107, 122, 0.15); color: var(--danger); }
+  .empty-state{padding:40px;text-align:center;color:var(--muted);border:1px dashed var(--border);border-radius:16px}
+  .export-row{display:flex;gap:10px;flex-wrap:wrap;margin-top:20px}
+  .export-row .btn{flex:1;padding:12px;font-size:.9rem}
+  .btn-export{background:var(--surface-2);color:var(--text);border:1px solid var(--border)}
+  .btn-clear{background:transparent;color:var(--danger);border:1px solid rgba(255,107,122,.3)}
 
-  .btn-danger { background: transparent; color: var(--danger); border: 1px solid rgba(255,107,122,0.3); padding: 8px 12px; font-size: 0.8rem; width: auto; border-radius: 8px; }
-  .btn-danger:hover { background: rgba(255,107,122,0.1); }
-
-  .empty-state { padding: 40px; text-align: center; color: var(--muted); border: 1px dashed var(--border); border-radius: 16px; }
-
-  /* MOBIELE WEERGAVE: Alles onder elkaar */
-  @media(max-width: 800px) {
-    .layout { grid-template-columns: 1fr; }
-    .search-box { max-width: 100%; }
-    .customer-card { flex-direction: column; align-items: flex-start; }
-    .btn-danger { width: 100%; margin-top: 10px; }
+  @media(max-width:800px){
+    .layout{grid-template-columns:1fr}
+    .search-box{max-width:100%}
+    .customer-card{flex-direction:column;align-items:flex-start}
+    .btn-danger{width:100%;margin-top:10px}
   }
 </style>
 </head>
@@ -81,11 +50,10 @@
   <div class="container">
     <div class="header">
       <h1>Klantenbeheer</h1>
-      <a href="admin.html">← Terug</a>
+      <a href="admin.html">← Terug naar Admin</a>
     </div>
 
     <div class="layout">
-      <!-- Formulier -->
       <div class="card">
         <h2>Nieuwe Klant</h2>
         <form id="customer-form">
@@ -106,7 +74,6 @@
         </form>
       </div>
 
-      <!-- Lijst -->
       <div>
         <div class="list-header">
           <h2>Overzicht (<span id="count">0</span>)</h2>
@@ -114,10 +81,24 @@
         </div>
         <div id="customer-grid" class="customer-grid"></div>
         <div id="empty-state" class="empty-state">Nog geen klanten toegevoegd.</div>
-        <div style="margin-top: 20px; display: flex; gap: 10px; flex-wrap: wrap;">
-          <button id="export-btn" class="btn" style="background: var(--surface-2); color: var(--text); border: 1px solid var(--border); flex: 1;">📥 Export CSV</button>
-          <button id="clear-all-btn" class="btn" style="background: transparent; color: var(--danger); border: 1px solid rgba(255,107,122,0.3); flex: 1;">🗑️ Wis Alles</button>
+        <div class="export-row">
+          <button id="export-btn" class="btn btn-export">📥 Export CSV</button>
+          <button id="clear-all-btn" class="btn btn-clear">🗑️ Wis Alles</button>
         </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Toast -->
+  <div class="toast" id="toast"></div>
+
+  <!-- Confirm Modal -->
+  <div class="modal-backdrop" id="modal">
+    <div class="modal">
+      <p id="modal-text">Weet je het zeker?</p>
+      <div class="modal-actions">
+        <button class="btn-cancel" id="modal-cancel">Annuleer</button>
+        <button class="btn-confirm" id="modal-confirm">Ja, verwijder</button>
       </div>
     </div>
   </div>
@@ -129,19 +110,40 @@
     const emptyState = document.getElementById('empty-state');
     const countEl = document.getElementById('count');
     const searchInput = document.getElementById('search');
+    const toast = document.getElementById('toast');
+    const modal = document.getElementById('modal');
+    const modalText = document.getElementById('modal-text');
+    let pendingAction = null;
 
-    function save() { localStorage.setItem('vh_customers', JSON.stringify(customers)); }
+    function save(){ localStorage.setItem('vh_customers', JSON.stringify(customers)); }
 
-    function render(filter = '') {
-      grid.innerHTML = '';
-      const filtered = customers.filter(c => c.name.toLowerCase().includes(filter.toLowerCase()) || (c.company && c.company.toLowerCase().includes(filter.toLowerCase())));
+    function showToast(msg, type='success'){
+      toast.textContent = msg;
+      toast.className = 'toast show ' + type;
+      setTimeout(()=> toast.classList.remove('show'), 2800);
+    }
+
+    function askConfirm(message, onConfirm){
+      modalText.textContent = message;
+      pendingAction = onConfirm;
+      modal.classList.add('show');
+    }
+    document.getElementById('modal-cancel').onclick = ()=>{ modal.classList.remove('show'); pendingAction=null; };
+    document.getElementById('modal-confirm').onclick = ()=>{ modal.classList.remove('show'); if(pendingAction) pendingAction(); pendingAction=null; };
+
+    function render(filter=''){
+      grid.innerHTML='';
+      const filtered = customers.filter(c =>
+        c.name.toLowerCase().includes(filter.toLowerCase()) ||
+        (c.company && c.company.toLowerCase().includes(filter.toLowerCase()))
+      );
       countEl.textContent = customers.length;
       emptyState.style.display = filtered.length === 0 ? 'block' : 'none';
 
-      filtered.forEach(c => {
+      filtered.forEach(c=>{
         const card = document.createElement('div');
         card.className = 'customer-card';
-        const statusClass = c.status === 'Prospect' ? 'status-prospect' : c.status === 'Actief' ? 'status-actief' : 'status-inactief';
+        const statusClass = c.status==='Prospect'?'status-prospect':c.status==='Actief'?'status-actief':'status-inactief';
         card.innerHTML = `
           <div class="customer-info">
             <div class="avatar">${c.name.charAt(0).toUpperCase()}</div>
@@ -155,42 +157,54 @@
               </div>
             </div>
           </div>
-          <button class="btn-danger" onclick="deleteCustomer(${c.id})">Verwijder</button>
+          <button class="btn-danger" data-id="${c.id}">Verwijder</button>
         `;
+        card.querySelector('.btn-danger').addEventListener('click', ()=>{
+          askConfirm(`Klant "${c.name}" verwijderen?`, ()=>{
+            customers = customers.filter(x => x.id !== c.id);
+            save(); render(searchInput.value);
+            showToast('Klant verwijderd', 'success');
+          });
+        });
         grid.appendChild(card);
       });
     }
 
-    form.addEventListener('submit', (e) => {
+    form.addEventListener('submit', (e)=>{
       e.preventDefault();
       customers.push({
-        id: Date.now(), name: document.getElementById('name').value.trim(),
-        company: document.getElementById('company').value.trim(), email: document.getElementById('email').value.trim(),
-        phone: document.getElementById('phone').value.trim(), status: document.getElementById('status').value,
+        id: Date.now(),
+        name: document.getElementById('name').value.trim(),
+        company: document.getElementById('company').value.trim(),
+        email: document.getElementById('email').value.trim(),
+        phone: document.getElementById('phone').value.trim(),
+        status: document.getElementById('status').value,
         notes: document.getElementById('notes').value.trim()
       });
       save(); form.reset(); render(searchInput.value);
+      showToast('Klant toegevoegd!', 'success');
     });
 
-    function deleteCustomer(id) {
-      if(confirm('Klant verwijderen?')) { customers = customers.filter(c => c.id !== id); save(); render(searchInput.value); }
-    }
+    searchInput.addEventListener('input', e => render(e.target.value));
 
-    searchInput.addEventListener('input', (e) => render(e.target.value));
-
-    document.getElementById('export-btn').addEventListener('click', () => {
-      if (customers.length === 0) return alert('Geen klanten.');
+    document.getElementById('export-btn').addEventListener('click', ()=>{
+      if(customers.length===0) return showToast('Geen klanten om te exporteren', 'error');
       let csv = 'Naam,Bedrijf,E-mail,Telefoon,Status,Notities\n';
-      customers.forEach(c => {
+      customers.forEach(c=>{
         csv += `"${c.name}","${c.company||''}","${c.email}","${c.phone||''}","${c.status}","${(c.notes||'').replace(/\n/g,' ')}"\n`;
       });
-      const blob = new Blob([csv], { type: 'text/csv;charset=utf-8;' });
+      const blob = new Blob([csv], {type:'text/csv;charset=utf-8;'});
       const link = document.createElement('a');
       link.href = URL.createObjectURL(blob); link.download = 'klanten.csv'; link.click();
+      showToast('CSV gedownload!', 'success');
     });
 
-    document.getElementById('clear-all-btn').addEventListener('click', () => {
-      if(confirm('Weet je zeker dat je ALLE klanten wilt wissen?')) { customers = []; save(); render(); }
+    document.getElementById('clear-all-btn').addEventListener('click', ()=>{
+      if(customers.length===0) return showToast('Er is niets om te wissen', 'error');
+      askConfirm('Weet je zeker dat je ALLE klanten wilt wissen?', ()=>{
+        customers = []; save(); render();
+        showToast('Alle klanten gewist', 'success');
+      });
     });
 
     render();
