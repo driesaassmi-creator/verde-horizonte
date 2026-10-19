@@ -1,0 +1,201 @@
+<!DOCTYPE html>
+<html lang="nl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Admin Dashboard – Verde Horizonte</title>
+<meta name="robots" content="noindex, nofollow">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --bg: #05070d;
+    --surface: #0b1020;
+    --surface-2: #0f1630;
+    --border: rgba(233, 237, 247, 0.09);
+    --text: #e9edf7;
+    --muted: rgba(233, 237, 247, 0.58);
+    --accent: #5b8cff;
+    --accent2: #4fd1ff;
+    --gold: #d4af37;
+  }
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body {
+    font-family: 'Inter', sans-serif;
+    background: var(--bg);
+    color: var(--text);
+    min-height: 100vh;
+    padding: 60px 20px;
+    background: radial-gradient(900px 420px at 50% -120px, rgba(91,140,255,.14), transparent 70%), var(--bg);
+  }
+  .container { max-width: 1000px; margin: 0 auto; }
+  
+  .header { text-align: center; margin-bottom: 60px; }
+  .header h1 { font-size: 2.5rem; font-weight: 800; letter-spacing: -0.03em; margin-bottom: 10px; }
+  .header h1 span { color: var(--gold); }
+  .header p { color: var(--muted); font-size: 1.1rem; }
+
+  /* Grid */
+  .dashboard-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    gap: 20px;
+  }
+
+  /* Cards */
+  .tool-card {
+    display: flex;
+    flex-direction: column;
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 20px;
+    padding: 30px;
+    text-decoration: none;
+    color: var(--text);
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    position: relative;
+    overflow: hidden;
+  }
+  .tool-card::before {
+    content: "";
+    position: absolute;
+    top: 0; left: 0; width: 100%; height: 2px;
+    background: linear-gradient(90deg, var(--accent), var(--accent2));
+    opacity: 0;
+    transition: opacity 0.3s;
+  }
+  .tool-card:hover {
+    transform: translateY(-5px);
+    border-color: rgba(91,140,255,.4);
+    background: var(--surface-2);
+    box-shadow: 0 20px 40px rgba(0,0,0,.4);
+  }
+  .tool-card:hover::before { opacity: 1; }
+
+  .icon-wrapper {
+    width: 54px; height: 54px;
+    border-radius: 14px;
+    background: rgba(91,140,255,.1);
+    color: var(--accent);
+    display: grid;
+    place-items: center;
+    margin-bottom: 20px;
+    transition: all 0.3s;
+  }
+  .tool-card:hover .icon-wrapper {
+    background: var(--accent);
+    color: #05070d;
+    box-shadow: 0 0 20px rgba(91,140,255,.4);
+  }
+  .icon-wrapper svg { width: 28px; height: 28px; }
+
+  .tool-card h2 { font-size: 1.3rem; font-weight: 700; margin-bottom: 8px; }
+  .tool-card p { color: var(--muted); font-size: 0.95rem; line-height: 1.5; flex-grow: 1; }
+
+  .card-footer {
+    margin-top: 25px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    font-weight: 600;
+    font-size: 0.9rem;
+    color: var(--accent2);
+  }
+  .arrow { transition: transform 0.3s; }
+  .tool-card:hover .arrow { transform: translateX(5px); }
+
+  .back-link {
+    display: block;
+    text-align: center;
+    margin-top: 60px;
+    color: var(--muted);
+    text-decoration: none;
+    font-size: 0.9rem;
+    transition: color 0.2s;
+  }
+  .back-link:hover { color: var(--text); }
+</style>
+</head>
+<body>
+
+<div class="container">
+  <div class="header">
+    <h1>Verde <span>Horizonte</span> Admin</h1>
+    <p>Jouw persoonlijke mission control. Kies een tool om te starten.</p>
+  </div>
+
+  <div class="dashboard-grid">
+    
+    <!-- Offerte -->
+    <a href="offerte.html" class="tool-card">
+      <div class="icon-wrapper">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path><polyline points="14 2 14 8 20 8"></polyline><line x1="16" y1="13" x2="8" y2="13"></line><line x1="16" y1="17" x2="8" y2="17"></line><polyline points="10 9 9 9 8 9"></polyline></svg>
+      </div>
+      <h2>Offerte Generator</h2>
+      <p>Maak een strakke, high-end offerte voor een nieuwe klant. Inclusief automatische BTW-berekening.</p>
+      <div class="card-footer">
+        <span>Open tool</span>
+        <span class="arrow">→</span>
+      </div>
+    </a>
+
+    <!-- Factuur -->
+    <a href="factuur.html" class="tool-card">
+      <div class="icon-wrapper">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="1" y="4" width="22" height="16" rx="2" ry="2"></rect><line x1="1" y1="10" x2="23" y2="10"></line></svg>
+      </div>
+      <h2>Factuur Generator</h2>
+      <p>Genereer een professionele factuur met factuurnummer, vervaldatum en betaalinstructies.</p>
+      <div class="card-footer">
+        <span>Open tool</span>
+        <span class="arrow">→</span>
+      </div>
+    </a>
+
+    <!-- Klantenbeheer -->
+    <a href="klantenbeheer.html" class="tool-card">
+      <div class="icon-wrapper">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"></path><circle cx="9" cy="7" r="4"></circle><path d="M23 21v-2a4 4 0 0 0-3-3.87"></path><path d="M16 3.13a4 4 0 0 1 0 7.75"></path></svg>
+      </div>
+      <h2>Klantenbeheer (CRM)</h2>
+      <p>Houd je klanten, prospects en contactgegevens netjes bij in een overzichtelijke database.</p>
+      <div class="card-footer">
+        <span>Open tool</span>
+        <span class="arrow">→</span>
+      </div>
+    </a>
+
+    <!-- Projecten -->
+    <a href="projecten.html" class="tool-card">
+      <div class="icon-wrapper">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="7" height="7"></rect><rect x="14" y="3" width="7" height="7"></rect><rect x="14" y="14" width="7" height="7"></rect><rect x="3" y="14" width="7" height="7"></rect></svg>
+      </div>
+      <h2>Projecten Tracker</h2>
+      <p>Beheer je projecten met een visueel Kanban-bord. Sleep taken van 'Te Doen' naar 'Afgerond'.</p>
+      <div class="card-footer">
+        <span>Open tool</span>
+        <span class="arrow">→</span>
+      </div>
+    </a>
+
+    <!-- Uren Tracker -->
+    <a href="uren-tracker.html" class="tool-card">
+      <div class="icon-wrapper">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"></circle><polyline points="12 6 12 12 16 14"></polyline></svg>
+      </div>
+      <h2>Uren Tracker</h2>
+      <p>Start en stop de timer om bij te houden hoeveel tijd je aan een klant of project besteedt.</p>
+      <div class="card-footer">
+        <span>Open tool</span>
+        <span class="arrow">→</span>
+      </div>
+    </a>
+
+  </div>
+
+  <a href="index.html" class="back-link">← Terug naar de publieke website</a>
+</div>
+
+</body>
+</html>
