@@ -2,7 +2,7 @@
 <html lang="nl">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
 <title>Factuur - Verde Horizonte</title>
 <meta name="robots" content="noindex, nofollow">
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
@@ -16,6 +16,7 @@
     --input-bg: #f8fafc;
     --readonly-bg: #f1f5f9;
   }
+  html, body { overflow-x: hidden; overscroll-behavior-x: none; }
   * { box-sizing: border-box; margin: 0; padding: 0; }
   body { font-family: 'Inter', sans-serif; background: #f8fafc; color: var(--primary); line-height: 1.6; padding: 40px 20px; }
   .container { max-width: 800px; margin: 0 auto; background: #ffffff; padding: 60px; border-radius: 8px; box-shadow: 0 10px 30px rgba(0,0,0,0.05); }
@@ -89,7 +90,7 @@
       <h3>Van</h3>
       <input type="text" value="Verde Horizonte" readonly>
       <input type="text" value="Dries" readonly>
-      <input type="text" value="homberkouter 142, 2811 Hombeek" readonly>
+      <input type="text" value="[Jouw Adres], [Postcode] [Stad]" readonly>
       <input type="text" value="BTW: BE 0000.000.000" readonly>
       <input type="text" value="IBAN: BE00 0000 0000 0000" readonly>
     </div>
