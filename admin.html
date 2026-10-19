@@ -48,11 +48,39 @@ a{color:inherit;text-decoration:none}
 :focus-visible{outline:2px solid var(--accent2);outline-offset:3px;border-radius:6px}
 .wrap{width:min(1120px,92%);margin-inline:auto}
 
+/* DE ENIGE LOGO ANIMATIE DEFINITIE */
+.logo {
+  font-weight: 800;
+  letter-spacing: 1px;
+  font-size: 1.2rem;
+  color: var(--text);
+  text-transform: uppercase;
+  /* De animatie: tekst komt van onder naar boven en lijkt in te zoomen */
+  animation: logoReveal 1.5s cubic-bezier(0.2, 0.8, 0.2, 1) forwards;
+  display: inline-block;
+}
+
+.logo span {
+  color: var(--gold);
+  /* De gouden gloed animatie op het tweede woord */
+  animation: goldGlow 3s infinite ease-in-out;
+  animation-delay: 1.5s;
+  display: inline-block;
+}
+
+@keyframes logoReveal {
+  0% { opacity: 0; transform: translateY(20px) scale(0.9); letter-spacing: 5px; }
+  100% { opacity: 1; transform: translateY(0) scale(1); letter-spacing: 1px; }
+}
+
+@keyframes goldGlow {
+  0%, 100% { text-shadow: 0 0 0px rgba(212,175,55,0); }
+  50% { text-shadow: 0 0 15px rgba(212,175,55,0.6); }
+}
+
 /* Nav */
 header{position:sticky;top:0;z-index:50;backdrop-filter:blur(14px);background:rgba(5,7,13,.65);border-bottom:1px solid var(--line)}
 .nav{display:flex;align-items:center;justify-content:space-between;height:72px}
-.logo{font-weight:800; letter-spacing:1px; font-size:1.2rem; color:var(--text); text-transform:uppercase;}
-.logo span{color: var(--gold);}
 .nav a.link{color:var(--muted);font-size:.9rem;transition:color .2s}
 .nav a.link:hover{color:var(--text)}
 
