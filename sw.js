@@ -1,4 +1,4 @@
-const CACHE = 'vh-admin-v14';
+const CACHE = 'vh-admin-v15';
 const ASSETS = [
   './admin.html',
   './manifest.json',

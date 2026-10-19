@@ -56,8 +56,8 @@
   .btn { display: flex; align-items: center; justify-content: center; width: 100%; padding: 15px; border-radius: 8px; font-weight: 600; font-size: 1rem; cursor: pointer; border: none; transition: 0.3s; text-decoration: none;}
   .btn-primary { background: var(--accent); color: white; box-shadow: 0 4px 12px rgba(59,130,246,0.3); }
   .btn-primary:hover { background: #2563eb; }
-  .btn-wa { background: var(--wa); color: white; box-shadow: 0 4px 12px rgba(37,211,102,0.3); }
-  .btn-wa:hover { background: #128c7e; }
+  .btn-share { background: var(--wa); color: white; box-shadow: 0 4px 12px rgba(37,211,102,0.3); }
+  .btn-share:hover { background: #128c7e; }
 
   @media (max-width: 768px) {
     body { padding: 10px; }
@@ -103,7 +103,7 @@
 
 <div class="action-buttons">
   <button class="btn btn-primary" onclick="window.print()">📥 Download / Print als PDF</button>
-  <button class="btn btn-wa" onclick="sendWhatsApp()">💬 Verstuur via WhatsApp</button>
+  <button class="btn btn-share" onclick="shareDocument()">📤 Deel Document (Mail / WhatsApp)</button>
 </div>
 
 <div class="container">
@@ -195,16 +195,22 @@
     document.getElementById('total').value = formatEuro(total);
   }
 
-  // Deel-functie via WhatsApp
-  function sendWhatsApp() {
+  // Universele Deel-functie
+  function shareDocument() {
     const client = document.getElementById('client-name').value || 'klant';
     const num = document.getElementById('doc-num').value;
     const total = document.getElementById('total').value;
     
-    const text = `Hallo ${client},%0A%0AHierbij de gegevens van factuur ${num}.%0A%0AHet totaalbedrag is: *${total}*%0A%0AIk stuur de PDF zo snel mogelijk door!%0A%0AMet vriendelijke groet,%0ADries - Verde Horizonte`;
+    const text = `Hallo ${client},\n\nHierbij de gegevens van factuur ${num}.\n\nHet totaalbedrag is: ${total}\n\nGelieve dit bedrag te voldoen voor de vervaldatum.\n\nMet vriendelijke groet,\nDries - Verde Horizonte`;
     
-    // Open WhatsApp met het vooraf ingevulde bericht
-    window.open(`https://wa.me/?text=${text}`, '_blank');
+    if (navigator.share) {
+      navigator.share({
+        title: 'Factuur ' + num + ' - Verde Horizonte',
+        text: text
+      }).catch(console.error);
+    } else {
+      window.location.href = `mailto:?subject=Factuur ${num} - Verde Horizonte&body=${encodeURIComponent(text)}`;
+    }
   }
 </script>
 </body>
