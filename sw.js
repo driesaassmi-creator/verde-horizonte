@@ -1,23 +1,42 @@
-const CACHE = 'vh-control-room-v3';
-const ASSETS = ['./', './index.html', './manifest.json', './icon.svg', './icon-192.png', './icon-512.png', './apple-touch-icon.png'];
+const CACHE = 'vh-admin-v1';
+const ASSETS = [
+  './admin.html', 
+  './manifest.json', 
+  './icon.svg', 
+  './icon-192.png', 
+  './icon-512.png', 
+  './apple-touch-icon.png'
+];
 
+// 1. Installatie: Sla de bestanden op in de cache
 self.addEventListener('install', e => {
-  e.waitUntil(caches.open(CACHE).then(c => c.addAll(ASSETS)).then(() => self.skipWaiting()));
-});
-
-self.addEventListener('activate', e => {
   e.waitUntil(
-    caches.keys().then(keys => Promise.all(keys.filter(k => k !== CACHE).map(k => caches.delete(k))))
-      .then(() => self.clients.claim())
+    caches.open(CACHE)
+      .then(c => c.addAll(ASSETS))
+      .then(() => self.skipWaiting())
   );
 });
 
+// 2. Activatie: Verwijder oude caches (zoals de oude control-room versies)
+self.addEventListener('activate', e => {
+  e.waitUntil(
+    caches.keys().then(keys => {
+      return Promise.all(
+        keys.filter(k => k !== CACHE).map(k => caches.delete(k))
+      );
+    }).then(() => self.clients.claim())
+  );
+});
+
+// 3. Fetch: Laad de bestanden uit de cache (offline werking)
 self.addEventListener('fetch', e => {
   if (e.request.method !== 'GET') return;
   const url = new URL(e.request.url);
   const sameOrigin = url.origin === location.origin;
   const isFont = /fonts\.(googleapis|gstatic)\.com$/.test(url.hostname);
-  if (!sameOrigin && !isFont) return; // externe links (portfolio etc.) niet cachen
+  
+  // Laat externe links (zoals GitHub/Vercel) met rust
+  if (!sameOrigin && !isFont) return; 
 
   e.respondWith(
     caches.match(e.request).then(hit => {
@@ -27,7 +46,7 @@ self.addEventListener('fetch', e => {
           caches.open(CACHE).then(c => c.put(e.request, copy));
         }
         return res;
-      }).catch(() => hit || (e.request.mode === 'navigate' ? caches.match('./index.html') : undefined));
+      }).catch(() => hit || (e.request.mode === 'navigate' ? caches.match('./admin.html') : undefined));
       return hit || net;
     })
   );
