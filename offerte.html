@@ -14,37 +14,50 @@
   * { box-sizing: border-box; margin: 0; padding: 0; }
   html, body { overflow-x: hidden; overscroll-behavior-x: none; }
   body { font-family: 'Inter', sans-serif; background: #f8fafc; color: var(--primary); line-height: 1.6; padding: 40px 20px; touch-action: pan-y; }
+
   .container { max-width: 800px; margin: 0 auto; background: #ffffff; padding: 60px; border-radius: 8px; box-shadow: 0 10px 30px rgba(0,0,0,0.05); }
   .header { display: flex; justify-content: space-between; align-items: flex-start; border-bottom: 2px solid var(--border); padding-bottom: 30px; margin-bottom: 40px; }
   .logo { font-size: 1.8rem; font-weight: 700; letter-spacing: 1px; text-transform: uppercase; }
   .logo span { color: var(--gold); }
   .offerte-info { text-align: right; }
   .offerte-info h1 { font-size: 2rem; font-weight: 700; margin-bottom: 5px; }
-  input, textarea { font-family: 'Inter', sans-serif; font-size: 1rem; color: var(--primary); border: 1px solid var(--border); background: var(--input-bg); border-radius: 6px; padding: 10px 12px; width: 100%; transition: border-color 0.2s; -webkit-appearance: none; }
+  
+  input, textarea {
+    font-family: 'Inter', sans-serif; font-size: 1rem; color: var(--primary);
+    border: 1px solid var(--border); background: var(--input-bg); border-radius: 6px;
+    padding: 10px 12px; width: 100%; transition: border-color 0.2s; -webkit-appearance: none;
+  }
   input:focus, textarea:focus { outline: none; border-color: var(--accent); background: #fff; }
   input[readonly] { background: var(--readonly-bg); color: var(--muted); cursor: not-allowed; border-color: transparent; font-weight: 600;}
   input.total-calc { color: var(--accent) !important; font-size: 1.2rem; font-weight: 700; }
   input[type=number]::-webkit-inner-spin-button, input[type=number]::-webkit-outer-spin-button { -webkit-appearance: none; margin: 0; }
   input[type=number] { -moz-appearance: textfield; }
+  
   .info-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 40px; margin-bottom: 40px; }
   .info-block h3 { font-size: 0.85rem; text-transform: uppercase; letter-spacing: 1px; color: var(--muted); margin-bottom: 10px; }
   .info-block input { margin-bottom: 10px; }
+  
   table { width: 100%; border-collapse: collapse; margin-bottom: 40px; }
   th { text-align: left; padding: 12px 15px; background: #f1f5f9; font-size: 0.85rem; text-transform: uppercase; letter-spacing: 1px; color: var(--muted); border-bottom: 2px solid var(--border); }
   td { padding: 15px; border-bottom: 1px solid var(--border); }
   .price-input { text-align: right; font-weight: 600; }
+  
   .total-block { display: flex; justify-content: flex-end; margin-bottom: 40px; }
   .total-table { width: 300px; }
   .total-table td { border: none; padding: 8px 15px; }
   .total-table .final { border-top: 2px solid var(--primary); padding-top: 15px; }
+  
   .terms { font-size: 0.85rem; color: var(--muted); border-top: 1px solid var(--border); padding-top: 20px; margin-bottom: 40px; }
   .terms h4 { color: var(--primary); margin-bottom: 10px; }
   .terms ul { padding-left: 20px; }
   .terms li { margin-bottom: 5px; }
+  
   .signature { display: flex; justify-content: space-between; margin-top: 50px; }
   .sig-box { width: 45%; border-top: 1px solid var(--muted); padding-top: 10px; font-size: 0.85rem; color: var(--muted); }
+
   .print-btn { display: block; width: 100%; max-width: 800px; margin: 0 auto 20px; padding: 15px; background: var(--accent); color: white; text-align: center; text-decoration: none; font-weight: 600; border-radius: 8px; cursor: pointer; border: none; font-size: 1rem; transition: background 0.3s; box-shadow: 0 4px 12px rgba(59,130,246,0.3); }
   .print-btn:hover { background: #2563eb; }
+
   @media (max-width: 768px) {
     body { padding: 10px; }
     .container { padding: 20px; border-radius: 12px; box-shadow: none; border: 1px solid var(--border); }
@@ -67,6 +80,7 @@
     .signature { flex-direction: column; gap: 30px; }
     .sig-box { width: 100%; }
   }
+
   @media print {
     body { background: #fff; padding: 0; }
     .container { box-shadow: none; padding: 0; max-width: 100%; border: none; }
@@ -87,7 +101,9 @@
 </style>
 </head>
 <body>
+
 <button class="print-btn" onclick="window.print()">📥 Download / Print als PDF</button>
+
 <div class="container">
   <div class="header">
     <div class="logo">Verde <span>Horizonte</span></div>
@@ -103,6 +119,7 @@
       </div>
     </div>
   </div>
+
   <div class="info-grid">
     <div class="info-block">
       <h3>Van</h3>
@@ -120,6 +137,7 @@
       <input type="email" placeholder="E-mailadres Klant">
     </div>
   </div>
+
   <table>
     <thead>
       <tr>
@@ -138,6 +156,7 @@
       </tr>
     </tbody>
   </table>
+
   <div class="total-block">
     <table class="total-table">
       <tr><td>Subtotaal:</td><td class="price-input"><input type="text" id="subtotal" readonly value="€ 0,00" style="text-align:right;"></td></tr>
@@ -145,6 +164,7 @@
       <tr class="final"><td>Totaal:</td><td class="price-input"><input type="text" id="total" readonly value="€ 0,00" class="total-calc" style="text-align:right;"></td></tr>
     </table>
   </div>
+
   <div class="terms">
     <h4>Voorwaarden & Planning</h4>
     <ul>
@@ -152,11 +172,13 @@
       <li><strong>Betaling:</strong> 50% aanbetaling bij akkoord, 50% bij oplevering.</li>
     </ul>
   </div>
+
   <div class="signature">
     <div class="sig-box">Akkoord klant (Datum & Handtekening)</div>
     <div class="sig-box">Namens Verde Horizonte (Datum & Handtekening)</div>
   </div>
 </div>
+
 <script>
   function calculate() {
     const price1 = parseFloat(document.getElementById('price1').value) || 0;
