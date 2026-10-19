@@ -9,7 +9,7 @@
 <style>
   :root {
     --primary: #0f172a; --accent: #3b82f6; --gold: #b45309; --muted: #64748b;
-    --border: #e2e8f0; --input-bg: #f8fafc; --readonly-bg: #f1f5f9; --wa: #25d366;
+    --border: #e2e8f0; --input-bg: #f8fafc; --readonly-bg: #f1f5f9;
   }
   * { box-sizing: border-box; margin: 0; padding: 0; }
   html, body { overflow-x: hidden; overscroll-behavior-x: none; }
@@ -52,12 +52,8 @@
   .terms ul { padding-left: 20px; }
   .terms li { margin-bottom: 5px; }
 
-  .action-buttons { display: flex; flex-direction: column; gap: 10px; margin-bottom: 20px; max-width: 800px; margin: 0 auto 20px; }
-  .btn { display: flex; align-items: center; justify-content: center; width: 100%; padding: 15px; border-radius: 8px; font-weight: 600; font-size: 1rem; cursor: pointer; border: none; transition: 0.3s; text-decoration: none;}
-  .btn-primary { background: var(--accent); color: white; box-shadow: 0 4px 12px rgba(59,130,246,0.3); }
-  .btn-primary:hover { background: #2563eb; }
-  .btn-share { background: var(--wa); color: white; box-shadow: 0 4px 12px rgba(37,211,102,0.3); }
-  .btn-share:hover { background: #128c7e; }
+  .print-btn { display: block; width: 100%; max-width: 800px; margin: 0 auto 20px; padding: 15px; background: var(--accent); color: white; text-align: center; text-decoration: none; font-weight: 600; border-radius: 8px; cursor: pointer; border: none; font-size: 1rem; transition: background 0.3s; box-shadow: 0 4px 12px rgba(59,130,246,0.3); }
+  .print-btn:hover { background: #2563eb; }
 
   @media (max-width: 768px) {
     body { padding: 10px; }
@@ -83,7 +79,7 @@
   @media print {
     body { background: #fff; padding: 0; }
     .container { box-shadow: none; padding: 0; max-width: 100%; border: none; }
-    .action-buttons { display: none; }
+    .print-btn { display: none; }
     input, textarea { border: none !important; background: transparent !important; padding: 0 !important; color: var(--primary) !important; }
     .header { flex-direction: row !important; }
     .info-grid { grid-template-columns: 1fr 1fr !important; }
@@ -101,10 +97,7 @@
 </head>
 <body>
 
-<div class="action-buttons">
-  <button class="btn btn-primary" onclick="window.print()">📥 Download / Print als PDF</button>
-  <button class="btn btn-share" onclick="shareDocument()">📤 Deel Document (Mail / WhatsApp)</button>
-</div>
+<button class="print-btn" onclick="window.print()">📥 Download / Print als PDF</button>
 
 <div class="container">
   <div class="header">
@@ -193,31 +186,6 @@
     document.getElementById('subtotal').value = formatEuro(subtotal);
     document.getElementById('vat').value = formatEuro(vat);
     document.getElementById('total').value = formatEuro(total);
-  }
-
-  function shareDocument() {
-    const client = document.getElementById('client-name').value || 'klant';
-    const num = document.getElementById('doc-num').value;
-    const total = document.getElementById('total').value;
-    
-    const text = `Hallo ${client},\n\nHierbij de gegevens van factuur ${num}.\n\nHet totaalbedrag is: ${total}\n\nGelieve dit bedrag te voldoen voor de vervaldatum.\n\nMet vriendelijke groet,\nDries - Verde Horizonte`;
-    
-    // 1. Kopieer tekst (voor de zekerheid)
-    if (navigator.clipboard) {
-      navigator.clipboard.writeText(text).catch(() => {});
-    }
-
-    // 2. Probeer native share, anders mailto
-    if (navigator.share) {
-      navigator.share({
-        title: 'Factuur ' + num,
-        text: text
-      }).catch(() => {
-        window.location.href = `mailto:?subject=Factuur ${num} - Verde Horizonte&body=${encodeURIComponent(text)}`;
-      });
-    } else {
-      window.location.href = `mailto:?subject=Factuur ${num} - Verde Horizonte&body=${encodeURIComponent(text)}`;
-    }
   }
 </script>
 </body>
