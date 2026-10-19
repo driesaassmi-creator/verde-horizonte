@@ -195,7 +195,6 @@
     document.getElementById('total').value = formatEuro(total);
   }
 
-  // Universele Deel-functie
   function shareDocument() {
     const client = document.getElementById('client-name').value || 'klant';
     const num = document.getElementById('doc-num').value;
@@ -203,11 +202,19 @@
     
     const text = `Hallo ${client},\n\nHierbij de gegevens van factuur ${num}.\n\nHet totaalbedrag is: ${total}\n\nGelieve dit bedrag te voldoen voor de vervaldatum.\n\nMet vriendelijke groet,\nDries - Verde Horizonte`;
     
+    // 1. Kopieer tekst (voor de zekerheid)
+    if (navigator.clipboard) {
+      navigator.clipboard.writeText(text).catch(() => {});
+    }
+
+    // 2. Probeer native share, anders mailto
     if (navigator.share) {
       navigator.share({
-        title: 'Factuur ' + num + ' - Verde Horizonte',
+        title: 'Factuur ' + num,
         text: text
-      }).catch(console.error);
+      }).catch(() => {
+        window.location.href = `mailto:?subject=Factuur ${num} - Verde Horizonte&body=${encodeURIComponent(text)}`;
+      });
     } else {
       window.location.href = `mailto:?subject=Factuur ${num} - Verde Horizonte&body=${encodeURIComponent(text)}`;
     }

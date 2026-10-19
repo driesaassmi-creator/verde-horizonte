@@ -199,7 +199,6 @@
     document.getElementById('total').value = formatEuro(total);
   }
 
-  // Universele Deel-functie (Native App / Mail Fallback)
   function shareDocument() {
     const client = document.getElementById('client-name').value || 'klant';
     const num = document.getElementById('doc-num').value;
@@ -207,14 +206,21 @@
     
     const text = `Hallo ${client},\n\nHierbij de gegevens van offerte ${num}.\n\nHet totaalbedrag is: ${total}\n\nIk stuur de PDF zo snel mogelijk door!\n\nMet vriendelijke groet,\nDries - Verde Horizonte`;
     
-    // Check of de telefoon de native share API ondersteunt
+    // 1. Kopieer tekst (voor de zekerheid)
+    if (navigator.clipboard) {
+      navigator.clipboard.writeText(text).catch(() => {});
+    }
+
+    // 2. Probeer native share, anders mailto
     if (navigator.share) {
       navigator.share({
-        title: 'Offerte ' + num + ' - Verde Horizonte',
+        title: 'Offerte ' + num,
         text: text
-      }).catch(console.error);
+      }).catch(() => {
+        // Als het deelfunctie niet lukt, open dan de mailto als fallback
+        window.location.href = `mailto:?subject=Offerte ${num} - Verde Horizonte&body=${encodeURIComponent(text)}`;
+      });
     } else {
-      // Fallback voor laptop/desktop: Open standaard mailprogramma
       window.location.href = `mailto:?subject=Offerte ${num} - Verde Horizonte&body=${encodeURIComponent(text)}`;
     }
   }
