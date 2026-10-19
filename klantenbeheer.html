@@ -1,0 +1,401 @@
+<!DOCTYPE html>
+<html lang="nl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Klantenbeheer – Verde Horizonte</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --bg: #05070d;
+    --accent: #5b8cff;
+    --text: #e9edf7;
+    --surface: #0b1020;
+    --surface-2: #0f1630;
+    --border: rgba(233, 237, 247, 0.09);
+    --muted: rgba(233, 237, 247, 0.58);
+    --danger: #ff6b7a;
+    --success: #4ade80;
+  }
+
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+
+  body {
+    min-height: 100vh;
+    background: radial-gradient(900px 420px at 50% -120px, rgba(91, 140, 255, 0.14), transparent 70%), var(--bg);
+    color: var(--text);
+    font-family: 'Inter', system-ui, -apple-system, sans-serif;
+    line-height: 1.5;
+    -webkit-font-smoothing: antialiased;
+    padding: 40px 20px;
+  }
+
+  main {
+    max-width: 1100px;
+    margin: 0 auto;
+  }
+
+  h1 {
+    font-size: 2rem;
+    font-weight: 700;
+    letter-spacing: -0.03em;
+    margin-bottom: 8px;
+  }
+
+  .sub {
+    color: var(--muted);
+    font-size: 0.95rem;
+    margin-bottom: 30px;
+  }
+
+  /* Layout */
+  .layout {
+    display: grid;
+    grid-template-columns: 350px 1fr;
+    gap: 30px;
+    align-items: start;
+  }
+
+  @media (max-width: 800px) {
+    .layout { grid-template-columns: 1fr; }
+  }
+
+  /* Cards */
+  .card {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 16px;
+    padding: 24px;
+    transition: border-color 0.2s;
+  }
+  .card:hover { border-color: rgba(91, 140, 255, 0.3); }
+
+  /* Form */
+  .form-group { margin-bottom: 16px; }
+  label {
+    display: block;
+    font-size: 0.85rem;
+    font-weight: 500;
+    color: var(--muted);
+    margin-bottom: 6px;
+  }
+  input, select, textarea {
+    width: 100%;
+    padding: 12px 14px;
+    background: var(--bg);
+    color: var(--text);
+    border: 1px solid var(--border);
+    border-radius: 10px;
+    font: inherit;
+    font-size: 0.95rem;
+    transition: border-color 0.2s, box-shadow 0.2s;
+  }
+  input:focus, select:focus, textarea:focus {
+    outline: none;
+    border-color: var(--accent);
+    box-shadow: 0 0 0 3px rgba(91, 140, 255, 0.22);
+  }
+  textarea { resize: vertical; min-height: 80px; }
+
+  .btn {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    padding: 12px 18px;
+    border-radius: 10px;
+    font-weight: 600;
+    font-size: 0.95rem;
+    cursor: pointer;
+    transition: all 0.2s;
+    border: none;
+    width: 100%;
+  }
+  .btn-primary { background: var(--accent); color: #05070d; }
+  .btn-primary:hover { filter: brightness(1.1); }
+  .btn-ghost { background: transparent; color: var(--muted); border: 1px solid var(--border); }
+  .btn-ghost:hover { border-color: var(--accent); color: var(--text); }
+  .btn-danger { background: transparent; color: var(--danger); border: 1px solid rgba(255,107,122,0.3); padding: 6px 10px; width: auto; font-size: 0.8rem; }
+  .btn-danger:hover { background: rgba(255,107,122,0.1); }
+
+  /* List */
+  .list-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 20px;
+    flex-wrap: wrap;
+    gap: 15px;
+  }
+  .list-header h2 { font-size: 1.2rem; font-weight: 600; }
+
+  .search-box {
+    padding: 10px 14px;
+    width: 250px;
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 10px;
+  }
+
+  .customer-grid {
+    display: grid;
+    gap: 12px;
+  }
+
+  .customer-card {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 16px;
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    transition: transform 0.2s, border-color 0.2s;
+  }
+  .customer-card:hover { transform: translateX(4px); border-color: rgba(91, 140, 255, 0.4); }
+
+  .customer-info { display: flex; align-items: center; gap: 16px; flex: 1; }
+  .avatar {
+    width: 48px; height: 48px;
+    border-radius: 50%;
+    background: rgba(91, 140, 255, 0.15);
+    color: var(--accent);
+    display: grid;
+    place-items: center;
+    font-weight: 700;
+    font-size: 1.2rem;
+    flex-shrink: 0;
+  }
+  .customer-details { display: flex; flex-direction: column; }
+  .customer-name { font-weight: 600; font-size: 1.05rem; }
+  .customer-company { color: var(--muted); font-size: 0.9rem; }
+  .customer-meta { display: flex; gap: 12px; margin-top: 4px; font-size: 0.8rem; color: var(--muted); }
+
+  .status-badge {
+    padding: 4px 10px;
+    border-radius: 20px;
+    font-size: 0.75rem;
+    font-weight: 600;
+    text-transform: uppercase;
+  }
+  .status-prospect { background: rgba(255, 170, 0, 0.15); color: #ffaa00; }
+  .status-actief { background: rgba(74, 222, 128, 0.15); color: var(--success); }
+  .status-inactief { background: rgba(255, 107, 122, 0.15); color: var(--danger); }
+
+  .customer-actions { display: flex; gap: 8px; }
+
+  .empty-state {
+    padding: 40px;
+    text-align: center;
+    color: var(--muted);
+    border: 1px dashed var(--border);
+    border-radius: 16px;
+  }
+
+  /* Utility */
+  .mt-4 { margin-top: 24px; }
+</style>
+</head>
+<body>
+  <main>
+    <h1>Klantenbeheer</h1>
+    <p class="sub">Houd je klanten, prospects en samenwerkingen overzichtelijk bij.</p>
+
+    <div class="layout">
+      <!-- Formulier -->
+      <div class="card">
+        <h2 style="font-size: 1.1rem; margin-bottom: 20px;">Nieuwe Klant Toevoegen</h2>
+        <form id="customer-form">
+          <div class="form-group">
+            <label for="name">Naam *</label>
+            <input type="text" id="name" required placeholder="Bijv. Sarah Janssens">
+          </div>
+          <div class="form-group">
+            <label for="company">Bedrijf</label>
+            <input type="text" id="company" placeholder="Bijv. FitZone Mechelen">
+          </div>
+          <div class="form-group">
+            <label for="email">E-mailadres *</label>
+            <input type="email" id="email" required placeholder="sarah@fitzone.be">
+          </div>
+          <div class="form-group">
+            <label for="phone">Telefoonnummer</label>
+            <input type="tel" id="phone" placeholder="+32 470 12 34 56">
+          </div>
+          <div class="form-group">
+            <label for="status">Status</label>
+            <select id="status">
+              <option value="Prospect">Prospect (Lead)</option>
+              <option value="Actief">Actieve Klant</option>
+              <option value="Inactief">Inactief</option>
+            </select>
+          </div>
+          <div class="form-group">
+            <label for="notes">Notities</label>
+            <textarea id="notes" placeholder="Waar hebben ze interesse in? Wat zijn de afspraken?"></textarea>
+          </div>
+          <button type="submit" class="btn btn-primary">Klant Toevoegen</button>
+        </form>
+      </div>
+
+      <!-- Lijst -->
+      <div>
+        <div class="list-header">
+          <h2>Klantenoverzicht (<span id="count">0</span>)</h2>
+          <input type="search" id="search" class="search-box" placeholder="Zoek op naam of bedrijf...">
+        </div>
+        <div id="customer-grid" class="customer-grid">
+          <!-- Klanten worden hier ingeladen -->
+        </div>
+        <div id="empty-state" class="empty-state">
+          Nog geen klanten. Voeg je eerste klant toe via het formulier.
+        </div>
+        <div style="margin-top: 20px; display: flex; gap: 10px;">
+          <button id="export-btn" class="btn btn-ghost">📥 Exporteer naar CSV</button>
+          <button id="clear-all-btn" class="btn btn-ghost" style="color: var(--danger); border-color: rgba(255,107,122,0.3);">🗑️ Alles Verwijderen</button>
+        </div>
+      </div>
+    </div>
+  </main>
+
+  <script>
+    // --- 1. Data Ophalen uit LocalStorage ---
+    let customers = JSON.parse(localStorage.getItem('vh_customers')) || [];
+
+    // DOM Elementen
+    const form = document.getElementById('customer-form');
+    const grid = document.getElementById('customer-grid');
+    const emptyState = document.getElementById('empty-state');
+    const countEl = document.getElementById('count');
+    const searchInput = document.getElementById('search');
+    const exportBtn = document.getElementById('export-btn');
+    const clearAllBtn = document.getElementById('clear-all-btn');
+
+    // --- 2. Data Opslaan in LocalStorage ---
+    function saveToLocalStorage() {
+      localStorage.setItem('vh_customers', JSON.stringify(customers));
+    }
+
+    // --- 3. Lijst tekenen (Render) ---
+    function render(filter = '') {
+      grid.innerHTML = ''; // Leegmaken
+      
+      // Filter op basis van zoekterm
+      const filtered = customers.filter(c => 
+        c.name.toLowerCase().includes(filter.toLowerCase()) || 
+        c.company.toLowerCase().includes(filter.toLowerCase())
+      );
+
+      // Update teller
+      countEl.textContent = customers.length;
+
+      // Lege staat tonen/verbergen
+      emptyState.style.display = filtered.length === 0 ? 'block' : 'none';
+
+      // Voor elke klant een kaartje bouwen
+      filtered.forEach(customer => {
+        const card = document.createElement('div');
+        card.className = 'customer-card';
+
+        const statusClass = customer.status === 'Prospect' ? 'status-prospect' 
+                          : customer.status === 'Actief' ? 'status-actief' 
+                          : 'status-inactief';
+
+        card.innerHTML = `
+          <div class="customer-info">
+            <div class="avatar">${customer.name.charAt(0).toUpperCase()}</div>
+            <div class="customer-details">
+              <div class="customer-name">${customer.name}</div>
+              <div class="customer-company">${customer.company || 'Geen bedrijf opgegeven'}</div>
+              <div class="customer-meta">
+                <span>${customer.email}</span>
+                ${customer.phone ? `<span>${customer.phone}</span>` : ''}
+                <span class="status-badge ${statusClass}">${customer.status}</span>
+              </div>
+            </div>
+          </div>
+          <div class="customer-actions">
+            <button class="btn btn-danger" data-id="${customer.id}">Verwijder</button>
+          </div>
+        `;
+        grid.appendChild(card);
+      });
+
+      // Voeg event listeners toe aan de verwijder-knoppen
+      document.querySelectorAll('.btn-danger').forEach(btn => {
+        btn.addEventListener('click', (e) => {
+          const id = parseInt(e.target.getAttribute('data-id'));
+          customers = customers.filter(c => c.id !== id);
+          saveToLocalStorage();
+          render(searchInput.value);
+        });
+      });
+    }
+
+    // --- 4. Formulier Verzenden ---
+    form.addEventListener('submit', (e) => {
+      e.preventDefault(); // Voorkom herladen
+
+      const newCustomer = {
+        id: Date.now(),
+        name: document.getElementById('name').value.trim(),
+        company: document.getElementById('company').value.trim(),
+        email: document.getElementById('email').value.trim(),
+        phone: document.getElementById('phone').value.trim(),
+        status: document.getElementById('status').value,
+        notes: document.getElementById('notes').value.trim()
+      };
+
+      customers.push(newCustomer);
+      saveToLocalStorage();
+      form.reset();
+      render(searchInput.value);
+    });
+
+    // --- 5. Zoekfunctie ---
+    searchInput.addEventListener('input', (e) => {
+      render(e.target.value);
+    });
+
+    // --- 6. CSV Export ---
+    exportBtn.addEventListener('click', () => {
+      if (customers.length === 0) {
+        alert('Geen klanten om te exporteren.');
+        return;
+      }
+
+      // Kopregel
+      let csv = 'Naam,Bedrijf,E-mail,Telefoon,Status,Notities\n';
+      
+      // Data
+      customers.forEach(c => {
+        // Vervang komma's en quotes om CSV-formaat te behouden
+        const safeName = c.name.replace(/,/g, ' ');
+        const safeCompany = (c.company || '').replace(/,/g, ' ');
+        const safeNotes = (c.notes || '').replace(/,/g, ' ').replace(/\n/g, ' ');
+        csv += `"${safeName}","${safeCompany}","${c.email}","${c.phone || ''}","${c.status}","${safeNotes}"\n`;
+      });
+
+      // Download triggeren
+      const blob = new Blob([csv], { type: 'text/csv;charset=utf-8;' });
+      const link = document.createElement('a');
+      link.href = URL.createObjectURL(blob);
+      link.download = 'klantenoverzicht.csv';
+      link.click();
+    });
+
+    // --- 7. Alles Verwijderen ---
+    clearAllBtn.addEventListener('click', () => {
+      if (confirm('Weet je zeker dat je ALLE klanten wilt verwijderen? Dit kan niet ongedaan worden gemaakt.')) {
+        customers = [];
+        saveToLocalStorage();
+        render();
+      }
+    });
+
+    // --- 8. Initieel tekenen ---
+    render();
+  </script>
+</body>
+</html>

@@ -1,0 +1,323 @@
+<!DOCTYPE html>
+<html lang="nl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Uren Tracker – Verde Horizonte Admin</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --bg: #05070d;
+    --surface: #0b1020;
+    --surface-2: #0f1630;
+    --border: rgba(233, 237, 247, 0.09);
+    --text: #e9edf7;
+    --muted: rgba(233, 237, 247, 0.58);
+    --accent: #5b8cff;
+    --accent2: #4fd1ff;
+    --gold: #d4af37;
+    --danger: #ff6b7a;
+    --success: #4ade80;
+  }
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body {
+    font-family: 'Inter', sans-serif;
+    background: var(--bg);
+    color: var(--text);
+    min-height: 100vh;
+    padding: 40px 20px;
+    background: radial-gradient(900px 420px at 50% -120px, rgba(91,140,255,.14), transparent 70%), var(--bg);
+  }
+  .container { max-width: 1000px; margin: 0 auto; }
+  .header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 30px; }
+  .header h1 { font-size: 1.8rem; font-weight: 700; }
+  .header span { color: var(--gold); }
+  .header a { color: var(--muted); text-decoration: none; font-size: 0.9rem; }
+  
+  .card {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 16px;
+    padding: 24px;
+    margin-bottom: 30px;
+  }
+  .card h2 { font-size: 1.1rem; margin-bottom: 20px; font-weight: 600; }
+
+  .form-row { display: flex; gap: 15px; flex-wrap: wrap; margin-bottom: 20px; }
+  .form-group { flex: 1; min-width: 200px; }
+  .form-group label { display: block; font-size: 0.85rem; color: var(--muted); margin-bottom: 6px; }
+  .form-group input, .form-group select {
+    width: 100%;
+    padding: 12px;
+    background: var(--bg);
+    border: 1px solid var(--border);
+    color: var(--text);
+    border-radius: 8px;
+    font: inherit;
+  }
+  .form-group input:focus, .form-group select:focus { outline: none; border-color: var(--accent); }
+
+  .btn {
+    padding: 12px 24px;
+    border-radius: 8px;
+    font-weight: 600;
+    border: none;
+    cursor: pointer;
+    font: inherit;
+    transition: all 0.2s;
+  }
+  .btn-primary { background: var(--accent); color: #05070d; }
+  .btn-primary:hover { filter: brightness(1.1); }
+  .btn-danger { background: transparent; color: var(--danger); border: 1px solid rgba(255,107,122,.3); padding: 6px 12px; font-size: 0.8rem; }
+  .btn-danger:hover { background: rgba(255,107,122,.1); }
+  .btn-stop { background: var(--danger); color: #fff; }
+  .btn-stop:hover { filter: brightness(1.1); }
+
+  .timer-display {
+    font-size: 3rem;
+    font-weight: 700;
+    text-align: center;
+    margin: 20px 0;
+    color: var(--accent2);
+    font-variant-numeric: tabular-nums;
+    letter-spacing: 2px;
+  }
+  .timer-active {
+    background: rgba(91,140,255,.1);
+    border: 1px solid var(--accent);
+    border-radius: 16px;
+    padding: 20px;
+    text-align: center;
+  }
+  .timer-active p { color: var(--muted); margin-bottom: 10px; }
+
+  .session-list { display: flex; flex-direction: column; gap: 10px; }
+  .session-item {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 15px;
+    background: var(--surface-2);
+    border: 1px solid var(--border);
+    border-radius: 10px;
+  }
+  .session-info { display: flex; flex-direction: column; gap: 4px; }
+  .session-project { font-weight: 600; }
+  .session-meta { font-size: 0.85rem; color: var(--muted); }
+  .session-duration { font-weight: 700; color: var(--accent2); }
+
+  .empty-msg { text-align: center; color: var(--muted); padding: 20px; font-style: italic; }
+</style>
+</head>
+<body>
+  <div class="container">
+    <div class="header">
+      <h1>Uren <span>Tracker</span></h1>
+      <a href="index.html">← Terug naar site</a>
+    </div>
+
+    <!-- Timer Start -->
+    <div class="card" id="start-card">
+      <h2>Start een nieuwe sessie</h2>
+      <div class="form-row">
+        <div class="form-group">
+          <label>Projectnaam</label>
+          <input type="text" id="project-name" placeholder="Bijv. Website Garage 2800">
+        </div>
+        <div class="form-group">
+          <label>Klantnaam</label>
+          <input type="text" id="client-name" placeholder="Bijv. Mark">
+        </div>
+        <div class="form-group">
+          <label>Uurtarief (€)</label>
+          <input type="number" id="hourly-rate" placeholder="75" step="0.01" value="75">
+        </div>
+      </div>
+      <button class="btn btn-primary" id="start-btn" style="width:100%;">▶ Start Timer</button>
+    </div>
+
+    <!-- Timer Actief -->
+    <div class="card timer-active" id="active-card" style="display:none;">
+      <p>Bezig met: <strong id="active-project"></strong> (<span id="active-client"></span>)</p>
+      <div class="timer-display" id="timer-display">00:00:00</div>
+      <button class="btn btn-stop" id="stop-btn" style="width:100%;">⏹ Stop Timer</button>
+    </div>
+
+    <!-- Overzicht -->
+    <div class="card">
+      <h2>Recente Sessies</h2>
+      <div class="session-list" id="session-list">
+        <!-- Sessies worden hier ingeladen -->
+      </div>
+      <div class="empty-msg" id="empty-msg">Nog geen sessies. Start je eerste timer hierboven.</div>
+    </div>
+  </div>
+
+  <script>
+    // --- LocalStorage Data ---
+    let sessions = JSON.parse(localStorage.getItem('vh_sessions')) || [];
+    let activeSession = JSON.parse(localStorage.getItem('vh_active_session')) || null;
+    let timerInterval = null;
+
+    // --- DOM Elementen ---
+    const startCard = document.getElementById('start-card');
+    const activeCard = document.getElementById('active-card');
+    const startBtn = document.getElementById('start-btn');
+    const stopBtn = document.getElementById('stop-btn');
+    const timerDisplay = document.getElementById('timer-display');
+    const activeProject = document.getElementById('active-project');
+    const activeClient = document.getElementById('active-client');
+    const sessionList = document.getElementById('session-list');
+    const emptyMsg = document.getElementById('empty-msg');
+
+    // --- Opslaan ---
+    function saveSessions() {
+      localStorage.setItem('vh_sessions', JSON.stringify(sessions));
+    }
+    function saveActiveSession() {
+      localStorage.setItem('vh_active_session', JSON.stringify(activeSession));
+    }
+
+    // --- Timer Weergave ---
+    function formatTime(seconds) {
+      const h = Math.floor(seconds / 3600).toString().padStart(2, '0');
+      const m = Math.floor((seconds % 3600) / 60).toString().padStart(2, '0');
+      const s = (seconds % 60).toString().padStart(2, '0');
+      return `${h}:${m}:${s}`;
+    }
+
+    function updateTimer() {
+      if (!activeSession) return;
+      const now = Date.now();
+      const elapsed = Math.floor((now - activeSession.startTime) / 1000);
+      timerDisplay.textContent = formatTime(elapsed);
+    }
+
+    // --- Start Timer ---
+    startBtn.addEventListener('click', () => {
+      const project = document.getElementById('project-name').value.trim();
+      const client = document.getElementById('client-name').value.trim();
+      const rate = parseFloat(document.getElementById('hourly-rate').value) || 75;
+
+      if (!project) {
+        alert('Vul een projectnaam in.');
+        return;
+      }
+
+      // Nieuwe actieve sessie
+      activeSession = {
+        project: project,
+        client: client || 'Onbekend',
+        rate: rate,
+        startTime: Date.now()
+      };
+      saveActiveSession();
+
+      // UI aanpassen
+      startCard.style.display = 'none';
+      activeCard.style.display = 'block';
+      activeProject.textContent = project;
+      activeClient.textContent = client || 'Onbekend';
+
+      // Timer starten
+      updateTimer();
+      timerInterval = setInterval(updateTimer, 1000);
+    });
+
+    // --- Stop Timer ---
+    stopBtn.addEventListener('click', () => {
+      if (!activeSession) return;
+
+      const endTime = Date.now();
+      const duration = Math.floor((endTime - activeSession.startTime) / 1000);
+      const durationHours = duration / 3600;
+      const amount = durationHours * activeSession.rate;
+
+      const session = {
+        id: Date.now(),
+        project: activeSession.project,
+        client: activeSession.client,
+        rate: activeSession.rate,
+        startTime: activeSession.startTime,
+        endTime: endTime,
+        duration: duration,
+        amount: amount
+      };
+
+      sessions.unshift(session); // Nieuwste bovenaan
+      saveSessions();
+
+      // Reset actieve sessie
+      activeSession = null;
+      saveActiveSession();
+      clearInterval(timerInterval);
+
+      // UI terugzetten
+      startCard.style.display = 'block';
+      activeCard.style.display = 'none';
+      document.getElementById('project-name').value = '';
+      document.getElementById('client-name').value = '';
+
+      renderSessions();
+    });
+
+    // --- Sessies Renderen ---
+    function renderSessions() {
+      sessionList.innerHTML = '';
+
+      if (sessions.length === 0) {
+        emptyMsg.style.display = 'block';
+        return;
+      }
+      emptyMsg.style.display = 'none';
+
+      sessions.forEach(session => {
+        const item = document.createElement('div');
+        item.className = 'session-item';
+
+        const startDate = new Date(session.startTime).toLocaleString('nl-BE', { day: '2-digit', month: '2-digit', hour: '2-digit', minute: '2-digit' });
+        const durationStr = formatTime(session.duration);
+
+        item.innerHTML = `
+          <div class="session-info">
+            <span class="session-project">${session.project} <span style="color:var(--muted);font-weight:400;">(${session.client})</span></span>
+            <span class="session-meta">${startDate} • ${session.rate} €/u</span>
+          </div>
+          <div style="display:flex; align-items:center; gap:15px;">
+            <span class="session-duration">${durationStr}</span>
+            <span style="color:var(--success); font-weight:600;">€ ${session.amount.toFixed(2)}</span>
+            <button class="btn btn-danger" onclick="deleteSession(${session.id})">Verwijder</button>
+          </div>
+        `;
+        sessionList.appendChild(item);
+      });
+    }
+
+    // --- Verwijderen ---
+    function deleteSession(id) {
+      if (!confirm('Weet je zeker dat je deze sessie wilt verwijderen?')) return;
+      sessions = sessions.filter(s => s.id !== id);
+      saveSessions();
+      renderSessions();
+    }
+
+    // --- Herstel actieve sessie bij herladen ---
+    function restoreActiveSession() {
+      if (activeSession) {
+        startCard.style.display = 'none';
+        activeCard.style.display = 'block';
+        activeProject.textContent = activeSession.project;
+        activeClient.textContent = activeSession.client;
+        updateTimer();
+        timerInterval = setInterval(updateTimer, 1000);
+      }
+    }
+
+    // --- Init ---
+    renderSessions();
+    restoreActiveSession();
+  </script>
+</body>
+</html>
