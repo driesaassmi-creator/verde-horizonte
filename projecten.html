@@ -9,154 +9,53 @@
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
 <style>
   :root {
-    --bg: #05070d; 
-    --surface: #0b1020; 
-    --surface-2: #0f1630;
-    --border: rgba(233, 237, 247, 0.09); 
-    --text: #e9edf7;
-    --muted: rgba(233, 237, 247, 0.58); 
-    --accent: #5b8cff;
-    --accent2: #4fd1ff; 
-    --gold: #d4af37;
-    --danger: #ff6b7a;
+    --bg: #05070d; --surface: #0b1020; --surface-2: #0f1630;
+    --border: rgba(233, 237, 247, 0.09); --text: #e9edf7;
+    --muted: rgba(233, 237, 247, 0.58); --accent: #5b8cff;
+    --danger: #ff6b7a; --success: #4ade80;
   }
   * { box-sizing: border-box; margin: 0; padding: 0; }
-  
-  /* VOORKOMT HORIZONTAAL SCROLLEN EN SWIPEN */
-  html, body { 
-    overflow-x: hidden; 
-    overscroll-behavior-x: none; 
-    touch-action: pan-y;
-  }
-  
+  html, body { overflow-x: hidden; overscroll-behavior-x: none; touch-action: pan-y; }
   body {
-    font-family: 'Inter', sans-serif; 
-    background: var(--bg); 
-    color: var(--text);
-    min-height: 100vh; 
-    padding: 30px 15px;
+    font-family: 'Inter', sans-serif; background: var(--bg); color: var(--text);
+    min-height: 100vh; padding: 30px 15px;
     background: radial-gradient(900px 420px at 50% -120px, rgba(91,140,255,.14), transparent 70%), var(--bg);
   }
-  
   .container { max-width: 1100px; margin: 0 auto; }
   
-  /* Header */
   .header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 25px; }
   .header h1 { font-size: 1.6rem; font-weight: 700; }
-  .header h1 span { color: var(--gold); }
-  .header a { 
-    color: var(--text); 
-    text-decoration: none; 
-    font-size: 0.85rem; 
-    background: var(--surface);
-    padding: 8px 14px;
-    border-radius: 8px;
-    border: 1px solid var(--border);
-  }
+  .header a { color: var(--text); text-decoration: none; font-size: 0.85rem; background: var(--surface); padding: 8px 14px; border-radius: 8px; border: 1px solid var(--border); }
 
-  /* Formulier */
-  .add-form { 
-    display: flex; 
-    gap: 10px; 
-    margin-bottom: 30px; 
-    background: var(--surface); 
-    padding: 15px; 
-    border-radius: 16px; 
-    border: 1px solid var(--border); 
-    flex-wrap: wrap;
-  }
-  .add-form input { 
-    flex: 1; 
-    min-width: 150px;
-    padding: 14px; 
-    background: var(--bg); 
-    border: 1px solid var(--border); 
-    color: var(--text); 
-    border-radius: 10px; 
-    font: inherit; 
-  }
+  .add-form { display: flex; gap: 10px; margin-bottom: 30px; background: var(--surface); padding: 15px; border-radius: 16px; border: 1px solid var(--border); flex-wrap: wrap; }
+  .add-form input { flex: 1; min-width: 150px; padding: 14px; background: var(--bg); border: 1px solid var(--border); color: var(--text); border-radius: 10px; font: inherit; }
   .add-form input:focus { outline: none; border-color: var(--accent); }
-  .btn-add { 
-    padding: 14px 24px; 
-    background: var(--accent); 
-    color: #000; 
-    font-weight: 600; 
-    border: none; 
-    border-radius: 10px; 
-    cursor: pointer; 
-    flex: 1;
-    min-width: 100%;
-  }
+  .btn-add { padding: 14px 24px; background: var(--accent); color: #000; font-weight: 600; border: none; border-radius: 10px; cursor: pointer; flex: 1; min-width: 100%; }
   .btn-add:hover { filter: brightness(1.1); }
 
-  /* Kanban Board */
   .board { display: grid; grid-template-columns: repeat(3, 1fr); gap: 20px; }
-  
-  .column { 
-    background: var(--surface-2); 
-    border-radius: 16px; 
-    padding: 15px; 
-    border: 1px solid var(--border); 
-    min-height: 200px; 
-  }
-  .column-header { 
-    display: flex; 
-    justify-content: space-between; 
-    align-items: center; 
-    margin-bottom: 15px; 
-    padding-bottom: 10px; 
-    border-bottom: 1px solid var(--border); 
-  }
+  .column { background: var(--surface-2); border-radius: 16px; padding: 15px; border: 1px solid var(--border); min-height: 200px; }
+  .column-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 15px; padding-bottom: 10px; border-bottom: 1px solid var(--border); }
   .column-header h2 { font-size: 0.9rem; font-weight: 600; text-transform: uppercase; letter-spacing: 1px; color: var(--muted); }
   .count { background: rgba(91,140,255,.1); color: var(--accent); padding: 2px 8px; border-radius: 10px; font-size: 0.8rem; font-weight: 700; }
 
-  /* Kaartjes */
   .task-list { display: flex; flex-direction: column; gap: 12px; }
-  .task { 
-    background: var(--surface); 
-    border: 1px solid var(--border); 
-    padding: 15px; 
-    border-radius: 12px; 
-    transition: all 0.2s; 
-  }
+  .task { background: var(--surface); border: 1px solid var(--border); padding: 15px; border-radius: 12px; transition: all 0.2s; }
   .task:hover { border-color: rgba(91,140,255,.4); }
   .task h3 { font-size: 1rem; margin-bottom: 5px; }
   .task p { font-size: 0.85rem; color: var(--muted); margin-bottom: 15px; }
-  
   .task-actions { display: flex; gap: 8px; flex-wrap: wrap; }
-  .btn-move { 
-    padding: 8px 12px; 
-    background: transparent; 
-    border: 1px solid var(--border); 
-    color: var(--text); 
-    border-radius: 8px; 
-    cursor: pointer; 
-    font-size: 0.8rem; 
-    flex: 1;
-  }
+  .btn-move { padding: 8px 12px; background: transparent; border: 1px solid var(--border); color: var(--text); border-radius: 8px; cursor: pointer; font-size: 0.8rem; flex: 1; }
   .btn-move:hover { background: rgba(91,140,255,.1); border-color: var(--accent); }
   .btn-delete { color: var(--danger); border-color: rgba(255,107,122,.3); flex: 0; }
   .btn-delete:hover { background: rgba(255,107,122,.1); border-color: var(--danger); }
 
-  /* MOBIELE WEERGAVE: Alles netjes onder elkaar */
   @media(max-width: 768px) {
-    .add-form { 
-      flex-direction: column; 
-    }
-    .add-form input {
-      width: 100%;
-    }
-    .btn-add {
-      width: 100%;
-      min-width: 100%;
-    }
-    .board { 
-      grid-template-columns: 1fr; /* Kolommen onder elkaar */
-      gap: 15px;
-    }
-    .column {
-      min-height: auto;
-    }
+    .add-form { flex-direction: column; }
+    .add-form input { width: 100%; }
+    .btn-add { width: 100%; min-width: 100%; }
+    .board { grid-template-columns: 1fr; gap: 15px; }
+    .column { min-height: auto; }
   }
 </style>
 </head>
@@ -192,26 +91,13 @@
   <script>
     let tasks = JSON.parse(localStorage.getItem('vh_tasks')) || [];
     const form = document.getElementById('task-form');
-    const lists = { 
-      todo: document.getElementById('list-todo'), 
-      doing: document.getElementById('list-doing'), 
-      done: document.getElementById('list-done') 
-    };
-    const counts = { 
-      todo: document.getElementById('count-todo'), 
-      doing: document.getElementById('count-doing'), 
-      done: document.getElementById('count-done') 
-    };
+    const lists = { todo: document.getElementById('list-todo'), doing: document.getElementById('list-doing'), done: document.getElementById('list-done') };
+    const counts = { todo: document.getElementById('count-todo'), doing: document.getElementById('count-doing'), done: document.getElementById('count-done') };
 
-    function saveTasks() { 
-      localStorage.setItem('vh_tasks', JSON.stringify(tasks)); 
-    }
+    function saveTasks() { localStorage.setItem('vh_tasks', JSON.stringify(tasks)); }
 
     function render() {
-      lists.todo.innerHTML = ''; 
-      lists.doing.innerHTML = ''; 
-      lists.done.innerHTML = '';
-      
+      lists.todo.innerHTML = ''; lists.doing.innerHTML = ''; lists.done.innerHTML = '';
       let countTodo = 0, countDoing = 0, countDone = 0;
 
       tasks.forEach(task => {
@@ -222,18 +108,10 @@
 
         const card = document.createElement('div');
         card.className = 'task';
-        
         let moveButtons = '';
-        if (task.status === 'todo') { 
-          moveButtons = `<button class="btn-move" onclick="moveTask(${task.id}, 'doing')">Start →</button>`; 
-        } else if (task.status === 'doing') { 
-          moveButtons = `
-            <button class="btn-move" onclick="moveTask(${task.id}, 'todo')">← Terug</button>
-            <button class="btn-move" onclick="moveTask(${task.id}, 'done')">Voltooi ✓</button>
-          `; 
-        } else if (task.status === 'done') { 
-          moveButtons = `<button class="btn-move" onclick="moveTask(${task.id}, 'doing')">← Heropen</button>`; 
-        }
+        if (task.status === 'todo') { moveButtons = `<button class="btn-move" onclick="moveTask(${task.id}, 'doing')">Start →</button>`; }
+        else if (task.status === 'doing') { moveButtons = `<button class="btn-move" onclick="moveTask(${task.id}, 'todo')">← Terug</button><button class="btn-move" onclick="moveTask(${task.id}, 'done')">Voltooi ✓</button>`; }
+        else if (task.status === 'done') { moveButtons = `<button class="btn-move" onclick="moveTask(${task.id}, 'doing')">← Heropen</button>`; }
 
         card.innerHTML = `
           <h3>${task.name}</h3>
@@ -245,7 +123,6 @@
         `;
         targetList.appendChild(card);
       });
-      
       counts.todo.textContent = countTodo;
       counts.doing.textContent = countDoing;
       counts.done.textContent = countDone;
@@ -253,32 +130,21 @@
 
     form.addEventListener('submit', (e) => {
       e.preventDefault();
-      tasks.push({ 
-        id: Date.now(), 
-        name: document.getElementById('task-name').value.trim(), 
-        client: document.getElementById('task-client').value.trim(), 
-        status: 'todo' 
-      });
-      saveTasks(); 
-      form.reset(); 
-      render();
+      tasks.push({ id: Date.now(), name: document.getElementById('task-name').value.trim(), client: document.getElementById('task-client').value.trim(), status: 'todo' });
+      saveTasks(); form.reset(); render();
     });
 
     function moveTask(id, newStatus) {
       tasks = tasks.map(t => t.id === id ? { ...t, status: newStatus } : t);
-      saveTasks(); 
-      render();
+      saveTasks(); render();
     }
 
     function deleteTask(id) {
       if(confirm('Weet je zeker dat je dit project wilt verwijderen?')) {
         tasks = tasks.filter(t => t.id !== id);
-        saveTasks(); 
-        render();
+        saveTasks(); render();
       }
     }
-    
-    // Start de app
     render();
   </script>
 </body>

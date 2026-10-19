@@ -3,191 +3,136 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-<title>Prijscalculator - Verde Horizonte</title>
+<title>Mijn Kaartje – Verde Horizonte</title>
 <meta name="robots" content="noindex, nofollow">
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
 <style>
   :root {
-    --bg: #05070d; --surface: #0b1020; --surface-2: #0f1630;
-    --border: rgba(233, 237, 247, 0.09); --text: #e9edf7;
-    --muted: rgba(233, 237, 247, 0.58); --accent: #5b8cff;
-    --accent2: #4fd1ff; --gold: #d4af37; --success: #4ade80;
+    --bg: #05070d; --surface: #0b1020; --border: rgba(233, 237, 247, 0.09);
+    --text: #e9edf7; --muted: rgba(233, 237, 247, 0.58);
+    --accent: #5b8cff; --gold: #d4af37;
   }
   * { box-sizing: border-box; margin: 0; padding: 0; }
   html, body { overflow-x: hidden; overscroll-behavior-x: none; touch-action: pan-y; }
   body {
     font-family: 'Inter', sans-serif; background: var(--bg); color: var(--text);
-    line-height: 1.6; padding: 40px 20px; display: flex; justify-content: center;
+    min-height: 100vh; padding: 30px 20px; display: flex; justify-content: center; align-items: center;
     background: radial-gradient(900px 420px at 50% -120px, rgba(91,140,255,.14), transparent 70%), var(--bg);
   }
-  .container { max-width: 700px; width: 100%; margin: 0 auto; }
-  
-  .header { text-align: center; margin-bottom: 40px; }
-  .header h1 { font-size: 2.2rem; font-weight: 800; letter-spacing: -0.03em; margin-bottom: 10px; }
-  .header h1 span { color: var(--gold); }
-  .header p { color: var(--muted); font-size: 1.05rem; }
 
-  .card { background: var(--surface); border: 1px solid var(--border); border-radius: 20px; padding: 30px; margin-bottom: 20px; }
-  .card h2 { font-size: 1.2rem; margin-bottom: 20px; font-weight: 600; border-bottom: 1px solid var(--border); padding-bottom: 10px; }
+  .card {
+    background: var(--surface); border: 1px solid var(--border); border-radius: 24px;
+    width: 100%; max-width: 400px; padding: 40px 30px; text-align: center;
+    box-shadow: 0 20px 50px rgba(0,0,0,0.5); position: relative;
+  }
 
-  .form-group { margin-bottom: 25px; }
-  .form-group label { display: block; font-size: 0.95rem; font-weight: 500; margin-bottom: 10px; }
-  .form-group select, .form-group input[type="text"], .form-group input[type="email"], .form-group input[type="number"] {
-    width: 100%; padding: 14px; background: var(--bg); border: 1px solid var(--border);
-    color: var(--text); border-radius: 10px; font: inherit; font-size: 1rem; -webkit-appearance: none;
-  }
-  .form-group select:focus, .form-group input:focus { outline: none; border-color: var(--accent); }
+  .logo { font-size: 1.5rem; font-weight: 800; text-transform: uppercase; letter-spacing: 1px; margin-bottom: 30px; }
+  .logo span { color: var(--gold); }
 
-  /* Custom checkboxes */
-  .checkbox-group { display: flex; flex-direction: column; gap: 10px; }
-  .checkbox-label {
-    display: flex; align-items: center; gap: 12px; padding: 15px;
-    background: rgba(255,255,255,.02); border: 1px solid var(--border); border-radius: 10px; cursor: pointer; transition: 0.2s;
+  .avatar {
+    width: 100px; height: 100px; border-radius: 50%; margin: 0 auto 20px;
+    background: linear-gradient(135deg, var(--accent), #3f6ef0);
+    display: grid; place-items: center; font-size: 2.5rem; font-weight: 700; color: #fff;
+    box-shadow: 0 10px 30px rgba(91,140,255,.3);
   }
-  .checkbox-label:hover { background: rgba(255,255,255,.05); }
-  .checkbox-label input { display: none; }
-  .custom-check {
-    width: 24px; height: 24px; border-radius: 6px; border: 2px solid var(--muted); display: grid; place-items: center; transition: 0.2s;
-  }
-  .checkbox-label input:checked ~ .custom-check { background: var(--accent); border-color: var(--accent); }
-  .custom-check svg { width: 14px; height: 14px; stroke: #fff; stroke-width: 3; fill: none; opacity: 0; transition: 0.2s; }
-  .checkbox-label input:checked ~ .custom-check svg { opacity: 1; }
 
-  .price-box {
-    background: linear-gradient(135deg, rgba(91,140,255,.1), rgba(79,209,255,.05));
-    border: 1px solid var(--accent); border-radius: 16px; padding: 25px; text-align: center; margin: 30px 0;
+  h1 { font-size: 1.8rem; font-weight: 800; margin-bottom: 5px; }
+  h2 { font-size: 1rem; color: var(--muted); font-weight: 500; margin-bottom: 25px; }
+
+  .contact-info { text-align: left; margin-bottom: 30px; }
+  .contact-row { display: flex; align-items: center; gap: 15px; margin-bottom: 15px; font-size: 0.95rem; }
+  .contact-row svg { width: 20px; height: 20px; color: var(--accent); flex-shrink: 0; }
+  .contact-row a { color: var(--text); text-decoration: none; }
+
+  .qr-container {
+    background: #fff; padding: 15px; border-radius: 16px; display: inline-block; margin-bottom: 20px;
   }
-  .price-box h3 { font-size: 1rem; color: var(--muted); text-transform: uppercase; letter-spacing: 1px; margin-bottom: 10px; }
-  .price-amount { font-size: 3rem; font-weight: 800; color: var(--accent2); line-height: 1; }
-  .price-note { font-size: 0.85rem; color: var(--muted); margin-top: 10px; }
+  .qr-container img { display: block; width: 200px; height: 200px; }
+  .qr-text { font-size: 0.8rem; color: var(--muted); margin-bottom: 20px; }
 
   .btn {
-    display: flex; align-items: center; justify-content: center; width: 100%; padding: 18px;
-    border-radius: 12px; font-weight: 700; font-size: 1.1rem; text-decoration: none; border: none; cursor: pointer; transition: 0.2s;
+    display: inline-flex; align-items: center; justify-content: center; width: 100%;
+    padding: 15px; border-radius: 12px; font-weight: 600; font-size: 1rem;
+    text-decoration: none; border: none; cursor: pointer; transition: 0.2s;
   }
-  .btn-primary { background: var(--accent); color: #05070d; box-shadow: 0 8px 30px rgba(91,140,255,.35); }
-  .btn-primary:hover { transform: translateY(-2px); box-shadow: 0 12px 44px rgba(91,140,255,.6); }
-
-  .contact-fields { display: none; margin-top: 20px; padding-top: 20px; border-top: 1px solid var(--border); }
-  .contact-fields.active { display: block; animation: fadeIn 0.3s ease-out; }
-  @keyframes fadeIn { from { opacity: 0; transform: translateY(-10px); } to { opacity: 1; transform: translateY(0); } }
+  .btn-primary { background: var(--accent); color: #05070d; }
+  .btn-primary:hover { filter: brightness(1.1); }
 </style>
 </head>
 <body>
 
-<div class="container">
-  <div class="header">
-    <h1>Bereken jouw <span>investering</span></h1>
-    <p>Vink aan wat je nodig hebt en zie direct een prijsindicatie.</p>
-  </div>
+<div class="card">
+  <div class="logo">Verde <span>Horizonte</span></div>
+  
+  <div class="avatar">D</div>
+  <h1>Dries</h1>
+  <h2>Webdeveloper & Founder</h2>
 
-  <div class="card">
-    <h2>1. Jouw Project</h2>
-    
-    <div class="form-group">
-      <label>Hoeveel pagina's heb je nodig?</label>
-      <select id="pages" onchange="calculate()">
-        <option value="799">One-pager / Landingspagina</option>
-        <option value="1199">Tot 5 pagina's</option>
-        <option value="1599">Tot 10 pagina's</option>
-        <option value="1999">Meer dan 10 pagina's</option>
-      </select>
+  <div class="contact-info">
+    <div class="contact-row">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"></path></svg>
+      <a href="tel:+32469181196">+32 469 18 11 96</a>
     </div>
-
-    <h2>2. Extra Functies</h2>
-    <div class="checkbox-group">
-      <label class="checkbox-label">
-        <input type="checkbox" class="extra" value="150" onchange="calculate()">
-        <div class="custom-check"><svg viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"></polyline></svg></div>
-        <div>
-          <strong>Boekingssysteem / Agenda</strong><br>
-          <span style="font-size: 0.85rem; color: var(--muted);">+ €150</span>
-        </div>
-      </label>
-      
-      <label class="checkbox-label">
-        <input type="checkbox" class="extra" value="250" onchange="calculate()">
-        <div class="custom-check"><svg viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"></polyline></svg></div>
-        <div>
-          <strong>Webshop / Betalingen</strong><br>
-          <span style="font-size: 0.85rem; color: var(--muted);">+ €250</span>
-        </div>
-      </label>
-      
-      <label class="checkbox-label">
-        <input type="checkbox" class="extra" value="100" onchange="calculate()">
-        <div class="custom-check"><svg viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"></polyline></svg></div>
-        <div>
-          <strong>Meertalige website</strong><br>
-          <span style="font-size: 0.85rem; color: var(--muted);">+ €100</span>
-        </div>
-      </label>
+    <div class="contact-row">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"></path><polyline points="22,6 12,13 2,6"></polyline></svg>
+      <a href="mailto:driesaassmi@gmail.com">driesaassmi@gmail.com</a>
+    </div>
+    <div class="contact-row">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"></circle><line x1="2" y1="12" x2="22" y2="12"></line><path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"></path></svg>
+      <a href="https://www.verdehorizonte.be" target="_blank">www.verdehorizonte.be</a>
     </div>
   </div>
 
-  <div class="price-box">
-    <h3>Geschatte investering (excl. btw)</h3>
-    <div class="price-amount" id="total-price">€ 0</div>
-    <div class="price-note">Dit is een indicatie. Na een gesprek krijg je een voorstel op maat.</div>
+  <!-- De QR-code wordt hier ingeladen -->
+  <div class="qr-container">
+    <img id="qr-image" src="" alt="QR Code">
   </div>
+  <p class="qr-text">Scan deze code om mij op te slaan</p>
 
-  <!-- Het formulier om de lead te verzenden -->
-  <form id="lead-form" action="https://api.web3forms.com/submit" method="POST">
-    <input type="hidden" name="access_key" value="a05ef49b-f4f1-473b-91a9-bd20994d2cd5">
-    <input type="hidden" name="subject" value="Nieuwe aanvraag via Prijscalculator">
-    <input type="hidden" id="hidden-price" name="Geschatte Prijs" value="">
-    <input type="hidden" id="hidden-extras" name="Gekozen Extra's" value="">
-
-    <button type="button" class="btn btn-primary" id="show-form-btn" onclick="showForm()">Vraag een voorstel op maat aan</button>
-
-    <div class="contact-fields" id="contact-fields">
-      <div class="form-group">
-        <input type="text" name="name" placeholder="Jouw naam" required>
-      </div>
-      <div class="form-group">
-        <input type="email" name="email" placeholder="Jouw e-mailadres" required>
-      </div>
-      <div class="form-group">
-        <input type="text" name="company" placeholder="Naam van je bedrijf (optioneel)">
-      </div>
-      <button type="submit" class="btn btn-primary">Verstuur definitieve aanvraag →</button>
-    </div>
-  </form>
-
+  <button id="download-btn" class="btn btn-primary">
+    📥 Opslaan in Contacten
+  </button>
 </div>
 
 <script>
-  function calculate() {
-    // 1. Haal de basisprijs op
-    let total = parseInt(document.getElementById('pages').value);
-    let extrasList = [];
+  // Jouw gegevens
+  const contact = {
+    firstName: "Dries",
+    lastName: "",
+    company: "Verde Horizonte",
+    title: "Webdeveloper & Founder",
+    phone: "+32469181196",
+    email: "driesaassmi@gmail.com",
+    website: "https://www.verdehorizonte.be"
+  };
 
-    // 2. Tel de extra's op
-    document.querySelectorAll('.extra:checked').forEach(checkbox => {
-      total += parseInt(checkbox.value);
-      // Zoek de titel van de checkbox (het <strong> element)
-      const title = checkbox.parentElement.querySelector('strong').innerText;
-      extrasList.push(title);
-    });
+  // 1. Genereer de vCard tekst
+  const vCardData = `BEGIN:VCARD
+VERSION:3.0
+N:${contact.lastName};${contact.firstName};;;
+FN:${contact.firstName} ${contact.lastName}
+ORG:${contact.company}
+TITLE:${contact.title}
+TEL;TYPE=CELL:${contact.phone}
+EMAIL;TYPE=WORK,INTERNET:${contact.email}
+URL:${contact.website}
+END:VCARD`;
 
-    // 3. Update de prijs op het scherm (met punt voor duizendtallen)
-    document.getElementById('total-price').innerText = '€ ' + total.toLocaleString('nl-BE');
-    
-    // 4. Update de verborgen velden voor de e-mail
-    document.getElementById('hidden-price').value = '€ ' + total.toLocaleString('nl-BE');
-    document.getElementById('hidden-extras').value = extrasList.length > 0 ? extrasList.join(', ') : 'Geen extra\'s gekozen';
-  }
+  // 2. Zet de vCard om in een QR-code
+  const encodedVCard = encodeURIComponent(vCardData);
+  document.getElementById('qr-image').src = `https://api.qrserver.com/v1/create-qr-code/?size=300x300&data=${encodedVCard}`;
 
-  function showForm() {
-    const formFields = document.getElementById('contact-fields');
-    formFields.classList.add('active');
-    document.getElementById('show-form-btn').style.display = 'none';
-    // Scroll een klein stukje naar beneden zodat het formulier mooi in beeld komt
-    formFields.scrollIntoView({ behavior: 'smooth', block: 'center' });
-  }
-
-  // Bereken de beginprijs bij het laden van de pagina
-  calculate();
+  // 3. Zorg dat de "Opslaan" knop een .vcf bestand downloadt
+  document.getElementById('download-btn').addEventListener('click', () => {
+    const blob = new Blob([vCardData], { type: 'text/vcard;charset=utf-8;' });
+    const url = URL.createObjectURL(blob);
+    const link = document.createElement('a');
+    link.href = url;
+    link.download = 'Dries_VerdeHorizonte.vcf';
+    document.body.appendChild(link);
+    link.click();
+    document.body.removeChild(link);
+  });
 </script>
 </body>
 </html>
