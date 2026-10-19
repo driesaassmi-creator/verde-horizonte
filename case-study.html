@@ -10,6 +10,8 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<!-- Chart.js voor de interactieve grafiek -->
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 
 <style>
 :root{
@@ -62,6 +64,30 @@ header{position:sticky;top:0;z-index:50;backdrop-filter:blur(14px);background:rg
 .portal-links a {display: inline-flex; align-items: center; gap: 0.5rem; padding: 0.6rem 1rem; background: rgba(14,22,44,.9); border: 1px solid var(--line); border-radius: 8px; font-size: 0.9rem; color: var(--text); transition: all 0.3s;}
 .portal-links a:hover {border-color: var(--accent); color: var(--accent2);}
 
+/* NIEUW: Interactief Dashboard Blok */
+.interactive-demo {
+  background: var(--surface); border: 1px solid var(--line); border-radius: 24px; padding: 2rem;
+  margin-bottom: 80px; box-shadow: 0 20px 60px rgba(0,0,0,0.4);
+}
+.interactive-demo h3 {font-size: 1.5rem; margin-bottom: 0.5rem;}
+.interactive-demo p {color: var(--muted); margin-bottom: 2rem; font-size: 0.95rem;}
+
+.demo-grid { display: grid; grid-template-columns: 1fr 2fr; gap: 2rem; }
+@media(max-width: 768px) { .demo-grid { grid-template-columns: 1fr; } }
+
+.demo-stats { display: flex; flex-direction: column; gap: 1rem; }
+.stat-box {
+  background: rgba(255,255,255,.03); border: 1px solid var(--line); border-radius: 12px; padding: 1.2rem;
+}
+.stat-box span { font-size: 0.8rem; color: var(--muted); text-transform: uppercase; letter-spacing: 1px; }
+.stat-box strong { display: block; font-size: 2rem; font-weight: 800; color: var(--accent2); margin-top: 0.2rem; }
+
+.chart-container {
+  background: rgba(255,255,255,.03); border: 1px solid var(--line); border-radius: 12px; padding: 1.2rem;
+  position: relative;
+}
+
+/* CTA Box */
 .cta-box {text-align: center; padding: 60px 20px; background: var(--surface); border: 1px solid var(--line); border-radius: 24px; margin-bottom: 80px;}
 .cta-box h2 {font-size: 2rem; margin-bottom: 1rem;}
 .cta-box p {color: var(--muted); margin-bottom: 2rem;}
@@ -92,7 +118,6 @@ footer{padding:28px 0;text-align:center;color:var(--muted);font-size:.82rem;bord
     <p>Hoe een traditionele sportschool werd omgetoverd tot een digitaal ecosysteem met vier verschillende portalen, van klant tot admin.</p>
   </section>
 
-  <!-- Vervang deze afbeelding door een echte screenshot van je fitness-demo -->
   <div class="case-image">
     <img src="https://s0.wp.com/mshots/v1/https%3A%2F%2Ffitness.fitzonemechelen.be?w=1200&h=800" alt="Screenshot van de FitZone demo">
   </div>
@@ -122,6 +147,30 @@ footer{padding:28px 0;text-align:center;color:var(--muted);font-size:.82rem;bord
         <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 13l4 4L19 7"/></svg> Klantportaal voor leden om zelf hun schema en abonnement te beheren.</li>
         <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 13l4 4L19 7"/></svg> Admin dashboard voor volledige controle over omzet en ledenaantallen.</li>
       </ul>
+    </div>
+  </section>
+
+  <!-- NIEUW: Interactieve Demo Sectie -->
+  <section class="interactive-demo">
+    <h3>Live Demo: Het Dashboard</h3>
+    <p>Klik op de knop om te zien hoe het dashboard in de praktijk werkt (dit is een interactieve simulatie).</p>
+    
+    <div class="demo-grid">
+      <div class="demo-stats">
+        <div class="stat-box">
+          <span>Actieve Leden</span>
+          <strong id="live-members">1.240</strong>
+        </div>
+        <div class="stat-box">
+          <span>Nieuwe Aanmeldingen</span>
+          <strong id="live-signups">12</strong>
+        </div>
+        <button class="btn primary" onclick="simulateSignup()" style="margin-top: 1rem;">Simuleer Nieuwe Aanmelding</button>
+      </div>
+      
+      <div class="chart-container">
+        <canvas id="demoChart"></canvas>
+      </div>
     </div>
   </section>
 
@@ -159,6 +208,65 @@ footer{padding:28px 0;text-align:center;color:var(--muted);font-size:.82rem;bord
 
 <script>
   document.getElementById("yr").textContent = new Date().getFullYear();
+
+  // Data voor de grafiek
+  const chartData = [120, 190, 150, 220, 280, 320, 350];
+  const chartLabels = ['Ma', 'Di', 'Wo', 'Do', 'Vr', 'Za', 'Zo'];
+
+  // Chart.js initialiseren
+  const ctx = document.getElementById('demoChart').getContext('2d');
+  const gradient = ctx.createLinearGradient(0, 0, 0, 200);
+  gradient.addColorStop(0, 'rgba(91, 140, 255, 0.5)');
+  gradient.addColorStop(1, 'rgba(91, 140, 255, 0.0)');
+
+  const demoChart = new Chart(ctx, {
+    type: 'line',
+    data: {
+      labels: chartLabels,
+      datasets: [{
+        label: 'Nieuwe Leden',
+        data: chartData,
+        borderColor: '#4fd1ff',
+        backgroundColor: gradient,
+        borderWidth: 2,
+        pointBackgroundColor: '#5b8cff',
+        pointBorderColor: '#fff',
+        pointRadius: 4,
+        fill: true,
+        tension: 0.4
+      }]
+    },
+    options: {
+      responsive: true,
+      maintainAspectRatio: false,
+      plugins: { legend: { display: false } },
+      scales: {
+        y: { grid: { color: 'rgba(255,255,255,0.05)' }, ticks: { color: '#8c97b0' } },
+        x: { grid: { display: false }, ticks: { color: '#8c97b0' } }
+      }
+    }
+  });
+
+  // Interactieve simulatie
+  let currentMembers = 1240;
+  let currentSignups = 12;
+
+  function simulateSignup() {
+    // Verhoog de getallen
+    currentMembers += 1;
+    currentSignups += 1;
+
+    // Update de HTML
+    document.getElementById('live-members').innerText = currentMembers.toLocaleString('nl-BE');
+    document.getElementById('live-signups').innerText = currentSignups;
+
+    // Voeg een nieuw datapunt toe aan de grafiek (en verwijder de oudste)
+    const newData = [...demoChart.data.datasets[0].data];
+    newData.shift();
+    newData.push(newData[newData.length - 1] + Math.floor(Math.random() * 50) + 20);
+    demoChart.data.datasets[0].data = newData;
+    demoChart.update();
+  }
 </script>
 </body>
 </html>
