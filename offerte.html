@@ -9,7 +9,7 @@
 <style>
   :root {
     --primary: #0f172a; --accent: #3b82f6; --gold: #b45309; --muted: #64748b;
-    --border: #e2e8f0; --input-bg: #f8fafc; --readonly-bg: #f1f5f9;
+    --border: #e2e8f0; --input-bg: #f8fafc; --readonly-bg: #f1f5f9; --wa: #25d366;
   }
   * { box-sizing: border-box; margin: 0; padding: 0; }
   html, body { overflow-x: hidden; overscroll-behavior-x: none; }
@@ -51,25 +51,25 @@
   .terms h4 { color: var(--primary); margin-bottom: 10px; }
   .terms ul { padding-left: 20px; }
   .terms li { margin-bottom: 5px; }
+  
   .signature { display: flex; justify-content: space-between; margin-top: 50px; }
   .sig-box { width: 45%; border-top: 1px solid var(--muted); padding-top: 10px; font-size: 0.85rem; color: var(--muted); }
 
-  .print-btn { display: block; width: 100%; max-width: 800px; margin: 0 auto 20px; padding: 15px; background: var(--accent); color: white; text-align: center; text-decoration: none; font-weight: 600; border-radius: 8px; cursor: pointer; border: none; font-size: 1rem; transition: background 0.3s; box-shadow: 0 4px 12px rgba(59,130,246,0.3); }
-  .print-btn:hover { background: #2563eb; }
+  .action-buttons { display: flex; flex-direction: column; gap: 10px; margin-bottom: 20px; max-width: 800px; margin: 0 auto 20px; }
+  .btn { display: flex; align-items: center; justify-content: center; width: 100%; padding: 15px; border-radius: 8px; font-weight: 600; font-size: 1rem; cursor: pointer; border: none; transition: 0.3s; text-decoration: none;}
+  .btn-primary { background: var(--accent); color: white; box-shadow: 0 4px 12px rgba(59,130,246,0.3); }
+  .btn-primary:hover { background: #2563eb; }
+  .btn-wa { background: var(--wa); color: white; box-shadow: 0 4px 12px rgba(37,211,102,0.3); }
+  .btn-wa:hover { background: #128c7e; }
 
-  /* MOBIELE WEERGAVE VOOR DE APP */
   @media (max-width: 768px) {
     body { padding: 10px; }
     .container { padding: 20px; border-radius: 12px; box-shadow: none; border: 1px solid var(--border); }
-    
     .header { flex-direction: column; gap: 20px; }
     .offerte-info { text-align: left; width: 100%; }
     .offerte-info div { justify-content: flex-start !important; }
     .offerte-info input { text-align: left !important; }
-    
     .info-grid { grid-template-columns: 1fr; gap: 20px; }
-    
-    /* Tabel in stukken hakken voor mobiel */
     table, thead, tbody, th, td, tr { display: block; width: 100%; }
     thead { display: none; }
     tbody { display: flex; flex-direction: column; gap: 15px; }
@@ -77,21 +77,18 @@
     td { border: none; padding: 5px 0; }
     td:first-child input { background: transparent; border: none; padding: 0; font-weight: 700; font-size: 1.1rem; margin-bottom: 10px; }
     td:last-child input { font-size: 1.2rem; padding: 12px; background: #fff; border: 1px solid var(--border); }
-    
     .total-block { justify-content: flex-start; margin-top: 30px; }
     .total-table { width: 100%; border: 1px solid var(--border); border-radius: 10px; padding: 15px; background: var(--input-bg); }
     .total-table td { display: flex; justify-content: space-between; align-items: center; padding: 8px 0; }
     .total-table input { width: 140px; text-align: right; background: #fff; }
-    
     .signature { flex-direction: column; gap: 30px; }
     .sig-box { width: 100%; }
   }
 
-  /* PRINT WEERGAVE */
   @media print {
     body { background: #fff; padding: 0; }
     .container { box-shadow: none; padding: 0; max-width: 100%; border: none; }
-    .print-btn { display: none; }
+    .action-buttons { display: none; }
     input, textarea { border: none !important; background: transparent !important; padding: 0 !important; color: var(--primary) !important; }
     .header { flex-direction: row !important; }
     .info-grid { grid-template-columns: 1fr 1fr !important; }
@@ -109,7 +106,10 @@
 </head>
 <body>
 
-<button class="print-btn" onclick="window.print()">📥 Download / Print als PDF</button>
+<div class="action-buttons">
+  <button class="btn btn-primary" onclick="window.print()">📥 Download / Print als PDF</button>
+  <button class="btn btn-wa" onclick="sendWhatsApp()">💬 Verstuur via WhatsApp</button>
+</div>
 
 <div class="container">
   <div class="header">
@@ -118,7 +118,7 @@
       <h1>OFFERTE</h1>
       <div style="display:flex; justify-content:flex-end; gap:10px; align-items:center; margin-top:5px;">
         <span style="color:var(--muted); font-size:0.9rem;">Offerte #:</span>
-        <input type="text" value="2026-001" style="width: 120px; text-align:right;">
+        <input type="text" id="doc-num" value="2026-001" style="width: 120px; text-align:right;">
       </div>
       <div style="display:flex; justify-content:flex-end; gap:10px; align-items:center; margin-top:5px;">
         <span style="color:var(--muted); font-size:0.9rem;">Datum:</span>
@@ -137,7 +137,7 @@
     </div>
     <div class="info-block">
       <h3>Voor</h3>
-      <input type="text" placeholder="Naam van de Klant">
+      <input type="text" id="client-name" placeholder="Naam van de Klant">
       <input type="text" placeholder="Naam van het Bedrijf">
       <input type="text" placeholder="Adres">
       <input type="text" placeholder="Postcode & Stad">
@@ -197,6 +197,18 @@
     document.getElementById('subtotal').value = formatEuro(subtotal);
     document.getElementById('vat').value = formatEuro(vat);
     document.getElementById('total').value = formatEuro(total);
+  }
+
+  // Deel-functie via WhatsApp
+  function sendWhatsApp() {
+    const client = document.getElementById('client-name').value || 'klant';
+    const num = document.getElementById('doc-num').value;
+    const total = document.getElementById('total').value;
+    
+    const text = `Hallo ${client},%0A%0AHierbij de gegevens van offerte ${num}.%0A%0AHet totaalbedrag is: *${total}*%0A%0AIk stuur de PDF zo snel mogelijk door!%0A%0AMet vriendelijke groet,%0ADries - Verde Horizonte`;
+    
+    // Open WhatsApp met het vooraf ingevulde bericht
+    window.open(`https://wa.me/?text=${text}`, '_blank');
   }
 </script>
 </body>
