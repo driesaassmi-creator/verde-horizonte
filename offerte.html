@@ -1,0 +1,223 @@
+<!DOCTYPE html>
+<html lang="nl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Offerte - Verde Horizonte</title>
+
+<!-- Dit houdt deze pagina uit de zoekmachines (privé) -->
+<meta name="robots" content="noindex, nofollow">
+
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --primary: #0f172a; 
+    --accent: #3b82f6; 
+    --gold: #b45309; 
+    --muted: #64748b;
+    --border: #e2e8f0;
+    --input-bg: #f8fafc;
+    --readonly-bg: #f1f5f9;
+  }
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body { font-family: 'Inter', sans-serif; background: #f8fafc; color: var(--primary); line-height: 1.6; padding: 40px 20px; }
+  .container { max-width: 800px; margin: 0 auto; background: #ffffff; padding: 60px; border-radius: 8px; box-shadow: 0 10px 30px rgba(0,0,0,0.05); }
+  
+  /* Header */
+  .header { display: flex; justify-content: space-between; align-items: flex-start; border-bottom: 2px solid var(--border); padding-bottom: 30px; margin-bottom: 40px; }
+  .logo { font-size: 1.8rem; font-weight: 700; letter-spacing: 1px; text-transform: uppercase; }
+  .logo span { color: var(--gold); }
+  .offerte-info { text-align: right; }
+  .offerte-info h1 { font-size: 2rem; font-weight: 700; color: var(--primary); margin-bottom: 5px; }
+  
+  /* Input velden styling */
+  input, textarea {
+    font-family: 'Inter', sans-serif;
+    font-size: 1rem;
+    color: var(--primary);
+    border: 1px solid var(--border);
+    background: var(--input-bg);
+    border-radius: 6px;
+    padding: 8px 12px;
+    width: 100%;
+    transition: border-color 0.2s;
+  }
+  input:focus, textarea:focus { outline: none; border-color: var(--accent); background: #fff; }
+  
+  /* Readonly velden (berekend) */
+  input[readonly] { background: var(--readonly-bg); color: var(--muted); cursor: not-allowed; border-color: transparent; font-weight: 600;}
+  input.total-calc { color: var(--accent) !important; font-size: 1.2rem; font-weight: 700; }
+
+  /* Verberg de spinnetjes (pijltjes) bij nummer-invoer */
+  input[type=number]::-webkit-inner-spin-button, 
+  input[type=number]::-webkit-outer-spin-button { -webkit-appearance: none; margin: 0; }
+  input[type=number] { -moz-appearance: textfield; }
+
+  /* Layout */
+  .info-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 40px; margin-bottom: 40px; }
+  .info-block h3 { font-size: 0.85rem; text-transform: uppercase; letter-spacing: 1px; color: var(--muted); margin-bottom: 10px; }
+  .info-block input { margin-bottom: 10px; }
+  
+  /* Table */
+  table { width: 100%; border-collapse: collapse; margin-bottom: 40px; }
+  th { text-align: left; padding: 12px 15px; background: #f1f5f9; font-size: 0.85rem; text-transform: uppercase; letter-spacing: 1px; color: var(--muted); border-bottom: 2px solid var(--border); }
+  td { padding: 15px; border-bottom: 1px solid var(--border); }
+  .price-input { text-align: right; font-weight: 600; }
+  
+  /* Total */
+  .total-block { display: flex; justify-content: flex-end; margin-bottom: 40px; }
+  .total-table { width: 300px; }
+  .total-table td { border: none; padding: 8px 15px; }
+  .total-table .final { border-top: 2px solid var(--primary); padding-top: 15px; }
+  
+  /* Terms & Footer */
+  .terms { font-size: 0.85rem; color: var(--muted); border-top: 1px solid var(--border); padding-top: 20px; margin-bottom: 40px; }
+  .terms h4 { color: var(--primary); margin-bottom: 10px; }
+  .terms ul { padding-left: 20px; }
+  .terms li { margin-bottom: 5px; }
+  
+  .signature { display: flex; justify-content: space-between; margin-top: 50px; }
+  .sig-box { width: 45%; border-top: 1px solid var(--muted); padding-top: 10px; font-size: 0.85rem; color: var(--muted); }
+
+  /* Print Button */
+  .print-btn { display: block; width: 100%; max-width: 800px; margin: 0 auto 20px; padding: 15px; background: var(--accent); color: white; text-align: center; text-decoration: none; font-weight: 600; border-radius: 8px; cursor: pointer; border: none; font-size: 1rem; transition: background 0.3s; box-shadow: 0 4px 12px rgba(59,130,246,0.3); }
+  .print-btn:hover { background: #2563eb; }
+
+  /* --- DE PDF MAGIE --- */
+  @media print {
+    body { background: #fff; padding: 0; }
+    .container { box-shadow: none; padding: 0; max-width: 100%; }
+    .print-btn { display: none; }
+    
+    /* Verberg lijntjes en achtergronden op de PDF */
+    input, textarea {
+      border: none !important;
+      background: transparent !important;
+      padding: 0 !important;
+      color: var(--primary) !important;
+    }
+    input[readonly], input.total-calc { color: var(--primary) !important; }
+  }
+</style>
+</head>
+<body>
+
+<button class="print-btn" onclick="window.print()">📥 Download / Print als PDF</button>
+
+<div class="container">
+  <div class="header">
+    <div class="logo">Verde <span>Horizonte</span></div>
+    <div class="offerte-info">
+      <h1>OFFERTE</h1>
+      <div style="display:flex; justify-content:flex-end; gap:10px; align-items:center; margin-top:5px;">
+        <span style="color:var(--muted); font-size:0.9rem;">Offerte #:</span>
+        <input type="text" value="2026-001" style="width: 120px; text-align:right;">
+      </div>
+      <div style="display:flex; justify-content:flex-end; gap:10px; align-items:center; margin-top:5px;">
+        <span style="color:var(--muted); font-size:0.9rem;">Datum:</span>
+        <input type="text" value="18 oktober 2026" style="width: 150px; text-align:right;">
+      </div>
+    </div>
+  </div>
+
+  <div class="info-grid">
+    <div class="info-block">
+      <h3>Van</h3>
+      <input type="text" value="Verde Horizonte" readonly>
+      <input type="text" value="Dries" readonly>
+      <input type="text" value="Mechelen, België" readonly>
+      <input type="text" value="info@verdehorizonte.com" readonly>
+    </div>
+    <div class="info-block">
+      <h3>Voor</h3>
+      <input type="text" placeholder="Naam van de Klant">
+      <input type="text" placeholder="Naam van het Bedrijf">
+      <input type="text" placeholder="Adres">
+      <input type="text" placeholder="Postcode & Stad">
+      <input type="email" placeholder="E-mailadres Klant">
+    </div>
+  </div>
+
+  <table>
+    <thead>
+      <tr>
+        <th>Omschrijving</th>
+        <th style="text-align: right; width: 150px;">Bedrag (€)</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td>
+          <input type="text" value="Professionele Website Op Maat" style="font-weight:600;">
+        </td>
+        <td class="price-input">
+          <input type="number" id="price1" placeholder="0.00" step="0.01" style="text-align:right; font-weight:600;" oninput="calculate()">
+        </td>
+      </tr>
+      <tr>
+        <td>
+          <input type="text" value="Onderhoud & Hosting (Jaarlijks)" style="font-weight:600;">
+        </td>
+        <td class="price-input">
+          <input type="number" id="price2" placeholder="0.00" step="0.01" style="text-align:right; font-weight:600;" oninput="calculate()">
+        </td>
+      </tr>
+    </tbody>
+  </table>
+
+  <div class="total-block">
+    <table class="total-table">
+      <tr>
+        <td>Subtotaal:</td>
+        <td class="price-input"><input type="text" id="subtotal" readonly value="€ 0,00" style="text-align:right;"></td>
+      </tr>
+      <tr>
+        <td>BTW (21%):</td>
+        <td class="price-input"><input type="text" id="vat" readonly value="€ 0,00" style="text-align:right;"></td>
+      </tr>
+      <tr class="final">
+        <td>Totaal:</td>
+        <td class="price-input"><input type="text" id="total" readonly value="€ 0,00" class="total-calc" style="text-align:right;"></td>
+      </tr>
+    </table>
+  </div>
+
+  <div class="terms">
+    <h4>Voorwaarden & Planning</h4>
+    <ul>
+      <li><strong>Planning:</strong> Zodra de offerte is ondertekend en de content (teksten/foto's) is aangeleverd, staat de website binnen 1 tot 2 weken live.</li>
+      <li><strong>Betaling:</strong> 50% aanbetaling bij akkoord, 50% bij oplevering van de website.</li>
+      <li><strong>Wijzigingen:</strong> Deze offerte is gebaseerd op de besproken wensen. Eventuele extra's worden in overleg gefactureerd.</li>
+    </ul>
+  </div>
+
+  <div class="signature">
+    <div class="sig-box">
+      Akkoord klant (Datum & Handtekening)
+    </div>
+    <div class="sig-box">
+      Namens Verde Horizonte (Datum & Handtekening)
+    </div>
+  </div>
+</div>
+
+<script>
+  function calculate() {
+    const price1 = parseFloat(document.getElementById('price1').value) || 0;
+    const price2 = parseFloat(document.getElementById('price2').value) || 0;
+
+    const subtotal = price1 + price2;
+    const vat = subtotal * 0.21;
+    const total = subtotal + vat;
+
+    const formatEuro = (number) => {
+      return new Intl.NumberFormat('nl-BE', { style: 'currency', currency: 'EUR' }).format(number);
+    };
+
+    document.getElementById('subtotal').value = formatEuro(subtotal);
+    document.getElementById('vat').value = formatEuro(vat);
+    document.getElementById('total').value = formatEuro(total);
+  }
+</script>
+</body>
+</html>

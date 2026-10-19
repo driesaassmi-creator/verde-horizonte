@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="nl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Pagina niet gevonden – Studio 2800</title>
+<link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><rect width='100' height='100' rx='20' fill='%2305070d'/><text x='50%' y='55%' font-size='45' font-family='sans-serif' font-weight='bold' fill='%235b8cff' text-anchor='middle' dominant-baseline='middle'>S28</text></svg>">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;800&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --bg: #05070d; --navy: #0a1226; --text: #e9edf7; --muted: #8c97b0; --accent: #5b8cff;
+  }
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body {
+    font-family: 'Inter', sans-serif;
+    background: radial-gradient(900px 500px at 50% 50%, rgba(91,140,255,.15), transparent 60%), linear-gradient(180deg, var(--bg), var(--navy));
+    color: var(--text);
+    height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    padding: 20px;
+  }
+  .container { max-width: 500px; }
+  .glitch-text {
+    font-size: clamp(6rem, 20vw, 12rem);
+    font-weight: 800;
+    line-height: 1;
+    color: transparent;
+    -webkit-text-stroke: 2px var(--accent);
+    margin-bottom: 1rem;
+    position: relative;
+    animation: pulse 3s infinite alternate;
+  }
+  h1 { font-size: 2rem; font-weight: 800; margin-bottom: 1rem; }
+  p { color: var(--muted); margin-bottom: 2rem; font-size: 1.1rem; }
+  .btn {
+    display: inline-block;
+    padding: 1rem 2rem;
+    background: var(--accent);
+    color: #fff;
+    font-weight: 600;
+    text-decoration: none;
+    border-radius: 999px;
+    transition: transform .2s, box-shadow .2s;
+  }
+  .btn:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 10px 30px rgba(91,140,255,.4);
+  }
+  @keyframes pulse {
+    0% { opacity: 0.5; }
+    100% { opacity: 1; text-shadow: 0 0 30px rgba(91,140,255,.5); }
+  }
+</style>
+</head>
+<body>
+  <div class="container">
+    <div class="glitch-text">404</div>
+    <h1>Oeps, deze pagina bestaat niet.</h1>
+    <p>De link is verbroken, of de pagina is verplaatst. Geen zorgen, we brengen je terug naar de veilige haven.</p>
+    <a href="/" class="btn">Terug naar de homepagina</a>
+  </div>
+</body>
+</html>

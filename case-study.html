@@ -1,0 +1,164 @@
+<!DOCTYPE html>
+<html lang="nl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+<title>Case Study: FitZone – Verde Horizonte</title>
+
+<link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><rect width='100' height='100' rx='20' fill='%2305070d'/><text x='50%' y='55%' font-size='45' font-family='sans-serif' font-weight='bold' fill='%23d4af37' text-anchor='middle' dominant-baseline='middle'>VH</text></svg>">
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+
+<style>
+:root{
+  --bg:#05070d; --navy:#0a1226; --surface:#0c1429; --line:rgba(122,162,255,.16);
+  --text:#e9edf7; --muted:#8c97b0; --accent:#5b8cff; --accent2:#4fd1ff;
+  --gold:#d4af37; --glow:0 0 40px rgba(91,140,255,.35);
+}
+*{box-sizing:border-box;margin:0;padding:0}
+html{scroll-behavior:smooth}
+body{font-family:Inter,Roboto,system-ui,-apple-system,sans-serif;background:var(--bg);color:var(--text);line-height:1.6;overflow-x:hidden;-webkit-font-smoothing:antialiased}
+body::before{content:"";position:fixed;inset:0;z-index:-1;background:
+  radial-gradient(900px 500px at 15% -10%,rgba(91,140,255,.18),transparent 60%),
+  radial-gradient(700px 500px at 100% 30%,rgba(79,209,255,.08),transparent 60%),
+  linear-gradient(180deg,var(--bg),var(--navy) 60%,var(--bg))}
+a{color:inherit;text-decoration:none}
+.wrap{width:min(900px,92%);margin-inline:auto}
+
+/* Nav & Buttons */
+header{position:sticky;top:0;z-index:50;backdrop-filter:blur(14px);background:rgba(5,7,13,.65);border-bottom:1px solid var(--line)}
+.nav{display:flex;align-items:center;justify-content:space-between;height:72px}
+.logo{font-weight:800; letter-spacing:1px; font-size:1.2rem; text-transform:uppercase;}
+.logo span{color: var(--gold);}
+.btn{display:inline-flex;align-items:center;gap:.5rem;padding:.8rem 1.4rem;border-radius:999px;font-weight:600;font-size:.9rem;border:1px solid var(--line);transition:all .3s;cursor:pointer}
+.btn.primary{background:linear-gradient(135deg,var(--accent),#3f6ef0);border-color:transparent;box-shadow:0 8px 30px rgba(91,140,255,.35)}
+.btn.primary:hover{transform:translateY(-2px);box-shadow:0 12px 44px rgba(91,140,255,.6)}
+.btn.ghost{background:rgba(255,255,255,.03)}
+.btn.ghost:hover{border-color:var(--accent);background:rgba(91,140,255,.1)}
+
+/* Case Study Content */
+.case-hero {padding: 80px 0 40px; text-align: center;}
+.case-hero h1 {font-size: clamp(2.5rem, 5vw, 4rem); font-weight: 800; letter-spacing: -0.03em; margin-bottom: 1rem; line-height: 1.1;}
+.case-hero h1 span {color: var(--gold);}
+.case-hero p {color: var(--muted); font-size: 1.2rem; max-width: 60ch; margin: 0 auto;}
+
+.case-image {margin: 40px 0; border-radius: 20px; overflow: hidden; border: 1px solid var(--line); box-shadow: 0 20px 60px rgba(0,0,0,.6);}
+.case-image img {width: 100%; display: block;}
+
+.case-grid {display: grid; grid-template-columns: 1fr 1fr; gap: 3rem; margin-bottom: 80px;}
+.case-block h3 {font-size: 1.4rem; margin-bottom: 1rem; color: var(--accent2); display: flex; align-items: center; gap: 0.5rem;}
+.case-block h3 svg {width: 24px; height: 24px;}
+.case-block p {color: var(--muted); font-size: 1.05rem; margin-bottom: 1rem;}
+.case-block ul {list-style: none; padding-left: 0; margin-bottom: 1rem;}
+.case-block ul li {display: flex; align-items: flex-start; gap: 0.8rem; margin-bottom: 0.8rem; color: var(--muted);}
+.case-block ul li svg {color: var(--accent); width: 20px; height: 20px; flex-shrink: 0; margin-top: 3px;}
+
+.tech-used {display: flex; flex-wrap: wrap; gap: 0.5rem; margin-top: 2rem;}
+.tech-tag {background: rgba(91,140,255,.1); border: 1px solid var(--line); padding: 0.4rem 0.8rem; border-radius: 999px; font-size: 0.8rem; font-weight: 500; color: var(--accent2);}
+
+.portal-links {display: flex; gap: 1rem; flex-wrap: wrap; margin-top: 1.5rem;}
+.portal-links a {display: inline-flex; align-items: center; gap: 0.5rem; padding: 0.6rem 1rem; background: rgba(14,22,44,.9); border: 1px solid var(--line); border-radius: 8px; font-size: 0.9rem; color: var(--text); transition: all 0.3s;}
+.portal-links a:hover {border-color: var(--accent); color: var(--accent2);}
+
+.cta-box {text-align: center; padding: 60px 20px; background: var(--surface); border: 1px solid var(--line); border-radius: 24px; margin-bottom: 80px;}
+.cta-box h2 {font-size: 2rem; margin-bottom: 1rem;}
+.cta-box p {color: var(--muted); margin-bottom: 2rem;}
+
+footer{padding:28px 0;text-align:center;color:var(--muted);font-size:.82rem;border-top:1px solid var(--line)}
+
+@media(max-width: 768px) {
+  .case-grid {grid-template-columns: 1fr; gap: 2rem;}
+}
+</style>
+</head>
+<body>
+<header>
+  <div class="wrap nav">
+    <a class="logo" href="index.html">Verde <span>Horizonte</span></a>
+    <a href="index.html" class="btn ghost">← Terug naar home</a>
+  </div>
+</header>
+
+<main class="wrap">
+  <section class="case-hero">
+    <div class="tech-used" style="justify-content: center; margin-bottom: 1.5rem; margin-top: 0;">
+      <span class="tech-tag">Webapplicatie</span>
+      <span class="tech-tag">UX/UI</span>
+      <span class="tech-tag">Portalen</span>
+    </div>
+    <h1>Case Study: <span>FitZone</span></h1>
+    <p>Hoe een traditionele sportschool werd omgetoverd tot een digitaal ecosysteem met vier verschillende portalen, van klant tot admin.</p>
+  </section>
+
+  <!-- Vervang deze afbeelding door een echte screenshot van je fitness-demo -->
+  <div class="case-image">
+    <img src="https://s0.wp.com/mshots/v1/https%3A%2F%2Ffitness.fitzonemechelen.be?w=1200&h=800" alt="Screenshot van de FitZone demo">
+  </div>
+
+  <section class="case-grid">
+    <div class="case-block">
+      <h3>
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/></svg>
+        De Uitdaging
+      </h3>
+      <p>Sportscholen worstelen vaak met een lappendeken aan systemen: ledenadministratie in Excel, boekingen via WhatsApp, en een website die eigenlijk alleen een visitekaartje is. De uitdaging was om dit <strong>alles samen te brengen in één naadloos ecosysteem</strong>.</p>
+      <ul>
+        <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 13l4 4L19 7"/></svg> Versnipperde data (leden, planners, betalingen).</li>
+        <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 13l4 4L19 7"/></svg> Hoge drempel voor leden om zelf dingen te regelen.</li>
+        <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 13l4 4L19 7"/></svg> Personeel dat te veel tijd kwijt was aan handmatige administratie.</li>
+      </ul>
+    </div>
+
+    <div class="case-block">
+      <h3>
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/><path d="M22 4L12 14.01l-3-3"/></svg>
+        Mijn Oplossing
+      </h3>
+      <p>Ik heb een platform gebouwd met <strong>vier op elkaar afgestemde portalen</strong>. Elk type gebruiker (klant, medewerker, commercieel, admin) heeft zijn eigen, op maat gemaakte dashboard.</p>
+      <ul>
+        <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 13l4 4L19 7"/></svg> Een centrale database die real-time synchroniseert.</li>
+        <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 13l4 4L19 7"/></svg> Klantportaal voor leden om zelf hun schema en abonnement te beheren.</li>
+        <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 13l4 4L19 7"/></svg> Admin dashboard voor volledige controle over omzet en ledenaantallen.</li>
+      </ul>
+    </div>
+  </section>
+
+  <section class="case-block" style="margin-bottom: 80px;">
+    <h3>Het Resultaat</h3>
+    <p>Geen losse systemen meer, maar één krachtig geheel. De leden zijn blijer omdat ze alles zelf kunnen regelen, het personeel is efficiënter en de eigenaar heeft altijd realtime inzicht in de prestaties van de zaak. Dit is software die niet alleen mooi is, maar <strong>dagelijks geld bespaart en omzet genereert</strong>.</p>
+    
+    <div class="portal-links">
+      <a href="https://fitness.fitzonemechelen.be/" target="_blank" rel="noopener">Bekijk de hoofdsite →</a>
+      <a href="https://fitness.fitzonemechelen.be/customer" target="_blank" rel="noopener">Klantportaal →</a>
+      <a href="https://fitness.fitzonemechelen.be/staff" target="_blank" rel="noopener">Staff Portaal →</a>
+      <a href="https://fitness.fitzonemechelen.be/admin" target="_blank" rel="noopener">Admin Dashboard →</a>
+    </div>
+
+    <div class="tech-used">
+      <span class="tech-tag">HTML/CSS</span>
+      <span class="tech-tag">JavaScript (Vanilla)</span>
+      <span class="tech-tag">REST API's</span>
+      <span class="tech-tag">Database Management</span>
+      <span class="tech-tag">Multi-user Architecture</span>
+    </div>
+  </section>
+
+  <div class="cta-box">
+    <h2>Klaar om jouw zaak te digitaliseren?</h2>
+    <p>Van een simpele website tot een complex platform zoals FitZone. Laten we kijken wat ik voor jou kan betekenen.</p>
+    <a href="index.html#contact" class="btn primary">Start jouw project</a>
+  </div>
+
+</main>
+
+<footer>
+  <div class="wrap">© <span id="yr"></span> Verde Horizonte. Alle rechten voorbehouden.</div>
+</footer>
+
+<script>
+  document.getElementById("yr").textContent = new Date().getFullYear();
+</script>
+</body>
+</html>

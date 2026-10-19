@@ -1,0 +1,176 @@
+<!DOCTYPE html>
+<html lang="nl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+<title>Portfolio – Verde Horizonte</title>
+
+<link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><rect width='100' height='100' rx='20' fill='%2305070d'/><text x='50%' y='55%' font-size='45' font-family='sans-serif' font-weight='bold' fill='%23d4af37' text-anchor='middle' dominant-baseline='middle'>VH</text></svg>">
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
+
+<style>
+:root{
+  --bg:#05070d; --navy:#0a1226; --surface:#0c1429; --line:rgba(122,162,255,.16);
+  --text:#e9edf7; --muted:#8c97b0; --accent:#5b8cff; --accent2:#4fd1ff;
+  --gold:#d4af37; --glow:0 0 40px rgba(91,140,255,.35);
+}
+*{box-sizing:border-box;margin:0;padding:0}
+html{scroll-behavior:smooth}
+body{font-family:Inter,Roboto,system-ui,-apple-system,sans-serif;background:var(--bg);color:var(--text);line-height:1.6;overflow-x:hidden;-webkit-font-smoothing:antialiased}
+body::before{content:"";position:fixed;inset:0;z-index:-1;background:
+  radial-gradient(900px 500px at 15% -10%,rgba(91,140,255,.18),transparent 60%),
+  radial-gradient(700px 500px at 100% 30%,rgba(79,209,255,.08),transparent 60%),
+  linear-gradient(180deg,var(--bg),var(--navy) 60%,var(--bg))}
+a{color:inherit;text-decoration:none}
+
+/* Nav */
+header{position:sticky;top:0;z-index:50;backdrop-filter:blur(14px);background:rgba(5,7,13,.65);border-bottom:1px solid var(--line)}
+.nav{display:flex;align-items:center;justify-content:space-between;height:72px;width:min(1120px,92%);margin-inline:auto}
+.logo{font-weight:800; letter-spacing:1px; font-size:1.2rem; text-transform:uppercase;}
+.logo span{color: var(--gold);}
+.btn{display:inline-flex;align-items:center;gap:.5rem;padding:.8rem 1.4rem;border-radius:999px;font-weight:600;font-size:.9rem;border:1px solid var(--line);transition:all .3s;cursor:pointer}
+.btn.ghost{background:rgba(255,255,255,.03)}
+.btn.ghost:hover{border-color:var(--accent);background:rgba(91,140,255,.1)}
+.btn.primary{background:linear-gradient(135deg,var(--accent),#3f6ef0);border-color:transparent;box-shadow:0 8px 30px rgba(91,140,255,.35)}
+.btn.primary:hover{transform:translateY(-2px);box-shadow:0 12px 44px rgba(91,140,255,.6)}
+
+/* Hero */
+.portfolio-hero {padding: 80px 0 60px; text-align: center;}
+.portfolio-hero h1 {font-size: clamp(2.5rem, 5vw, 4rem); font-weight: 800; letter-spacing: -0.03em; margin-bottom: 1rem;}
+.portfolio-hero p {color: var(--muted); font-size: 1.2rem; max-width: 60ch; margin: 0 auto;}
+
+/* Grid */
+.container {width: min(1120px, 92%); margin: 0 auto; padding-bottom: 100px;}
+.portfolio-grid {display: grid; grid-template-columns: repeat(auto-fill, minmax(320px, 1fr)); gap: 2rem;}
+.port-card {position: relative; border-radius: 16px; overflow: hidden; background: var(--surface); border: 1px solid var(--line); box-shadow: 0 10px 30px rgba(0,0,0,.4); transition: transform .3s, border-color .3s, box-shadow .3s; display: flex; flex-direction: column;}
+.port-card:hover {transform: translateY(-6px); border-color: rgba(91,140,255,.6); box-shadow: 0 20px 50px rgba(0,0,0,.6), var(--glow);}
+.port-img {width: 100%; height: 250px; object-fit: cover; object-position: top; border-bottom: 1px solid var(--line);}
+.port-content {padding: 1.5rem; display: flex; justify-content: space-between; align-items: center;}
+.port-title {font-weight: 700; font-size: 1.2rem; color: var(--text);}
+.port-cat {font-size: 0.85rem; color: var(--muted);}
+.port-link {font-size: 0.9rem; color: var(--accent2); font-weight: 600; display: flex; align-items: center; gap: 0.3rem;}
+.port-card:hover .port-link {color: #fff; text-decoration: underline;}
+
+/* WhatsApp */
+.whatsapp-float {position: fixed; width: 60px; height: 60px; bottom: 30px; right: 30px; background-color: #25d366; color: #FFF; border-radius: 50px; text-align: center; box-shadow: 0 4px 15px rgba(0,0,0,0.3); z-index: 100; display: flex; align-items: center; justify-content: center; transition: transform 0.3s, box-shadow 0.3s;}
+.whatsapp-float:hover {transform: scale(1.1) translateY(-5px); box-shadow: 0 10px 25px rgba(37, 211, 102, 0.4);}
+.whatsapp-float svg {width: 35px; height: 35px;}
+
+footer{padding:28px 0;text-align:center;color:var(--muted);font-size:.82rem;border-top:1px solid var(--line)}
+</style>
+</head>
+<body>
+<header>
+  <div class="nav">
+    <a class="logo" href="index.html">Verde <span>Horizonte</span></a>
+    <a href="index.html" class="btn ghost">← Terug naar home</a>
+  </div>
+</header>
+
+<section class="portfolio-hero">
+  <h1>Ons Werk</h1>
+  <p>Een overzicht van alle demo-websites. Klik op een project om de live versie te bekijken.</p>
+</section>
+
+<div class="container">
+  <div class="portfolio-grid">
+    <!-- Beauty -->
+    <a href="https://beauty.fitzonemechelen.be" target="_blank" class="port-card" data-aos="fade-up">
+      <img src="https://s0.wp.com/mshots/v1/https%3A%2F%2Fbeauty.fitzonemechelen.be?w=600&h=400" class="port-img" alt="Beauty">
+      <div class="port-content">
+        <div><div class="port-title">Maison Belle</div><div class="port-cat">Beauty</div></div>
+        <div class="port-link">Bekijk →</div>
+      </div>
+    </a>
+    <!-- Cafe -->
+    <a href="https://cafe.fitzonemechelen.be" target="_blank" class="port-card" data-aos="fade-up">
+      <img src="https://s0.wp.com/mshots/v1/https%3A%2F%2Fcafe.fitzonemechelen.be?w=600&h=400" class="port-img" alt="Cafe">
+      <div class="port-content">
+        <div><div class="port-title">Cafe Central</div><div class="port-cat">Horeca</div></div>
+        <div class="port-link">Bekijk →</div>
+      </div>
+    </a>
+    <!-- Elektricien -->
+    <a href="https://elektricien.fitzonemechelen.be" target="_blank" class="port-card" data-aos="fade-up">
+      <img src="https://s0.wp.com/mshots/v1/https%3A%2F%2Felektricien.fitzonemechelen.be?w=600&h=400" class="port-img" alt="Elektricien">
+      <div class="port-content">
+        <div><div class="port-title">Voltx</div><div class="port-cat">Elektricien</div></div>
+        <div class="port-link">Bekijk →</div>
+      </div>
+    </a>
+    <!-- Garage -->
+    <a href="https://garage.fitzonemechelen.be" target="_blank" class="port-card" data-aos="fade-up">
+      <img src="https://s0.wp.com/mshots/v1/https%3A%2F%2Fgarage.fitzonemechelen.be?w=600&h=400" class="port-img" alt="Garage">
+      <div class="port-content">
+        <div><div class="port-title">Garage 2800</div><div class="port-cat">Autogarage</div></div>
+        <div class="port-link">Bekijk →</div>
+      </div>
+    </a>
+    <!-- Kapper -->
+    <a href="https://kapper.fitzonemechelen.be" target="_blank" class="port-card" data-aos="fade-up">
+      <img src="https://s0.wp.com/mshots/v1/https%3A%2F%2Fkapper.fitzonemechelen.be?w=600&h=400" class="port-img" alt="Kapper">
+      <div class="port-content">
+        <div><div class="port-title">De Kapper</div><div class="port-cat">Kapsalon</div></div>
+        <div class="port-link">Bekijk →</div>
+      </div>
+    </a>
+    <!-- Kine -->
+    <a href="https://kine.fitzonemechelen.be" target="_blank" class="port-card" data-aos="fade-up">
+      <img src="https://s0.wp.com/mshots/v1/https%3A%2F%2Fkine.fitzonemechelen.be?w=600&h=400" class="port-img" alt="Kine">
+      <div class="port-content">
+        <div><div class="port-title">KineMotion</div><div class="port-cat">Kinesitherapie</div></div>
+        <div class="port-link">Bekijk →</div>
+      </div>
+    </a>
+    <!-- Loodgieter -->
+    <a href="https://loodgieter.fitzonemechelen.be" target="_blank" class="port-card" data-aos="fade-up">
+      <img src="https://s0.wp.com/mshots/v1/https%3A%2F%2Floodgieter.fitzonemechelen.be?w=600&h=400" class="port-img" alt="Loodgieter">
+      <div class="port-content">
+        <div><div class="port-title">AquaFix</div><div class="port-cat">Loodgieter</div></div>
+        <div class="port-link">Bekijk →</div>
+      </div>
+    </a>
+    <!-- Miro -->
+    <a href="https://miro.fitzonemechelen.be" target="_blank" class="port-card" data-aos="fade-up">
+      <img src="https://s0.wp.com/mshots/v1/https%3A%2F%2Fmiro.fitzonemechelen.be?w=600&h=400" class="port-img" alt="Miro">
+      <div class="port-content">
+        <div><div class="port-title">Miro Atelier</div><div class="port-cat">Atelier</div></div>
+        <div class="port-link">Bekijk →</div>
+      </div>
+    </a>
+    <!-- Restaurant -->
+    <a href="https://restaurant.fitzonemechelen.be" target="_blank" class="port-card" data-aos="fade-up">
+      <img src="https://s0.wp.com/mshots/v1/https%3A%2F%2Frestaurant.fitzonemechelen.be?w=600&h=400" class="port-img" alt="Restaurant">
+      <div class="port-content">
+        <div><div class="port-title">Atelier</div><div class="port-cat">Restaurant</div></div>
+        <div class="port-link">Bekijk →</div>
+      </div>
+    </a>
+    <!-- Schoonmaak -->
+    <a href="https://schoonmaak.fitzonemechelen.be" target="_blank" class="port-card" data-aos="fade-up">
+      <img src="https://s0.wp.com/mshots/v1/https%3A%2F%2Fschoonmaak.fitzonemechelen.be?w=600&h=400" class="port-img" alt="Schoonmaak">
+      <div class="port-content">
+        <div><div class="port-title">Helder & Co</div><div class="port-cat">Schoonmaak</div></div>
+        <div class="port-link">Bekijk →</div>
+      </div>
+    </a>
+  </div>
+</div>
+
+<footer><div class="wrap">© <span id="yr"></span> Verde Horizonte. Alle rechten voorbehouden.</div></footer>
+
+<a href="https://wa.me/32470000000" target="_blank" rel="noopener" class="whatsapp-float" aria-label="Chat via WhatsApp">
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512" fill="currentColor"><path d="M380.9 97.1C339 55.1 283.2 32 223.9 32c-122.4 0-222 99.6-222 222 0 39.1 10.2 77.3 29.6 111L0 480l117.7-30.9c32.4 17.7 68.9 27 106.1 27h.1c122.3 0 224.1-99.6 224.1-222 0-59.3-25.2-115-67.1-157zm-157 341.6c-33.2 0-65.7-8.9-94-25.7l-6.7-4-69.8 18.3L72 359.2l-4.4-7c-18.5-29.4-28.2-63.3-28.2-98.2 0-101.7 82.8-184.5 184.6-184.5 49.3 0 95.6 19.2 130.4 54.1 34.8 34.9 56.2 81.2 56.1 130.5 0 101.8-84.9 184.6-186.6 184.6zm101.2-138.2c-5.5-2.8-32.8-16.2-37.9-18-5.1-1.9-8.8-2.8-12.5 2.8-3.7 5.6-14.3 18-17.6 21.8-3.2 3.7-6.5 4.2-12 1.4-32.6-16.3-54-29.1-75.5-66-5.7-9.8 5.7-9.1 16.3-30.3 1.8-3.7.9-6.9-.5-9.7-1.4-2.8-12.5-30.1-17.1-41.2-4.5-10.8-9.1-9.3-12.5-9.5-3.2-.2-6.9-.2-10.6-.2-3.7 0-9.7 1.4-14.8 6.9-5.1 5.6-19.4 19-19.4 46.3 0 27.3 19.9 53.7 22.6 57.4 2.8 3.7 39.1 59.7 94.8 83.8 35.2 15.2 49 16.5 66.7 13.8 10.7-1.6 32.8-13.4 37.4-26.4 4.6-13 4.6-24.1 3.2-26.4-1.3-2.5-5-3.9-10.5-6.6z"/></svg>
+</a>
+
+<script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
+<script>
+  document.getElementById("yr").textContent = new Date().getFullYear();
+  AOS.init({ duration: 800, once: true, offset: 50 });
+</script>
+</body>
+</html>
