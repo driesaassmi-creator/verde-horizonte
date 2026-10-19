@@ -10,8 +10,7 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
-<!-- Chart.js voor de interactieve grafiek -->
-<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+<link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
 
 <style>
 :root{
@@ -64,38 +63,119 @@ header{position:sticky;top:0;z-index:50;backdrop-filter:blur(14px);background:rg
 .portal-links a {display: inline-flex; align-items: center; gap: 0.5rem; padding: 0.6rem 1rem; background: rgba(14,22,44,.9); border: 1px solid var(--line); border-radius: 8px; font-size: 0.9rem; color: var(--text); transition: all 0.3s;}
 .portal-links a:hover {border-color: var(--accent); color: var(--accent2);}
 
-/* NIEUW: Interactief Dashboard Blok */
-.interactive-demo {
-  background: var(--surface); border: 1px solid var(--line); border-radius: 24px; padding: 2rem;
-  margin-bottom: 80px; box-shadow: 0 20px 60px rgba(0,0,0,0.4);
+/* =========================================
+   NIEUW: 3D TELEFOON SHOWCASE
+   ========================================= */
+.phone-showcase {
+  padding: 100px 0;
+  text-align: center;
+  perspective: 1200px;
+  overflow: hidden;
+  border-top: 1px solid var(--line);
+  border-bottom: 1px solid var(--line);
+  background: radial-gradient(600px 400px at 50% 50%, rgba(91,140,255,.1), transparent 70%);
 }
-.interactive-demo h3 {font-size: 1.5rem; margin-bottom: 0.5rem;}
-.interactive-demo p {color: var(--muted); margin-bottom: 2rem; font-size: 0.95rem;}
 
-.demo-grid { display: grid; grid-template-columns: 1fr 2fr; gap: 2rem; }
-@media(max-width: 768px) { .demo-grid { grid-template-columns: 1fr; } }
-
-.demo-stats { display: flex; flex-direction: column; gap: 1rem; }
-.stat-box {
-  background: rgba(255,255,255,.03); border: 1px solid var(--line); border-radius: 12px; padding: 1.2rem;
+.phone-showcase h2 {
+  font-size: 2.5rem;
+  font-weight: 800;
+  margin-bottom: 1rem;
 }
-.stat-box span { font-size: 0.8rem; color: var(--muted); text-transform: uppercase; letter-spacing: 1px; }
-.stat-box strong { display: block; font-size: 2rem; font-weight: 800; color: var(--accent2); margin-top: 0.2rem; }
 
-.chart-container {
-  background: rgba(255,255,255,.03); border: 1px solid var(--line); border-radius: 12px; padding: 1.2rem;
+.phone-showcase p {
+  color: var(--muted);
+  max-width: 50ch;
+  margin: 0 auto 60px;
+}
+
+.phone-container {
   position: relative;
+  width: 260px;
+  height: 520px;
+  margin: 0 auto;
+  /* De 3D effecten */
+  transform: rotateY(-15deg) rotateX(10deg);
+  transform-style: preserve-3d;
+  transition: transform 0.5s ease-out;
 }
 
-/* CTA Box */
-.cta-box {text-align: center; padding: 60px 20px; background: var(--surface); border: 1px solid var(--line); border-radius: 24px; margin-bottom: 80px;}
-.cta-box h2 {font-size: 2rem; margin-bottom: 1rem;}
-.cta-box p {color: var(--muted); margin-bottom: 2rem;}
+.phone-container:hover {
+  transform: rotateY(0deg) rotateX(0deg) scale(1.05);
+}
 
-footer{padding:28px 0;text-align:center;color:var(--muted);font-size:.82rem;border-top:1px solid var(--line)}
+/* De telefoon behuizing */
+.phone-device {
+  position: absolute;
+  inset: 0;
+  background: #000;
+  border-radius: 40px;
+  border: 8px solid #222;
+  box-shadow: 
+    -20px 20px 50px rgba(0,0,0,0.8),
+    inset 0 0 0 2px #444;
+  overflow: hidden;
+  z-index: 2;
+}
+
+/* De inkeping (notch) */
+.phone-device::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 120px;
+  height: 25px;
+  background: #222;
+  border-bottom-left-radius: 16px;
+  border-bottom-right-radius: 16px;
+  z-index: 10;
+}
+
+/* Het scherm met de screenshot */
+.phone-screen {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: top;
+  display: block;
+}
+
+/* De reflectie/gloed op het scherm */
+.phone-glare {
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(
+    135deg,
+    rgba(255,255,255,0.1) 0%,
+    rgba(255,255,255,0) 40%,
+    rgba(255,255,255,0) 100%
+  );
+  z-index: 5;
+  pointer-events: none;
+}
+
+/* De schaduw onder de telefoon */
+.phone-shadow {
+  position: absolute;
+  bottom: -30px;
+  left: 50%;
+  transform: translateX(-50%) rotateX(90deg);
+  width: 200px;
+  height: 40px;
+  background: rgba(0,0,0,0.8);
+  filter: blur(20px);
+  border-radius: 50%;
+  z-index: 1;
+}
 
 @media(max-width: 768px) {
   .case-grid {grid-template-columns: 1fr; gap: 2rem;}
+  .phone-container {
+    transform: rotateY(0deg) rotateX(0deg); /* Op mobiel geen 3D om ruimte te sparen */
+    width: 220px;
+    height: 440px;
+  }
 }
 </style>
 </head>
@@ -150,31 +230,22 @@ footer{padding:28px 0;text-align:center;color:var(--muted);font-size:.82rem;bord
     </div>
   </section>
 
-  <!-- NIEUW: Interactieve Demo Sectie -->
-  <section class="interactive-demo">
-    <h3>Live Demo: Het Dashboard</h3>
-    <p>Klik op de knop om te zien hoe het dashboard in de praktijk werkt (dit is een interactieve simulatie).</p>
+  <!-- NIEUW: 3D Telefoon Showcase -->
+  <section class="phone-showcase" data-aos="fade-up">
+    <h2>De mobiele ervaring</h2>
+    <p>Een dashboard is niets zonder een perfecte mobiele weergave. Beweeg je muis over de telefoon om de 3D-weergave te activeren.</p>
     
-    <div class="demo-grid">
-      <div class="demo-stats">
-        <div class="stat-box">
-          <span>Actieve Leden</span>
-          <strong id="live-members">1.240</strong>
-        </div>
-        <div class="stat-box">
-          <span>Nieuwe Aanmeldingen</span>
-          <strong id="live-signups">12</strong>
-        </div>
-        <button class="btn primary" onclick="simulateSignup()" style="margin-top: 1rem;">Simuleer Nieuwe Aanmelding</button>
+    <div class="phone-container">
+      <div class="phone-device">
+        <!-- We laden de live screenshot van je FitZone klantportaal in de telefoon -->
+        <img src="https://s0.wp.com/mshots/v1/https%3A%2F%2Ffitness.fitzonemechelen.be%2Fcustomer?w=500&h=1000" class="phone-screen" alt="FitZone Mobiel">
+        <div class="phone-glare"></div>
       </div>
-      
-      <div class="chart-container">
-        <canvas id="demoChart"></canvas>
-      </div>
+      <div class="phone-shadow"></div>
     </div>
   </section>
 
-  <section class="case-block" style="margin-bottom: 80px;">
+  <section class="case-block" style="margin-top: 80px; margin-bottom: 80px;">
     <h3>Het Resultaat</h3>
     <p>Geen losse systemen meer, maar één krachtig geheel. De leden zijn blijer omdat ze alles zelf kunnen regelen, het personeel is efficiënter en de eigenaar heeft altijd realtime inzicht in de prestaties van de zaak. Dit is software die niet alleen mooi is, maar <strong>dagelijks geld bespaart en omzet genereert</strong>.</p>
     
@@ -194,9 +265,9 @@ footer{padding:28px 0;text-align:center;color:var(--muted);font-size:.82rem;bord
     </div>
   </section>
 
-  <div class="cta-box">
-    <h2>Klaar om jouw zaak te digitaliseren?</h2>
-    <p>Van een simpele website tot een complex platform zoals FitZone. Laten we kijken wat ik voor jou kan betekenen.</p>
+  <div class="cta-box" style="text-align: center; padding: 60px 20px; background: var(--surface); border: 1px solid var(--line); border-radius: 24px; margin-bottom: 80px;">
+    <h2 style="font-size: 2rem; margin-bottom: 1rem;">Klaar om jouw zaak te digitaliseren?</h2>
+    <p style="color: var(--muted); margin-bottom: 2rem;">Van een simpele website tot een complex platform zoals FitZone. Laten we kijken wat ik voor jou kan betekenen.</p>
     <a href="index.html#contact" class="btn primary">Start jouw project</a>
   </div>
 
@@ -206,67 +277,10 @@ footer{padding:28px 0;text-align:center;color:var(--muted);font-size:.82rem;bord
   <div class="wrap">© <span id="yr"></span> Verde Horizonte. Alle rechten voorbehouden.</div>
 </footer>
 
+<script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
 <script>
   document.getElementById("yr").textContent = new Date().getFullYear();
-
-  // Data voor de grafiek
-  const chartData = [120, 190, 150, 220, 280, 320, 350];
-  const chartLabels = ['Ma', 'Di', 'Wo', 'Do', 'Vr', 'Za', 'Zo'];
-
-  // Chart.js initialiseren
-  const ctx = document.getElementById('demoChart').getContext('2d');
-  const gradient = ctx.createLinearGradient(0, 0, 0, 200);
-  gradient.addColorStop(0, 'rgba(91, 140, 255, 0.5)');
-  gradient.addColorStop(1, 'rgba(91, 140, 255, 0.0)');
-
-  const demoChart = new Chart(ctx, {
-    type: 'line',
-    data: {
-      labels: chartLabels,
-      datasets: [{
-        label: 'Nieuwe Leden',
-        data: chartData,
-        borderColor: '#4fd1ff',
-        backgroundColor: gradient,
-        borderWidth: 2,
-        pointBackgroundColor: '#5b8cff',
-        pointBorderColor: '#fff',
-        pointRadius: 4,
-        fill: true,
-        tension: 0.4
-      }]
-    },
-    options: {
-      responsive: true,
-      maintainAspectRatio: false,
-      plugins: { legend: { display: false } },
-      scales: {
-        y: { grid: { color: 'rgba(255,255,255,0.05)' }, ticks: { color: '#8c97b0' } },
-        x: { grid: { display: false }, ticks: { color: '#8c97b0' } }
-      }
-    }
-  });
-
-  // Interactieve simulatie
-  let currentMembers = 1240;
-  let currentSignups = 12;
-
-  function simulateSignup() {
-    // Verhoog de getallen
-    currentMembers += 1;
-    currentSignups += 1;
-
-    // Update de HTML
-    document.getElementById('live-members').innerText = currentMembers.toLocaleString('nl-BE');
-    document.getElementById('live-signups').innerText = currentSignups;
-
-    // Voeg een nieuw datapunt toe aan de grafiek (en verwijder de oudste)
-    const newData = [...demoChart.data.datasets[0].data];
-    newData.shift();
-    newData.push(newData[newData.length - 1] + Math.floor(Math.random() * 50) + 20);
-    demoChart.data.datasets[0].data = newData;
-    demoChart.update();
-  }
+  AOS.init({ duration: 800, once: true, offset: 50 });
 </script>
 </body>
 </html>
