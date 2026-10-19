@@ -1,0 +1,138 @@
+<!DOCTYPE html>
+<html lang="nl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+<title>Mijn Kaartje – Verde Horizonte</title>
+<meta name="robots" content="noindex, nofollow">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --bg: #05070d; --surface: #0b1020; --border: rgba(233, 237, 247, 0.09);
+    --text: #e9edf7; --muted: rgba(233, 237, 247, 0.58);
+    --accent: #5b8cff; --gold: #d4af37;
+  }
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  html, body { overflow-x: hidden; overscroll-behavior-x: none; touch-action: pan-y; }
+  body {
+    font-family: 'Inter', sans-serif; background: var(--bg); color: var(--text);
+    min-height: 100vh; padding: 30px 20px; display: flex; justify-content: center; align-items: center;
+    background: radial-gradient(900px 420px at 50% -120px, rgba(91,140,255,.14), transparent 70%), var(--bg);
+  }
+
+  .card {
+    background: var(--surface); border: 1px solid var(--border); border-radius: 24px;
+    width: 100%; max-width: 400px; padding: 40px 30px; text-align: center;
+    box-shadow: 0 20px 50px rgba(0,0,0,0.5); position: relative;
+  }
+
+  .logo { font-size: 1.5rem; font-weight: 800; text-transform: uppercase; letter-spacing: 1px; margin-bottom: 30px; }
+  .logo span { color: var(--gold); }
+
+  .avatar {
+    width: 100px; height: 100px; border-radius: 50%; margin: 0 auto 20px;
+    background: linear-gradient(135deg, var(--accent), #3f6ef0);
+    display: grid; place-items: center; font-size: 2.5rem; font-weight: 700; color: #fff;
+    box-shadow: 0 10px 30px rgba(91,140,255,.3);
+  }
+
+  h1 { font-size: 1.8rem; font-weight: 800; margin-bottom: 5px; }
+  h2 { font-size: 1rem; color: var(--muted); font-weight: 500; margin-bottom: 25px; }
+
+  .contact-info { text-align: left; margin-bottom: 30px; }
+  .contact-row { display: flex; align-items: center; gap: 15px; margin-bottom: 15px; font-size: 0.95rem; }
+  .contact-row svg { width: 20px; height: 20px; color: var(--accent); flex-shrink: 0; }
+  .contact-row a { color: var(--text); text-decoration: none; }
+
+  .qr-container {
+    background: #fff; padding: 15px; border-radius: 16px; display: inline-block; margin-bottom: 20px;
+  }
+  .qr-container img { display: block; width: 200px; height: 200px; }
+  .qr-text { font-size: 0.8rem; color: var(--muted); margin-bottom: 20px; }
+
+  .btn {
+    display: inline-flex; align-items: center; justify-content: center; width: 100%;
+    padding: 15px; border-radius: 12px; font-weight: 600; font-size: 1rem;
+    text-decoration: none; border: none; cursor: pointer; transition: 0.2s;
+  }
+  .btn-primary { background: var(--accent); color: #05070d; }
+  .btn-primary:hover { filter: brightness(1.1); }
+</style>
+</head>
+<body>
+
+<div class="card">
+  <div class="logo">Verde <span>Horizonte</span></div>
+  
+  <div class="avatar">D</div>
+  <h1>Dries</h1>
+  <h2>Webdeveloper & Founder</h2>
+
+  <div class="contact-info">
+    <div class="contact-row">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"></path></svg>
+      <a href="tel:+32470000000">+32 470 00 00 00</a>
+    </div>
+    <div class="contact-row">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"></path><polyline points="22,6 12,13 2,6"></polyline></svg>
+      <a href="mailto:info@verdehorizonte.com">info@verdehorizonte.com</a>
+    </div>
+    <div class="contact-row">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"></circle><line x1="2" y1="12" x2="22" y2="12"></line><path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"></path></svg>
+      <a href="https://pitch.fitzonemechelen.be" target="_blank">pitch.fitzonemechelen.be</a>
+    </div>
+  </div>
+
+  <!-- De QR-code wordt hier ingeladen -->
+  <div class="qr-container">
+    <img id="qr-image" src="" alt="QR Code">
+  </div>
+  <p class="qr-text">Scan deze code om mij op te slaan</p>
+
+  <button id="download-btn" class="btn btn-primary">
+    📥 Opslaan in Contacten
+  </button>
+</div>
+
+<script>
+  // Jouw gegevens (pas deze aan als je een echt nummer/adres hebt)
+  const contact = {
+    firstName: "Dries",
+    lastName: "",
+    company: "Verde Horizonte",
+    title: "Webdeveloper & Founder",
+    phone: "+32470000000",
+    email: "info@verdehorizonte.com",
+    website: "https://pitch.fitzonemechelen.be"
+  };
+
+  // 1. Genereer de vCard tekst (het bestandsformaat dat telefoons begrijpen)
+  const vCardData = `BEGIN:VCARD
+VERSION:3.0
+N:${contact.lastName};${contact.firstName};;;
+FN:${contact.firstName} ${contact.lastName}
+ORG:${contact.company}
+TITLE:${contact.title}
+TEL;TYPE=CELL:${contact.phone}
+EMAIL;TYPE=WORK,INTERNET:${contact.email}
+URL:${contact.website}
+END:VCARD`;
+
+  // 2. Zet de vCard om in een QR-code via een gratis API
+  const encodedVCard = encodeURIComponent(vCardData);
+  document.getElementById('qr-image').src = `https://api.qrserver.com/v1/create-qr-code/?size=300x300&data=${encodedVCard}`;
+
+  // 3. Zorg dat de "Opslaan" knop een .vcf bestand downloadt
+  document.getElementById('download-btn').addEventListener('click', () => {
+    const blob = new Blob([vCardData], { type: 'text/vcard;charset=utf-8;' });
+    const url = URL.createObjectURL(blob);
+    const link = document.createElement('a');
+    link.href = url;
+    link.download = 'Dries_VerdeHorizonte.vcf';
+    document.body.appendChild(link);
+    link.click();
+    document.body.removeChild(link);
+  });
+</script>
+</body>
+</html>
