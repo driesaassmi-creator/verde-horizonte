@@ -1,0 +1,185 @@
+<!DOCTYPE html>
+<html lang="nl">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Verde Horizonte Control Room</title>
+<meta name="theme-color" content="#05070d">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<meta name="apple-mobile-web-app-title" content="Control Room">
+<link rel="manifest" href="manifest.json">
+<link rel="icon" href="icon.svg" type="image/svg+xml">
+<link rel="apple-touch-icon" href="apple-touch-icon.png">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+:root{
+  --bg:#05070d; --blue:#5b8cff; --cyan:#4fd1ff; --gold:#d4af37;
+  --text:#f2f5fb; --muted:#8b93a7; --card:rgba(255,255,255,.045); --line:rgba(255,255,255,.09);
+}
+*{box-sizing:border-box;margin:0;-webkit-tap-highlight-color:transparent}
+html,body{height:100%}
+body{
+  background:radial-gradient(900px 500px at 15% -10%,rgba(91,140,255,.18),transparent 60%),
+             radial-gradient(700px 420px at 100% 0%,rgba(79,209,255,.10),transparent 60%),var(--bg);
+  color:var(--text);font-family:'Inter',-apple-system,BlinkMacSystemFont,'SF Pro Display','Segoe UI',sans-serif;
+  -webkit-font-smoothing:antialiased;
+  padding:calc(env(safe-area-inset-top,0px) + 28px) 20px calc(env(safe-area-inset-bottom,0px) + 20px);
+  display:flex;justify-content:center;
+}
+.app{width:100%;max-width:480px;display:flex;flex-direction:column;min-height:100%;gap:22px}
+header{display:flex;align-items:center;gap:14px}
+.logo{width:48px;height:48px;border-radius:14px;background:#0a0e18;border:1px solid rgba(212,175,55,.35);
+  display:grid;place-items:center;color:var(--gold);font-weight:700;font-size:18px;letter-spacing:.5px;flex:none}
+h1{font-size:24px;line-height:1.15;font-weight:700;letter-spacing:-.02em}
+h1 small{display:block;font-size:13px;font-weight:500;color:var(--muted);letter-spacing:0;margin-top:4px}
+.grid{display:grid;grid-template-columns:1fr 1fr;gap:14px}
+.tile{
+  position:relative;aspect-ratio:1/1;border-radius:26px;padding:18px;text-decoration:none;color:var(--text);
+  background:var(--card);border:1px solid var(--line);backdrop-filter:blur(18px);-webkit-backdrop-filter:blur(18px);
+  display:flex;flex-direction:column;justify-content:space-between;
+  transition:transform .25s cubic-bezier(.2,.8,.2,1),border-color .25s,background .25s;
+}
+.tile svg{width:30px;height:30px;stroke:var(--cyan);fill:none;stroke-width:1.7;stroke-linecap:round;stroke-linejoin:round}
+.tile:nth-child(2) svg{stroke:var(--blue)}
+.tile:nth-child(3) svg{stroke:var(--gold)}
+.tile b{font-size:17px;font-weight:600;letter-spacing:-.01em;display:block}
+.tile span{font-size:12.5px;color:var(--muted);display:block;margin-top:3px}
+.tile:hover{transform:scale(1.03);border-color:rgba(91,140,255,.45);background:rgba(255,255,255,.07)}
+.tile:active{transform:scale(.96)}
+.magic{
+  border:0;width:100%;border-radius:24px;padding:22px 20px;font:inherit;color:#fff;cursor:pointer;text-align:left;
+  background:linear-gradient(120deg,var(--blue),var(--cyan));
+  box-shadow:0 14px 40px -12px rgba(91,140,255,.65),inset 0 1px 0 rgba(255,255,255,.35);
+  display:flex;align-items:center;justify-content:space-between;gap:12px;
+  transition:transform .25s cubic-bezier(.2,.8,.2,1),box-shadow .25s;
+}
+.magic strong{font-size:20px;font-weight:700;letter-spacing:-.02em;display:block;color:#04101f}
+.magic em{font-style:normal;font-size:13px;color:rgba(4,16,31,.7);font-weight:500}
+.magic svg{width:30px;height:30px;stroke:#04101f;fill:none;stroke-width:2;stroke-linecap:round;stroke-linejoin:round;flex:none}
+.magic:hover{transform:scale(1.02);box-shadow:0 18px 48px -10px rgba(79,209,255,.7),inset 0 1px 0 rgba(255,255,255,.35)}
+.magic:active{transform:scale(.97)}
+footer{margin-top:auto;display:flex;align-items:center;justify-content:space-between;gap:12px;padding-top:6px}
+.dash{color:var(--muted);font-size:14px;text-decoration:none;transition:color .2s}
+.dash:hover{color:var(--text)}
+.wa{display:inline-flex;align-items:center;gap:8px;padding:12px 18px;border-radius:999px;text-decoration:none;
+  color:var(--gold);font-weight:600;font-size:14px;border:1px solid rgba(212,175,55,.4);background:rgba(212,175,55,.08);
+  transition:transform .2s,background .2s}
+.wa svg{width:18px;height:18px;fill:currentColor}
+.wa:hover{transform:scale(1.05);background:rgba(212,175,55,.15)}
+.wa:active{transform:scale(.95)}
+#toast{position:fixed;left:50%;bottom:calc(env(safe-area-inset-bottom,0px) + 90px);transform:translate(-50%,20px);
+  background:rgba(20,26,40,.95);border:1px solid var(--line);padding:12px 18px;border-radius:14px;font-size:14px;
+  opacity:0;pointer-events:none;transition:.3s;max-width:90%;text-align:center}
+#toast.show{opacity:1;transform:translate(-50%,0)}
+#install{display:none;border:1px solid rgba(255,255,255,.12);background:transparent;color:var(--muted);font:inherit;font-size:13px;
+  padding:10px;border-radius:14px;cursor:pointer}
+a:focus-visible,button:focus-visible{outline:2px solid var(--cyan);outline-offset:3px}
+@media (prefers-reduced-motion:reduce){*{transition:none!important}}
+</style>
+</head>
+<body>
+<main class="app">
+  <header>
+    <div class="logo" aria-hidden="true">VH</div>
+    <h1>Verde Horizonte Control Room<small>Klaar voor het klantgesprek</small></h1>
+  </header>
+
+  <nav class="grid" aria-label="Snelkoppelingen">
+    <a class="tile" id="t-portfolio" href="#" target="_blank" rel="noopener">
+      <svg viewBox="0 0 24 24"><rect x="3" y="4" width="18" height="14" rx="2.5"/><path d="M8 21h8M12 18v3"/></svg>
+      <div><b>Portfolio</b><span>Alle demo-sites</span></div>
+    </a>
+    <a class="tile" id="t-case" href="#" target="_blank" rel="noopener">
+      <svg viewBox="0 0 24 24"><path d="M6 3h9l4 4v14H6z"/><path d="M14 3v5h5M9 13h7M9 17h5"/></svg>
+      <div><b>Case Study</b><span>Bewezen resultaat</span></div>
+    </a>
+    <a class="tile" id="t-offerte" href="#" target="_blank" rel="noopener">
+      <svg viewBox="0 0 24 24"><path d="M5 3h14v18l-2.5-1.8L14 21l-2-1.8L10 21l-2.5-1.8L5 21z"/><path d="M9 8h6M9 12h6"/></svg>
+      <div><b>Offerte</b><span>Direct opmaken</span></div>
+    </a>
+    <a class="tile" id="t-uren" href="#" target="_blank" rel="noopener">
+      <svg viewBox="0 0 24 24"><circle cx="12" cy="13" r="8"/><path d="M12 9v4l2.5 2M9 2h6"/></svg>
+      <div><b>Uren</b><span>Tijd bijhouden</span></div>
+    </a>
+  </nav>
+
+  <button class="magic" id="magic" type="button">
+    <div><strong>Magic Pitch</strong><em>Deel al je links met één tik</em></div>
+    <svg viewBox="0 0 24 24"><path d="M12 15V3M7.5 7.5 12 3l4.5 4.5"/><path d="M5 12v7a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2v-7"/></svg>
+  </button>
+
+  <button id="install" type="button">App installeren op beginscherm</button>
+
+  <footer>
+    <a class="dash" id="dash" href="#" target="_blank" rel="noopener">Business Dashboard</a>
+    <a class="wa" id="wa" href="#" target="_blank" rel="noopener">
+      <svg viewBox="0 0 24 24"><path d="M12 2a10 10 0 0 0-8.6 15.1L2 22l4.9-1.3A10 10 0 1 0 12 2zm5 14c-.2.6-1.2 1.2-1.700 1.200-.4.1-1 .1-1.600-.1-.4-.1-.9-.3-1.500-.6-2.700-1.200-4.400-3.900-4.500-4.100-.1-.2-1.100-1.400-1.100-2.700s.7-1.900.9-2.200c.2-.2.5-.3.7-.3h.5c.2 0 .4 0 .6.5l.8 2c.1.2.1.3 0 .5l-.3.5-.4.4c-.1.1-.3.3-.1.6.2.3.7 1.200 1.500 1.900 1 .9 1.900 1.200 2.200 1.300.3.1.4.1.6-.1l.8-1c.2-.3.4-.2.6-.1l1.900.9c.3.1.5.2.5.3.1.2.1.7-.1 1.300z"/></svg>
+      WhatsApp
+    </a>
+  </footer>
+</main>
+<div id="toast" role="status" aria-live="polite"></div>
+
+<script>
+/* ===== PAS HIER JE EIGEN GEGEVENS AAN ===== */
+const CONFIG = {
+  naam: 'Verde Horizonte',
+  website:   'https://www.verdehorizonte.be',
+  portfolio: 'https://www.verdehorizonte.be/portfolio',
+  caseStudy: 'https://www.verdehorizonte.be/case-study',
+  offerte:   'https://www.verdehorizonte.be/offerte',
+  uren:      'https://www.verdehorizonte.be/uren',
+  dashboard: 'https://www.verdehorizonte.be/dashboard',
+  whatsapp:  '32470000000'   // internationaal formaat, zonder + of spaties
+};
+
+const $ = id => document.getElementById(id);
+$('t-portfolio').href = CONFIG.portfolio;
+$('t-case').href = CONFIG.caseStudy;
+$('t-offerte').href = CONFIG.offerte;
+$('t-uren').href = CONFIG.uren;
+$('dash').href = CONFIG.dashboard;
+$('wa').href = 'https://wa.me/' + CONFIG.whatsapp + '?text=' + encodeURIComponent('Hallo ' + CONFIG.naam + ', ik heb een vraag.');
+
+function toast(msg){
+  const t = $('toast'); t.textContent = msg; t.classList.add('show');
+  clearTimeout(toast.id); toast.id = setTimeout(() => t.classList.remove('show'), 2600);
+}
+
+$('magic').addEventListener('click', async () => {
+  const text =
+    'Bedankt voor het gesprek! Hier vind je alles op een rij:\n\n' +
+    '🌐 Website: ' + CONFIG.website + '\n' +
+    '🖥️ Portfolio: ' + CONFIG.portfolio + '\n' +
+    '📄 Case study: ' + CONFIG.caseStudy + '\n\n' +
+    'Vragen? Stuur gerust een bericht.\n— ' + CONFIG.naam;
+  const data = { title: CONFIG.naam, text };
+  try {
+    if (navigator.share) { await navigator.share(data); return; }
+    await navigator.clipboard.writeText(text);
+    toast('Gekopieerd. Plak het in WhatsApp of e-mail.');
+  } catch (e) {
+    if (e && e.name === 'AbortError') return; // gebruiker sloot het deelmenu
+    window.open('https://wa.me/?text=' + encodeURIComponent(text), '_blank');
+  }
+});
+
+/* Installeren */
+let deferred;
+window.addEventListener('beforeinstallprompt', e => { e.preventDefault(); deferred = e; $('install').style.display = 'block'; });
+$('install').addEventListener('click', async () => {
+  if (!deferred) return; deferred.prompt(); await deferred.userChoice; deferred = null; $('install').style.display = 'none';
+});
+window.addEventListener('appinstalled', () => { $('install').style.display = 'none'; });
+
+/* Service worker (offline) */
+if ('serviceWorker' in navigator) {
+  window.addEventListener('load', () => navigator.serviceWorker.register('sw.js').catch(() => {}));
+}
+</script>
+</body>
+</html>
