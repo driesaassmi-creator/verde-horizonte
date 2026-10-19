@@ -128,13 +128,13 @@ a:focus-visible,button:focus-visible{outline:2px solid var(--cyan);outline-offse
 /* ===== PAS HIER JE EIGEN GEGEVENS AAN ===== */
 const CONFIG = {
   naam: 'Verde Horizonte',
-  website:   'https://www.verdehorizonte.be',
-  portfolio: 'https://www.verdehorizonte.be/portfolio',
-  caseStudy: 'https://www.verdehorizonte.be/case-study',
-  offerte:   'https://www.verdehorizonte.be/offerte',
-  uren:      'https://www.verdehorizonte.be/uren',
-  dashboard: 'https://www.verdehorizonte.be/dashboard',
-  whatsapp:  '32470000000'   // internationaal formaat, zonder + of spaties
+  website:   'https://pitch.fitzonemechelen.be',
+  portfolio: 'https://pitch.fitzonemechelen.be/portfolio.html',
+  caseStudy: 'https://pitch.fitzonemechelen.be/case-study.html',
+  offerte:   'https://pitch.fitzonemechelen.be/offerte.html',
+  uren:      'https://pitch.fitzonemechelen.be/uren-tracker.html',
+  dashboard: 'https://pitch.fitzonemechelen.be/dashboard.html',
+  whatsapp:  '0469181169'   // <-- Vervang dit door jouw nummer, bijv: 32470123456
 };
 
 const $ = id => document.getElementById(id);
@@ -163,7 +163,7 @@ $('magic').addEventListener('click', async () => {
     await navigator.clipboard.writeText(text);
     toast('Gekopieerd. Plak het in WhatsApp of e-mail.');
   } catch (e) {
-    if (e && e.name === 'AbortError') return; // gebruiker sloot het deelmenu
+    if (e && e.name === 'AbortError') return;
     window.open('https://wa.me/?text=' + encodeURIComponent(text), '_blank');
   }
 });
