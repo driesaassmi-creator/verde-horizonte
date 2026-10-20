@@ -50,49 +50,6 @@ header{position:sticky;top:0;z-index:50;backdrop-filter:blur(14px);background:rg
 
 .case-grid {display: grid; grid-template-columns: 1fr 1fr; gap: 3rem; margin-bottom: 80px;}
 
-/* Mobiel: tekstblokken inklapbaar */
-@media (max-width: 700px) {
-  .case-grid {grid-template-columns: 1fr; gap: 1.5rem; margin-bottom: 40px;}
-  .case-block {
-    background: rgba(12,20,41,.6);
-    border: 1px solid var(--line);
-    border-radius: 16px;
-    padding: 0;
-    overflow: hidden;
-  }
-  .case-block h3 {
-    padding: 1.2rem 1.2rem;
-    margin: 0;
-    cursor: pointer;
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    font-size: 1.1rem;
-    background: rgba(91,140,255,.05);
-  }
-  .case-block h3::after {
-    content: '+';
-    font-size: 1.5rem;
-    color: var(--accent2);
-    transition: transform .3s;
-    font-weight: 400;
-  }
-  .case-block.open h3::after {
-    transform: rotate(45deg);
-  }
-  .case-block p,
-  .case-block ul {
-    display: none;
-    padding: 0 1.2rem;
-  }
-  .case-block p { padding-top: 1rem; }
-  .case-block ul { padding-bottom: 1.2rem; }
-  .case-block.open p,
-  .case-block.open ul {
-    display: block;
-  }
-}
-
 .case-block h3 {font-size: 1.4rem; margin-bottom: 1rem; color: var(--accent2); display: flex; align-items: center; gap: 0.5rem;}
 .case-block h3 svg {width: 24px; height: 24px;}
 .case-block p {color: var(--muted); font-size: 1.05rem; margin-bottom: 1rem;}
@@ -103,8 +60,9 @@ header{position:sticky;top:0;z-index:50;backdrop-filter:blur(14px);background:rg
 .tech-used {display: flex; flex-wrap: wrap; gap: 0.5rem; margin-top: 2rem;}
 .tech-tag {background: rgba(91,140,255,.1); border: 1px solid var(--line); padding: 0.4rem 0.8rem; border-radius: 999px; font-size: 0.8rem; font-weight: 500; color: var(--accent2);}
 
+/* De knoppen onder "Het Resultaat" */
 .portal-links {display: flex; gap: 1rem; flex-wrap: wrap; margin-top: 1.5rem;}
-.portal-links a {display: inline-flex; align-items: center; gap: 0.5rem; padding: 0.6rem 1rem; background: rgba(14,22,44,.9); border: 1px solid var(--line); border-radius: 8px; font-size: 0.9rem; color: var(--text); transition: all 0.3s;}
+.portal-links a {display: inline-flex; align-items: center; justify-content: center; gap: 0.5rem; padding: 0.8rem 1.2rem; background: rgba(14,22,44,.9); border: 1px solid var(--line); border-radius: 8px; font-size: 0.9rem; color: var(--text); transition: all 0.3s; text-align: center;}
 .portal-links a:hover {border-color: var(--accent); color: var(--accent2);}
 
 /* =========================================
@@ -135,9 +93,9 @@ header{position:sticky;top:0;z-index:50;backdrop-filter:blur(14px);background:rg
 .pz-stage.pz-hover .pz-float{animation-play-state:paused}
 
 @keyframes pz-spin{
-  0%  {transform:rotateY(-24deg) rotateX(8deg)}
-  50% {transform:rotateY(4deg)   rotateX(-5deg)}
-  100%{transform:rotateY(24deg)  rotateX(7deg)}
+  0%  {transform:rotateY(-24deg) rotateX(8deg) scale(var(--pz-s))}
+  50% {transform:rotateY(4deg)   rotateX(-5deg) scale(var(--pz-s))}
+  100%{transform:rotateY(24deg)  rotateX(7deg) scale(var(--pz-s))}
 }
 @keyframes pz-bob{0%,100%{transform:translateY(-8px)}50%{transform:translateY(12px)}}
 
@@ -201,15 +159,45 @@ header{position:sticky;top:0;z-index:50;backdrop-filter:blur(14px);background:rg
   background:radial-gradient(closest-side,rgba(0,0,0,.75),transparent);filter:blur(6px);animation:pz-sh 6s ease-in-out infinite}
 @keyframes pz-sh{0%,100%{transform:translateX(-50%) scale(1.06);opacity:.9}50%{transform:translateX(-50%) scale(.8);opacity:.55}}
 
-/* Responsive: 3D telefoon ook op mobiel zichtbaar */
-@media (max-width:520px){
+/* =========================================
+   MOBIELE FIXES
+   ========================================= */
+@media (max-width: 700px) {
+  .case-grid {grid-template-columns: 1fr; gap: 1.5rem; margin-bottom: 40px;}
+  .case-block { background: rgba(12,20,41,.6); border: 1px solid var(--line); border-radius: 16px; padding: 0; overflow: hidden; }
+  .case-block h3 { padding: 1.2rem 1.2rem; margin: 0; cursor: pointer; display: flex; justify-content: space-between; align-items: center; font-size: 1.1rem; background: rgba(91,140,255,.05); }
+  .case-block h3::after { content: '+'; font-size: 1.5rem; color: var(--accent2); transition: transform .3s; font-weight: 400; }
+  .case-block.open h3::after { transform: rotate(45deg); }
+  .case-block p, .case-block ul { display: none; padding: 0 1.2rem; }
+  .case-block p { padding-top: 1rem; }
+  .case-block ul { padding-bottom: 1.2rem; }
+  .case-block.open p, .case-block.open ul { display: block; }
+  
+  /* FIX VOOR DE KNOPPEN ONDER RESULTAAT */
+  .portal-links { flex-direction: column; gap: 0.8rem; }
+  .portal-links a { width: 100%; }
+}
+
+@media (max-width: 520px) {
   .pz-wrap{padding:40px 8px}
   .pz-stage{padding:20px 10px 50px; perspective:1200px}
   .pz-phone{--pz-s:.72}
-  .pz-phone{transform:rotateY(-15deg) rotateX(5deg) scale(var(--pz-s))!important; animation:none!important}
+  /* De telefoon draait nu ook op mobiel, inclusief de kleinere schaal */
+  .pz-phone{animation:pz-spin-mobile 9s ease-in-out infinite alternate !important;}
   .pz-shadow{width:180px;bottom:20px}
 }
-@media (prefers-reduced-motion:reduce){.pz-float,.pz-phone,.pz-shadow{animation:none!important}.pz-phone{transform:rotateY(-12deg) rotateX(4deg)}}
+
+/* Speciale animatie voor mobiel zodat de telefoon niet gigantisch wordt */
+@keyframes pz-spin-mobile {
+  0%  {transform:rotateY(-24deg) rotateX(8deg) scale(var(--pz-s))}
+  50% {transform:rotateY(4deg)   rotateX(-5deg) scale(var(--pz-s))}
+  100%{transform:rotateY(24deg)  rotateX(7deg) scale(var(--pz-s))}
+}
+
+@media (prefers-reduced-motion:reduce){
+  .pz-float,.pz-phone,.pz-shadow{animation:none!important}
+  .pz-phone{transform:rotateY(-12deg) rotateX(4deg) scale(var(--pz-s))}
+}
 </style>
 </head>
 <body>
@@ -263,7 +251,6 @@ header{position:sticky;top:0;z-index:50;backdrop-filter:blur(14px);background:rg
     </div>
   </section>
 
-  <!-- 3D Telefoon Showcase -->
   <section class="pz-wrap" id="pz-showcase" aria-label="FitZone app showcase">
     <div class="pz-stage" id="pz-stage">
       <div class="pz-float">
