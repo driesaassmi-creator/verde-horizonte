@@ -1,0 +1,9 @@
+# PROJECT: VERDE HORIZONTE (Dries)
+# DOEL: High-end, snelle websites en software bouwen.
+
+1. HUISSTIJL: Behoud ALTIJD de donkere premium look. Gebruik de bestaande CSS-variabelen (--bg: #05070d, --accent: #5b8cff, --gold: #d4af37). Verander niks aan de layout tenzij expliciet gevraagd.
+2. TECH STACK: Gebruik uitsluitend Vanilla HTML5, CSS3 en Vanilla JavaScript. Voeg GEEN frameworks (React, Vue, Tailwind) of externe libraries toe, tenzij ik dat letterlijk vraag.
+3. BESTANDSBEHEER: Als ik een bestandsnaam noem (bijv. index.html) zonder de @-tag, zoek en lees dat bestand dan zelfstandig in de projectmap. Vraag niet om toestemming, doe het gewoon.
+4. UITVOERING: Voer wijzigingen direct uit. Ik gebruik Git als vangnet, dus je hoeft niet voor elke regel om mijn goedkeuring te vragen.
+5. KWALITEIT: Zorg voor nette, semantische code. Test je wijzigingen op fouten (zoals ontbrekende haakjes) voordat je ze voorstelt.
+6. RAPPORTAGE: Geef na elke wijziging een korte samenvatting van wat je hebt aangepast en in welke bestanden.
