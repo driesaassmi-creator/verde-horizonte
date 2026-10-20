@@ -49,6 +49,17 @@
   .btn-save{background:var(--accent);color:#05070d;padding:12px;border-radius:10px;cursor:pointer;font-family:inherit;font-weight:600;font-size:.95rem;border:none}
   .form-group{margin-bottom:15px}
 
+  /* FIX VOOR HET LEGE VAK ONDERAAN */
+  .toast {
+    visibility: hidden;
+    opacity: 0;
+    transition: opacity 0.3s, transform 0.3s, visibility 0.3s;
+  }
+  .toast.show {
+    visibility: visible;
+    opacity: 1;
+  }
+
   @media(max-width:768px){
     .add-form{flex-direction:column}
     .add-form input{width:100%}
@@ -88,6 +99,7 @@
   </div>
 
   <div class="toast" id="toast"></div>
+  
   <div class="modal-backdrop" id="modal">
     <div class="modal">
       <p id="modal-text">Weet je het zeker?</p>
@@ -98,7 +110,6 @@
     </div>
   </div>
 
-  <!-- Edit modal -->
   <div class="edit-modal" id="edit-modal">
     <div class="edit-modal-content">
       <h2>Project Bewerken</h2>
@@ -137,11 +148,13 @@
     const editStatus = document.getElementById('edit-status');
 
     function saveTasks(){ localStorage.setItem('vh_tasks', JSON.stringify(tasks)); }
+    
     function showToast(msg, type='success'){
       toast.textContent = msg;
       toast.className = 'toast show ' + type;
       setTimeout(()=> toast.classList.remove('show'), 2500);
     }
+    
     function askConfirm(msg, cb){
       modalText.textContent = msg; pendingAction = cb; modal.classList.add('show');
     }
@@ -162,7 +175,7 @@
         card.className = 'task';
         let moveButtons = '';
         if(task.status==='todo') moveButtons = `<button class="btn-move" data-move="doing" data-id="${task.id}">Start →</button>`;
-        else if(task.status==='doing') moveButtons = `<button class="btn-move" data-move="todo" data-id="${task.id}">← Terug</button><button class="btn-move" data-move="done" data-id="${task.id}">Voltooi ✓</button>`;
+        else if(task.status==='doing') moveButtons = `<button class="btn-move" data-move="todo" data-id="${task.id}">← Terug</button><button class="btn-move" data-move="done" data-id="${task.id}">Voltooien ✓</button>`;
         else moveButtons = `<button class="btn-move" data-move="doing" data-id="${task.id}">← Heropen</button>`;
 
         card.innerHTML = `
