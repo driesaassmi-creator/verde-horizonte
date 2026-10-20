@@ -33,7 +33,9 @@
 <style>
 :root{
   --bg:#05070d; --navy:#0a1226; --surface:#0c1429; --line:rgba(122,162,255,.16);
-  --text:#e9edf7; --muted:#8c97b0; --accent:#5b8cff; --accent2:#4fd1ff;
+  --text:#e9edf7; 
+  --muted:#9aa6c0; /* AANGEPAST: Iets helderder voor beter contrast */
+  --accent:#5b8cff; --accent2:#4fd1ff;
   --gold:#d4af37;
   --glow:0 0 40px rgba(91,140,255,.35);
 }
@@ -193,9 +195,7 @@ footer{padding:28px 0;text-align:center;color:var(--muted);font-size:.82rem;bord
 .whatsapp-float:hover {transform: scale(1.1) translateY(-5px); box-shadow: 0 10px 25px rgba(37, 211, 102, 0.4);}
 .whatsapp-float svg {width: 35px; height: 35px;}
 
-/* =========================================
-   NIEUW: Pricing inklapbaar op mobiel
-   ========================================= */
+/* Pricing inklapbaar op mobiel */
 @media(max-width:700px){
   .pricing-grid,
   .maintenance-grid{
@@ -271,7 +271,7 @@ footer{padding:28px 0;text-align:center;color:var(--muted);font-size:.82rem;bord
 <body>
 <header>
   <div class="wrap nav">
-    <a class="logo" href="#top">Verde <span>Horizonte</span></a>
+    <a class="logo" href="#top" aria-label="Verde Horizonte - naar boven">Verde <span>Horizonte</span></a>
     <a class="link" href="#maatwerk">Maatwerk</a>
     <a class="btn ghost" href="#contact" style="padding:.55rem 1.1rem;font-size:.85rem">Contact</a>
   </div>
@@ -284,7 +284,7 @@ footer{padding:28px 0;text-align:center;color:var(--muted);font-size:.82rem;bord
       <p>Geen standaard templates. Ik bouw snelle, high-end websites en slimme software voor ondernemers die online willen groeien en indruk willen maken.</p>
       <div class="actions">
         <a class="btn primary" href="#contact">Start jouw project</a>
-        <a class="btn ghost" href="#werk">Bekijk demo’s</a>
+        <a class="btn ghost" href="#werk" aria-label="Scroll naar de demo's">Bekijk demo’s</a>
       </div>
     </div>
   </section>
@@ -295,8 +295,8 @@ footer{padding:28px 0;text-align:center;color:var(--muted);font-size:.82rem;bord
         <div class="ring" id="ring"></div>
       </div>
       <div class="arrows">
-        <button class="arrow" id="prev" aria-label="Vorige demo"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M15 18l-6-6 6-6"/></svg></button>
-        <button class="arrow" id="next" aria-label="Volgende demo"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 18l6-6-6-6"/></svg></button>
+        <button class="arrow" id="prev" aria-label="Vorige demo website"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M15 18l-6-6 6-6"/></svg></button>
+        <button class="arrow" id="next" aria-label="Volgende demo website"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 18l6-6-6-6"/></svg></button>
       </div>
       <p class="hint">Sleep om te draaien. Klik op een kaart om de live demo te openen.</p>
       
@@ -309,7 +309,7 @@ footer{padding:28px 0;text-align:center;color:var(--muted);font-size:.82rem;bord
   
   <section class="about" id="over-mij" data-aos="fade-up">
     <div class="wrap about-grid">
-      <div class="about-img"><img src="foto.png" alt="Dries - Verde Horizonte"></div>
+      <div class="about-img"><img src="foto.png" alt="Dries, oprichter van Verde Horizonte"></div>
       <div class="about-text">
         <h2>Hallo, ik ben Dries.</h2>
         <p>Ik bouw websites en software die niet alleen mooi zijn, maar ook presteren. Snel, veilig en volledig op maat — afgestemd op wat jouw bedrijf écht nodig heeft.</p>
@@ -508,10 +508,10 @@ footer{padding:28px 0;text-align:center;color:var(--muted);font-size:.82rem;bord
           <input type="hidden" name="access_key" value="a05ef49b-f4f1-473b-91a9-bd20994d2cd5">
           <input type="hidden" name="subject" value="Nieuwe aanvraag via Verde Horizonte">
           <div class="form-row">
-            <input type="text" name="name" placeholder="Jouw naam" required>
-            <input type="email" name="email" placeholder="Jouw e-mailadres" required>
+            <input type="text" name="name" placeholder="Jouw naam" aria-label="Jouw naam" required>
+            <input type="email" name="email" placeholder="Jouw e-mailadres" aria-label="Jouw e-mailadres" required>
           </div>
-          <textarea name="message" placeholder="Vertel kort over je project..." required></textarea>
+          <textarea name="message" placeholder="Vertel kort over je project..." aria-label="Vertel kort over je project" required></textarea>
           <button type="submit" class="btn primary">Verstuur aanvraag</button>
         </form>
         <div id="form-success" style="display:none; padding: 2rem; background: rgba(91,140,255,.1); border: 1px solid var(--accent); border-radius: 12px; margin-top: 1rem;">
