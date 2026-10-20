@@ -193,13 +193,50 @@ footer{padding:28px 0;text-align:center;color:var(--muted);font-size:.82rem;bord
 .whatsapp-float:hover {transform: scale(1.1) translateY(-5px); box-shadow: 0 10px 25px rgba(37, 211, 102, 0.4);}
 .whatsapp-float svg {width: 35px; height: 35px;}
 
-/* Responsive */
+/* =========================================
+   NIEUW: Pricing horizontaal scrollbaar op mobiel
+   ========================================= */
+@media(max-width:700px){
+  .pricing-grid{
+    display:flex;
+    overflow-x:auto;
+    scroll-snap-type:x mandatory;
+    gap:1rem;
+    padding:0 4vw 1.5rem;
+    margin-inline:-4vw;
+    -webkit-overflow-scrolling:touch;
+    scrollbar-width:thin;
+  }
+  .pricing-grid::-webkit-scrollbar{height:6px}
+  .pricing-grid::-webkit-scrollbar-thumb{background:rgba(91,140,255,.4);border-radius:3px}
+  .price-card{
+    flex:0 0 82%;
+    scroll-snap-align:center;
+  }
+  .maintenance-grid{
+    display:flex;
+    overflow-x:auto;
+    scroll-snap-type:x mandatory;
+    gap:1rem;
+    padding:0 4vw 1.5rem;
+    margin-inline:-4vw;
+    -webkit-overflow-scrolling:touch;
+    scrollbar-width:thin;
+  }
+  .maintenance-grid::-webkit-scrollbar{height:6px}
+  .maintenance-grid::-webkit-scrollbar-thumb{background:rgba(91,140,255,.4);border-radius:3px}
+  .maintenance-card{
+    flex:0 0 82%;
+    scroll-snap-align:center;
+  }
+}
+
 @media(max-width:900px){
   .about-grid{grid-template-columns:1fr;text-align:center;gap:2rem}
   .about-text p{margin-inline:auto}
   .about-list li{justify-content:center}
   .about-img img{max-width:300px}
-  .grid-steps, .grid, .pricing-grid, .maintenance-grid{grid-template-columns:1fr}
+  .grid-steps, .grid{grid-template-columns:1fr}
 }
 @media(max-width:600px){
   .form-row{grid-template-columns:1fr}
