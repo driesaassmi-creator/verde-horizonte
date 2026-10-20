@@ -64,6 +64,10 @@ header{position:sticky;top:0;z-index:50;backdrop-filter:blur(14px);background:rg
 .btn.ghost:hover{border-color:var(--accent);background:rgba(91,140,255,.1)}
 .btn.case-btn{border-color:var(--gold);color:var(--gold);background:rgba(212,175,55,.05);padding:1rem 2rem;font-size:1rem;}
 .btn.case-btn:hover{background:rgba(212,175,55,.15);box-shadow:0 0 20px rgba(212,175,55,.2);transform:translateY(-2px);}
+.btn .spinner{display:none;width:18px;height:18px;border-radius:50%;border:2px solid rgba(255,255,255,.35);border-top-color:#fff;animation:btn-spin .7s linear infinite;flex-shrink:0}
+.btn.loading .spinner{display:inline-block}
+.btn.loading{pointer-events:none;opacity:.85}
+@keyframes btn-spin{to{transform:rotate(360deg)}}
 
 /* Hero */
 .hero{padding:clamp(56px,10vw,120px) 0 24px;text-align:center}
@@ -150,6 +154,38 @@ header{position:sticky;top:0;z-index:50;backdrop-filter:blur(14px);background:rg
 .maintenance-price .amount { font-size: 1.5rem; font-weight: 800; color: var(--text); line-height: 1.2; display: block; }
 .gold-card .maintenance-price .amount { color: var(--gold); }
 .maintenance-price .unit { font-size: 0.85rem; color: var(--muted); }
+
+/* Prijscalculator */
+.calc{margin:2rem 0 0}
+.calc-card{max-width:640px;margin-inline:auto;padding:2rem 2rem 2.25rem;border-radius:24px;background:linear-gradient(180deg,rgba(14,22,44,.9),rgba(9,14,30,.9));border:1px solid var(--line);box-shadow:0 20px 60px rgba(0,0,0,.35)}
+.calc-card h3{font-size:1.3rem;letter-spacing:-.02em;margin-bottom:.25rem;color:var(--text)}
+.calc-sub{color:var(--muted);font-size:.95rem;margin-bottom:1.75rem}
+.calc-row{margin-bottom:1.75rem}
+.calc-label{display:flex;justify-content:space-between;align-items:center;margin-bottom:.85rem}
+.calc-label span{font-weight:600;font-size:1rem;color:var(--text)}
+.calc-label output{font-size:1.05rem;font-weight:800;color:var(--accent2);background:rgba(91,140,255,.1);border:1px solid var(--line);border-radius:999px;padding:.25rem .9rem;min-width:2.6rem;text-align:center}
+.calc input[type=range]{-webkit-appearance:none;appearance:none;width:100%;height:6px;border-radius:999px;background:linear-gradient(90deg,var(--accent) 0%,var(--accent) var(--fill,0%),rgba(255,255,255,.08) var(--fill,0%));outline:none;cursor:pointer;display:block}
+.calc input[type=range]::-webkit-slider-thumb{-webkit-appearance:none;appearance:none;width:22px;height:22px;border-radius:50%;background:#fff;border:4px solid var(--accent);box-shadow:0 0 0 4px rgba(91,140,255,.2),0 2px 10px rgba(0,0,0,.5);cursor:grab;transition:transform .15s}
+.calc input[type=range]::-webkit-slider-thumb:hover{transform:scale(1.12)}
+.calc input[type=range]::-webkit-slider-thumb:active{cursor:grabbing}
+.calc input[type=range]::-moz-range-thumb{width:22px;height:22px;border-radius:50%;background:#fff;border:4px solid var(--accent);box-shadow:0 0 0 4px rgba(91,140,255,.2),0 2px 10px rgba(0,0,0,.5);cursor:grab}
+.calc input[type=range]::-moz-range-track{height:6px;border-radius:999px;background:linear-gradient(90deg,var(--accent) 0%,var(--accent) var(--fill,0%),rgba(255,255,255,.08) var(--fill,0%))}
+.calc-range-labels{display:flex;justify-content:space-between;font-size:.8rem;color:var(--muted);margin-top:.5rem}
+.calc-options{display:flex;flex-direction:column;gap:.75rem;margin-bottom:1.75rem}
+.calc-option{position:relative;display:flex;align-items:center;gap:.8rem;padding:.9rem 1rem;border-radius:14px;border:1px solid var(--line);background:rgba(255,255,255,.02);cursor:pointer;transition:border-color .2s,background .2s}
+.calc-option:hover{border-color:rgba(91,140,255,.45);background:rgba(91,140,255,.05)}
+.calc-option input{position:absolute;opacity:0;width:0;height:0}
+.calc-check{width:22px;height:22px;border-radius:7px;border:1px solid var(--line);background:rgba(255,255,255,.03);display:grid;place-items:center;flex-shrink:0;color:transparent;transition:all .2s}
+.calc-check svg{width:14px;height:14px}
+.calc-option input:checked + .calc-check{background:var(--accent);border-color:var(--accent);color:#fff}
+.calc-option input:focus-visible + .calc-check{outline:2px solid var(--accent2);outline-offset:2px}
+.calc-option-text{flex:1;font-weight:500;font-size:.95rem;color:var(--text)}
+.calc-option-price{font-weight:700;font-size:.9rem;color:var(--muted);transition:color .2s}
+.calc-option input:checked ~ .calc-option-price{color:var(--gold)}
+.calc-total{display:flex;justify-content:space-between;align-items:flex-end;padding-top:1.25rem;border-top:1px solid rgba(255,255,255,.06)}
+.calc-total > span:first-child{font-weight:600;color:var(--muted);font-size:1rem}
+.calc-price{font-size:2.25rem;font-weight:800;letter-spacing:-.02em;color:var(--text);line-height:1}
+.calc-price small{font-size:.9rem;font-weight:400;color:var(--muted);letter-spacing:0}
 
 /* FAQ */
 .faq{padding:80px 0 40px;border-top:1px solid var(--line)}
@@ -339,6 +375,42 @@ footer{padding:28px 0;text-align:center;color:var(--muted);font-size:.82rem;bord
       <h2>Een slimme investering</h2>
       <p class="intro">Kies een pakket dat past bij jouw fase, of vraag een voorstel op maat aan.</p>
 
+      <div class="calc">
+        <div class="calc-card">
+          <h3>Prijscalculator</h3>
+          <p class="calc-sub">Stel hieronder je website samen en zie direct een indicatieprijs.</p>
+
+          <div class="calc-row">
+            <div class="calc-label">
+              <span>Aantal pagina's</span>
+              <output id="calc-pages-val">1</output>
+            </div>
+            <input type="range" id="calc-pages" min="1" max="10" step="1" value="1" aria-label="Aantal pagina's">
+            <div class="calc-range-labels"><span>1 pagina</span><span>10 pagina's</span></div>
+          </div>
+
+          <div class="calc-options">
+            <label class="calc-option">
+              <input type="checkbox" id="calc-seo">
+              <span class="calc-check"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg></span>
+              <span class="calc-option-text">SEO-optimalisatie</span>
+              <span class="calc-option-price">+€250</span>
+            </label>
+            <label class="calc-option">
+              <input type="checkbox" id="calc-copy">
+              <span class="calc-check"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg></span>
+              <span class="calc-option-text">Copywriting</span>
+              <span class="calc-option-price">+€150</span>
+            </label>
+          </div>
+
+          <div class="calc-total">
+            <span>Totaal indicatie</span>
+            <span class="calc-price">€<span id="calc-total">799</span><small> / eenmalig</small></span>
+          </div>
+        </div>
+      </div>
+
       <button class="pricing-toggle" id="pricing-toggle" aria-expanded="false">Bekijk de pakketten</button>
 
       <div class="pricing-grid" id="pricing-grid">
@@ -485,7 +557,10 @@ footer{padding:28px 0;text-align:center;color:var(--muted);font-size:.82rem;bord
             <input type="email" name="email" placeholder="Jouw e-mailadres" aria-label="Jouw e-mailadres" required>
           </div>
           <textarea name="message" placeholder="Vertel kort over je project..." aria-label="Vertel kort over je project" required></textarea>
-          <button type="submit" class="btn primary">Verstuur aanvraag</button>
+          <button type="submit" class="btn primary" id="contact-submit">
+            <span class="btn-label">Verstuur aanvraag</span>
+            <span class="spinner" aria-hidden="true"></span>
+          </button>
         </form>
         <div id="form-success" style="display:none; padding: 2rem; background: rgba(91,140,255,.1); border: 1px solid var(--accent); border-radius: 12px; margin-top: 1rem;">
           <h3 style="color: var(--accent2); margin-bottom: .5rem;">Bedankt voor je bericht!</h3>
@@ -586,8 +661,15 @@ footer{padding:28px 0;text-align:center;color:var(--muted);font-size:.82rem;bord
 // 2. Formulier verzenden
 const form = document.querySelector('.contact-form');
 if (form) {
+  const submitBtn = form.querySelector('button[type="submit"]');
+  const btnLabel = submitBtn ? submitBtn.querySelector('.btn-label') : null;
   form.addEventListener('submit', function(e) {
     e.preventDefault();
+    if (submitBtn) {
+      submitBtn.disabled = true;
+      submitBtn.classList.add('loading');
+      if (btnLabel) btnLabel.textContent = 'Versturen...';
+    }
     const formData = new FormData(form); const object = Object.fromEntries(formData); const json = JSON.stringify(object);
     fetch('https://api.web3forms.com/submit', {
       method: 'POST', headers: { 'Content-Type': 'application/json', 'Accept': 'application/json' }, body: json
@@ -596,9 +678,41 @@ if (form) {
       if (response.status == 200) {
         form.style.display = 'none'; document.getElementById('form-success').style.display = 'block';
       } else { alert("Er ging iets mis: " + json.message); }
-    }).catch(error => { alert("Er ging iets mis bij het verzenden."); });
+    }).catch(error => { alert("Er ging iets mis bij het verzenden."); })
+    .finally(() => {
+      if (submitBtn) {
+        submitBtn.disabled = false;
+        submitBtn.classList.remove('loading');
+        if (btnLabel) btnLabel.textContent = 'Verstuur aanvraag';
+      }
+    });
   });
 }
+
+// 2b. Prijscalculator
+(function(){
+  var pages = document.getElementById('calc-pages');
+  var pagesVal = document.getElementById('calc-pages-val');
+  var seo = document.getElementById('calc-seo');
+  var copy = document.getElementById('calc-copy');
+  var total = document.getElementById('calc-total');
+  if (!pages || !pagesVal || !seo || !copy || !total) return;
+
+  var BASE = 799, PER_PAGE = 150, SEO_PRICE = 250, COPY_PRICE = 150;
+
+  function update(){
+    var p = parseInt(pages.value, 10);
+    var sum = BASE + (p - 1) * PER_PAGE + (seo.checked ? SEO_PRICE : 0) + (copy.checked ? COPY_PRICE : 0);
+    pagesVal.textContent = p;
+    total.textContent = sum.toLocaleString('nl-BE');
+    pages.style.setProperty('--fill', ((p - 1) / 9 * 100) + '%');
+  }
+
+  pages.addEventListener('input', update);
+  seo.addEventListener('change', update);
+  copy.addEventListener('change', update);
+  update();
+})();
 
 // 3. AOS Animaties
 AOS.init({ duration: 800, once: true, offset: 50 });
