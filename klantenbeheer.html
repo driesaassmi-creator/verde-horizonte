@@ -29,6 +29,9 @@
   .status-actief{background:rgba(74,222,128,.15);color:var(--success)}
   .status-inactief{background:rgba(255,107,122,.15);color:var(--danger)}
 
+  .card-actions{display:flex;gap:8px;flex-wrap:wrap}
+  .btn-edit{background:rgba(91,140,255,.1);color:var(--accent);border:1px solid rgba(91,140,255,.3);padding:8px 12px;font-size:.8rem;border-radius:8px;cursor:pointer;font-family:inherit}
+  .btn-edit:hover{background:rgba(91,140,255,.2)}
   .btn-danger{background:transparent;color:var(--danger);border:1px solid rgba(255,107,122,.3);padding:8px 12px;font-size:.8rem;width:auto;border-radius:8px;cursor:pointer;font-family:inherit}
   .btn-danger:hover{background:rgba(255,107,122,.1)}
 
@@ -38,11 +41,28 @@
   .btn-export{background:var(--surface-2);color:var(--text);border:1px solid var(--border)}
   .btn-clear{background:transparent;color:var(--danger);border:1px solid rgba(255,107,122,.3)}
 
+  /* Edit modal */
+  .edit-modal{
+    position:fixed;inset:0;background:rgba(0,0,0,.7);backdrop-filter:blur(4px);
+    display:none;align-items:center;justify-content:center;z-index:9999;padding:20px;
+  }
+  .edit-modal.show{display:flex}
+  .edit-modal-content{
+    background:var(--surface);border:1px solid var(--border);border-radius:16px;
+    padding:24px;max-width:500px;width:100%;max-height:90vh;overflow-y:auto;
+  }
+  .edit-modal-content h2{margin-bottom:20px;font-size:1.3rem}
+  .edit-modal-actions{display:flex;gap:10px;margin-top:20px}
+  .edit-modal-actions .btn{flex:1}
+  .btn-cancel{background:var(--surface-2);color:var(--text);border:1px solid var(--border);padding:12px;border-radius:10px;cursor:pointer;font-family:inherit;font-weight:600;font-size:.95rem}
+  .btn-save{background:var(--accent);color:#05070d;padding:12px;border-radius:10px;cursor:pointer;font-family:inherit;font-weight:600;font-size:.95rem;border:none}
+
   @media(max-width:800px){
     .layout{grid-template-columns:1fr}
     .search-box{max-width:100%}
     .customer-card{flex-direction:column;align-items:flex-start}
-    .btn-danger{width:100%;margin-top:10px}
+    .card-actions{width:100%}
+    .btn-edit, .btn-danger{flex:1}
   }
 </style>
 </head>
@@ -89,16 +109,38 @@
     </div>
   </div>
 
-  <!-- Toast -->
   <div class="toast" id="toast"></div>
-
-  <!-- Confirm Modal -->
   <div class="modal-backdrop" id="modal">
     <div class="modal">
       <p id="modal-text">Weet je het zeker?</p>
       <div class="modal-actions">
         <button class="btn-cancel" id="modal-cancel">Annuleer</button>
         <button class="btn-confirm" id="modal-confirm">Ja, verwijder</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Edit modal -->
+  <div class="edit-modal" id="edit-modal">
+    <div class="edit-modal-content">
+      <h2>Klant Bewerken</h2>
+      <input type="hidden" id="edit-id">
+      <div class="form-group"><label>Naam *</label><input type="text" id="edit-name" required></div>
+      <div class="form-group"><label>Bedrijf</label><input type="text" id="edit-company"></div>
+      <div class="form-group"><label>E-mailadres *</label><input type="email" id="edit-email" required></div>
+      <div class="form-group"><label>Telefoonnummer</label><input type="tel" id="edit-phone"></div>
+      <div class="form-group">
+        <label>Status</label>
+        <select id="edit-status">
+          <option value="Prospect">Prospect (Lead)</option>
+          <option value="Actief">Actieve Klant</option>
+          <option value="Inactief">Inactief</option>
+        </select>
+      </div>
+      <div class="form-group"><label>Notities</label><textarea id="edit-notes"></textarea></div>
+      <div class="edit-modal-actions">
+        <button class="btn-cancel" id="edit-cancel">Annuleer</button>
+        <button class="btn-save" id="edit-save">Opslaan</button>
       </div>
     </div>
   </div>
@@ -114,6 +156,15 @@
     const modal = document.getElementById('modal');
     const modalText = document.getElementById('modal-text');
     let pendingAction = null;
+
+    const editModal = document.getElementById('edit-modal');
+    const editId = document.getElementById('edit-id');
+    const editName = document.getElementById('edit-name');
+    const editCompany = document.getElementById('edit-company');
+    const editEmail = document.getElementById('edit-email');
+    const editPhone = document.getElementById('edit-phone');
+    const editStatus = document.getElementById('edit-status');
+    const editNotes = document.getElementById('edit-notes');
 
     function save(){ localStorage.setItem('vh_customers', JSON.stringify(customers)); }
 
@@ -157,9 +208,13 @@
               </div>
             </div>
           </div>
-          <button class="btn-danger" data-id="${c.id}">Verwijder</button>
+          <div class="card-actions">
+            <button class="btn-edit" data-edit="${c.id}">✏️ Bewerken</button>
+            <button class="btn-danger" data-delete="${c.id}">Verwijder</button>
+          </div>
         `;
-        card.querySelector('.btn-danger').addEventListener('click', ()=>{
+        card.querySelector('[data-edit]').addEventListener('click', ()=> openEdit(c));
+        card.querySelector('[data-delete]').addEventListener('click', ()=>{
           askConfirm(`Klant "${c.name}" verwijderen?`, ()=>{
             customers = customers.filter(x => x.id !== c.id);
             save(); render(searchInput.value);
@@ -169,6 +224,41 @@
         grid.appendChild(card);
       });
     }
+
+    function openEdit(customer){
+      editId.value = customer.id;
+      editName.value = customer.name;
+      editCompany.value = customer.company || '';
+      editEmail.value = customer.email;
+      editPhone.value = customer.phone || '';
+      editStatus.value = customer.status;
+      editNotes.value = customer.notes || '';
+      editModal.classList.add('show');
+    }
+
+    document.getElementById('edit-cancel').onclick = ()=>{
+      editModal.classList.remove('show');
+    };
+
+    document.getElementById('edit-save').onclick = ()=>{
+      const id = parseInt(editId.value);
+      if (!editName.value.trim() || !editEmail.value.trim()) {
+        return showToast('Naam en e-mail zijn verplicht', 'error');
+      }
+      customers = customers.map(c => c.id === id ? {
+        ...c,
+        name: editName.value.trim(),
+        company: editCompany.value.trim(),
+        email: editEmail.value.trim(),
+        phone: editPhone.value.trim(),
+        status: editStatus.value,
+        notes: editNotes.value.trim()
+      } : c);
+      save();
+      render(searchInput.value);
+      editModal.classList.remove('show');
+      showToast('Klant bijgewerkt!', 'success');
+    };
 
     form.addEventListener('submit', (e)=>{
       e.preventDefault();
