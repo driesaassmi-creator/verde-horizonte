@@ -11,6 +11,32 @@
   .form-group{margin-bottom:15px}
   .btn-primary{background:var(--accent);color:#05070d;padding:14px;border-radius:10px;font-weight:600;font-size:1rem;cursor:pointer;border:none;width:100%;font-family:inherit;margin-top:10px;}
   .btn-primary:hover{filter:brightness(1.1)}
+  
+  /* DE FIX VOOR HET LEGE VAK ONDERAAN */
+  .toast {
+    position: fixed;
+    bottom: 24px;
+    left: 50%;
+    transform: translateX(-50%) translateY(200%);
+    background: var(--surface-2);
+    border: 1px solid var(--accent);
+    color: var(--text);
+    padding: 14px 22px;
+    border-radius: 12px;
+    font-size: .95rem;
+    font-weight: 500;
+    box-shadow: 0 10px 30px rgba(0,0,0,.5);
+    z-index: 9999;
+    transition: transform .35s ease;
+    max-width: 90vw;
+    visibility: hidden; /* Verbergt het element volledig */
+    opacity: 0;
+  }
+  .toast.show {
+    transform: translateX(-50%) translateY(0);
+    visibility: visible;
+    opacity: 1;
+  }
 </style>
 </head>
 <body>
@@ -50,24 +76,20 @@
       const company = document.getElementById('company').value.trim();
       const notes = document.getElementById('notes').value.trim();
 
-      // Haal bestaande klanten op
       let customers = JSON.parse(localStorage.getItem('vh_customers')) || [];
 
-      // Voeg de nieuwe lead toe
       customers.push({
         id: Date.now(),
         name: name,
         email: email,
         company: company,
         phone: '',
-        status: 'Prospect', // Automatisch als prospect
+        status: 'Prospect',
         notes: notes
       });
 
-      // Sla op
       localStorage.setItem('vh_customers', JSON.stringify(customers));
 
-      // Toon succesmelding en stuur terug
       showToast('Lead toegevoegd aan Klantenbeheer!', 'success');
       
       setTimeout(() => {
