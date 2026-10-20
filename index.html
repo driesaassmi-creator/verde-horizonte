@@ -496,7 +496,7 @@ footer{padding:28px 0;text-align:center;color:var(--muted);font-size:.82rem;bord
   </section>
 </main>
 
-<footer><div class="wrap">© <span id="yr"></span> Verde Horizonte. Alle rechten voorbehouden.</div></footer>
+<footer><div class="wrap">Websites &amp; software op maat</div></footer>
 
 <button id="scroll-top" aria-label="Scroll naar boven">
   <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M18 15l-6-6-6 6"/></svg>
@@ -526,7 +526,7 @@ footer{padding:28px 0;text-align:center;color:var(--muted);font-size:.82rem;bord
   var n=demos.length,step=360/n,radius=0;
   var reduce=window.matchMedia("(prefers-reduced-motion: reduce)").matches;
   var mobile=window.matchMedia("(max-width:300px)");
-  document.getElementById("yr").textContent=new Date().getFullYear();
+  var yr=document.getElementById("yr"); if(yr) yr.textContent=new Date().getFullYear();
 
   var cards=demos.map(function(d){
     var a=document.createElement("a"); a.className="card3d"; a.href="https://"+d[2]+"/"; a.target="_blank"; a.rel="noopener";
