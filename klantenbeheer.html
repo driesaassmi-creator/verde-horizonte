@@ -57,6 +57,16 @@
   .btn-cancel{background:var(--surface-2);color:var(--text);border:1px solid var(--border);padding:12px;border-radius:10px;cursor:pointer;font-family:inherit;font-weight:600;font-size:.95rem}
   .btn-save{background:var(--accent);color:#05070d;padding:12px;border-radius:10px;cursor:pointer;font-family:inherit;font-weight:600;font-size:.95rem;border:none}
 
+  /* FIX VOOR HET LEGE VAK ONDERAAN */
+  .toast {
+    position: fixed; bottom: 24px; left: 50%; transform: translateX(-50%) translateY(200%);
+    background: var(--surface-2); border: 1px solid var(--accent); color: var(--text);
+    padding: 14px 22px; border-radius: 12px; font-size: .95rem; font-weight: 500;
+    box-shadow: 0 10px 30px rgba(0,0,0,.5); z-index: 9999; transition: transform .35s ease;
+    max-width: 90vw; visibility: hidden; opacity: 0;
+  }
+  .toast.show { transform: translateX(-50%) translateY(0); visibility: visible; opacity: 1; }
+
   @media(max-width:800px){
     .layout{grid-template-columns:1fr}
     .search-box{max-width:100%}
@@ -120,7 +130,6 @@
     </div>
   </div>
 
-  <!-- Edit modal -->
   <div class="edit-modal" id="edit-modal">
     <div class="edit-modal-content">
       <h2>Klant Bewerken</h2>
