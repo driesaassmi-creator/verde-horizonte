@@ -76,6 +76,12 @@ document.getElementById('install').addEventListener('click', async () => {
 window.addEventListener('appinstalled', () => { document.getElementById('install').style.display = 'none'; });
 function haptic() { if (navigator.vibrate) navigator.vibrate(10); }
 document.querySelectorAll('a, button').forEach(el => { el.addEventListener('touchstart', haptic, {passive: true}); });
+if ('serviceWorker' in navigator) {
+  navigator.serviceWorker.register('sw.js').then((reg) => {
+    // Check elke minuut of er een nieuwe versie is
+    setInterval(() => reg.update(), 60000);
+  });
+}
 </script>
 </body>
 </html>
