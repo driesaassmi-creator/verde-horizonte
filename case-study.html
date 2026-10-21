@@ -186,8 +186,29 @@ header{position:sticky;top:0;z-index:50;backdrop-filter:blur(14px);background:rg
   .portal-links-desc.show p { display: block; padding: 0; }
   
   /* FIX VOOR DE KNOPPEN ONDER RESULTAAT */
-  .portal-links { flex-direction: column; gap: 0.8rem; }
-  .portal-links button, .portal-links a { width: 100%; }
+  .portal-links { flex-direction: column; gap: 12px; width: 100%; }
+  .portal-links button, .portal-links a { width: 100%; max-width: 100%; box-sizing: border-box; }
+
+  /* MOBIELE KNOP LAYOUT (alle knoppen binnen de case-study) */
+  .btn,
+  .portal-links button,
+  .portal-links a {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+    max-width: 100%;
+    box-sizing: border-box;
+    min-height: 48px;
+    padding: 14px 20px;
+    margin: 8px 0;
+    text-align: center;
+    white-space: normal;
+    line-height: 1.3;
+    overflow-wrap: break-word;
+    word-break: break-word;
+  }
+  .btn.primary { width: 100%; max-width: 100%; box-sizing: border-box; }
 }
 
 @media (max-width: 520px) {
