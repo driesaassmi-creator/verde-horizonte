@@ -1,7 +1,10 @@
 # .clinerules voor Verde Horizonte
 
 1. STIJL: Gebruik altijd de bestaande donkere huisstijl (kleuren, CSS-variabelen, Inter font).
-2. TECHNIEK: Alleen vanilla HTML, CSS en JavaScript. Geen frameworks.
-3. BESTANDEN: Als ik een bestandsnaam noem, zoek en lees dat bestand zelfstandig. Vraag niet om de @-tag.
-4. ACTIE: Voer wijzigingen DIRECT uit. Vraag NOOIT om toestemming of goedkeuring in de chat. Ik heb Git als vangnet.
-5. FOUTEN: Als je een fout tegenkomt, los hem zelf op. Vraag mij niet om hulp tenzij je echt vastloopt.
+2. TECHNIEK: Alleen vanilla HTML, CSS en JavaScript. Geen frameworks (zoals React of Vue).
+3. ACTIE: Voer wijzigingen DIRECT uit. Vraag NOOIT om toestemming in de chat. 
+4. BESTANDEN: Zoek bestanden zelf op basis van de naam die ik noem (bijv. index.html of case-study.html).
+
+5. TERMINAL VERBOD (CRUCIAAL): Gebruik NOOIT de terminal (PowerShell) om bestanden te lezen, te schrijven of aan te passen (dus absoluut geen 'cat', 'Get-Content', 'echo' of 'Select-String'). Gebruik uitsluitend je interne file-tools (Read File, Write File, Replace in File). De terminal is ALLEEN bedoeld voor Git-commando's als ik daar specifiek om vraag.
+
+6. FOUTEN: Los fouten zelf op met je file-tools. Vraag niet om hulp tenzij je echt vastloopt.
