@@ -209,6 +209,19 @@ header{position:sticky;top:0;z-index:50;backdrop-filter:blur(14px);background:rg
     word-break: break-word;
   }
   .btn.primary { width: 100%; max-width: 100%; box-sizing: border-box; }
+
+  /* Terug-naar-home knop uitsluiten van full-width */
+  .btn.ghost[href="index.html"],
+  a[href="index.html"].btn,
+  .back-home-btn,
+  a[href="../index.html"] {
+    width: auto;
+    max-width: fit-content;
+    padding: 10px 18px;
+    margin: 8px 0;
+    display: inline-flex;
+    min-height: auto;
+  }
 }
 
 @media (max-width: 520px) {
@@ -442,10 +455,22 @@ header{position:sticky;top:0;z-index:50;backdrop-filter:blur(14px);background:rg
         const descId = `desc-${btn.dataset.desc}`;
         const descEl = document.getElementById(descId);
         if (descEl) {
+          const wasOpen = descEl.classList.contains('show');
           // Verberg alle beschrijvingen eerst
           portalDescs.forEach(d => d.classList.remove('show'));
-          // Toon alleen de geselecteerde
-          descEl.classList.add('show');
+          // Toggle: hetzelfde knop openen/sluiten
+          descEl.classList.toggle('show', !wasOpen);
+          // Knoptekst meeschakelen (behoud het svg-icoon)
+          const labelNode = [...btn.childNodes].find(n => n.nodeType === Node.TEXT_NODE && n.textContent.trim());
+          if (!wasOpen) {
+            if (labelNode) {
+              btn.dataset.prevText = labelNode.textContent;
+              labelNode.textContent = ' Lees minder';
+            }
+          } else if (btn.dataset.prevText) {
+            if (labelNode) labelNode.textContent = btn.dataset.prevText;
+            else btn.insertBefore(document.createTextNode(btn.dataset.prevText), btn.firstChild);
+          }
         }
       });
     });
