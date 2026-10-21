@@ -2,7 +2,7 @@
   "name": "Verde Horizonte Admin",
   "short_name": "VH Admin",
   "description": "Persoonlijke admin app",
-  "start_url": "./admin.html",
+  "start_url": "/",
   "scope": "./",
   "display": "standalone",
   "orientation": "portrait",
