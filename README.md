@@ -1,29 +1,22 @@
-# Verde Horizonte — Websites & Maatwerksoftware
+# Verde Horizonte
 
-Welkom bij de repository van **Verde Horizonte**, het webdevelopment bureau van Dries. 
-Deze repository bevat de volledige front-end code voor de publieke website, de portfolio, de case study en de interne administratie-app (PWA).
+Dit is de repository van Dries (Verde Horizonte). Het bevat zowel mijn publieke portfolio-website als mijn persoonlijke admin-app. Deze twee draaien op dezelfde server, maar zijn bedoeld voor verschillend gebruik.
 
-## 🌐 Live Omgevingen
-- **Hoofdwebsite:** [pitch.fitzonemechelen.be](https://pitch.fitzonemechelen.be)
-- **Portfolio:** [pitch.fitzonemechelen.be/portfolio.html](https://pitch.fitzonemechelen.be/portfolio.html)
-- **Case Study (FitZone):** [pitch.fitzonemechelen.be/case-study.html](https://pitch.fitzonemechelen.be/case-study.html)
+## Wat zit erin?
+- **Publieke website:** Mijn portfolio, demo's en case study (bedoeld voor klanten).
+- **Admin-app (privé):** Mijn eigen tools voor klantenbeheer, offertes, facturen, projecten en urenregistratie.
 
-## 🛠️ Gebruikte Technologieën
-Dit project is volledig "vanilla" gebouwd (geen zware frameworks) voor maximale snelheid en controle:
-- **HTML5 & CSS3** (Custom design, donker thema, glassmorphism)
-- **Vanilla JavaScript** (3D Carousel, interactieve UI, LocalStorage voor data-opslag)
-- **Progressive Web App (PWA)** (Installeerbaar op mobiel, offline caching via Service Worker)
-- **Chart.js** (Voor data-visualisatie in demo's)
-- **Web3Forms API** (Voor het verwerken van contactformulieren)
+## Status: basis / prototype
+De admin-app is een werkende basis, nog geen afgewerkt product:
+- **Data-opslag:** gebeurt momenteel in LocalStorage in de browser, niet in Supabase en niet in een andere database. Gegevens blijven dus per browser en per toestel staan en worden niet gesynchroniseerd tussen toestellen.
+- **Login:** er is nog geen login- of authenticatiesysteem aanwezig in deze versie. Iedereen die de URL kent, kan de admin-pagina's openen. Ze staan niet in de navigatie van de publieke site en zijn waar mogelijk op `noindex` gezet, maar dat is geen beveiliging.
 
-## 📱 Admin App (Privé)
-De map bevat ook een volledig functionele admin-app (`admin.html`) die als PWA op de telefoon geïnstalleerd kan worden. 
-Deze app bevat tools voor:
-- Offertes & Facturen genereren (met automatische BTW-berekening)
-- Klantenbeheer (CRM met LocalStorage)
-- Projectmanagement (Kanban-bord)
-- Urenregistratie
-- Digitale vCard (QR-code)
+## Techniek
+- **Frontend:** HTML, CSS (vanilla, handgeschreven) en JavaScript (vanilla). Geen frameworks en geen build-stap.
+- **Admin-data:** LocalStorage in de browser, onder de keys `vh_customers`, `vh_tasks`, `vh_sessions` en `vh_active_session`.
+- **Database & Auth:** nog niet aanwezig (geen Supabase, geen server-side opslag).
+- **Hosting:** Vercel, gekoppeld aan de GitHub-repository. Elke push naar `main` deployt automatisch.
+- **Formulieren:** Web3Forms API (voor het contactformulier op de publieke site).
 
 ## 🚀 Deployment
 De code wordt gehost op **Vercel** en is gekoppeld aan deze GitHub-repository. Elke `git push` naar de `main` branch triggert automatisch een nieuwe deployment.
