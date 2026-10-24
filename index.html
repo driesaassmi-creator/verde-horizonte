@@ -216,6 +216,8 @@ footer{padding:28px 0;text-align:center;color:var(--muted);font-size:.82rem;bord
 .contact-form input:focus,.contact-form textarea:focus{border-color:var(--accent)}
 .contact-form textarea{min-height:150px;resize:vertical}
 .contact-form button{justify-content:center;margin-top:.5rem;width:100%}
+.form-field{display:flex;flex-direction:column;gap:.4rem}
+.form-field label{font-size:.9rem;font-weight:600;color:var(--muted)}
 
 /* Scroll naar boven knop */
 #scroll-top {
@@ -314,7 +316,7 @@ footer{padding:28px 0;text-align:center;color:var(--muted);font-size:.82rem;bord
   
   <section class="about" id="over-mij" data-aos="fade-up">
     <div class="wrap about-grid">
-      <div class="about-img"><img src="foto.png" alt="Dries, oprichter van Verde Horizonte"></div>
+      <div class="about-img"><img src="foto.png" alt="Dries, oprichter van Verde Horizonte" loading="lazy"></div>
       <div class="about-text">
         <h2>Hallo, ik ben Dries.</h2>
         <p>Ik bouw websites en software die niet alleen mooi zijn, maar ook presteren. Snel, veilig en volledig op maat — afgestemd op wat jouw bedrijf écht nodig heeft.</p>
@@ -539,10 +541,19 @@ footer{padding:28px 0;text-align:center;color:var(--muted);font-size:.82rem;bord
           <input type="hidden" name="access_key" value="a05ef49b-f4f1-473b-91a9-bd20994d2cd5">
           <input type="hidden" name="subject" value="Nieuwe aanvraag via Verde Horizonte">
           <div class="form-row">
-            <input type="text" name="name" placeholder="Jouw naam" aria-label="Jouw naam" required>
-            <input type="email" name="email" placeholder="Jouw e-mailadres" aria-label="Jouw e-mailadres" required>
+            <div class="form-field">
+              <label for="contact-name">Naam</label>
+              <input id="contact-name" type="text" name="name" placeholder="Jouw naam" aria-label="Jouw naam" required>
+            </div>
+            <div class="form-field">
+              <label for="contact-email">E-mailadres</label>
+              <input id="contact-email" type="email" name="email" placeholder="Jouw e-mailadres" aria-label="Jouw e-mailadres" required>
+            </div>
           </div>
-          <textarea name="message" placeholder="Vertel kort over je project..." aria-label="Vertel kort over je project" required></textarea>
+          <div class="form-field">
+            <label for="contact-message">Je project</label>
+            <textarea id="contact-message" name="message" placeholder="Vertel kort over je project..." aria-label="Vertel kort over je project" required></textarea>
+          </div>
           <button type="submit" class="btn primary" id="contact-submit">
             <span class="btn-label">Verstuur aanvraag</span>
             <span class="spinner" aria-hidden="true"></span>
